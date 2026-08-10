@@ -34,8 +34,8 @@
 
   // ============ CHART 1: 账户净值曲线 ============
   var c1 = init('chart-equity', 340);
-  var eqDates = ['07-04','07-08','07-14','07-20','07-23','07-27','07-31','08-04','08-07'];
-  var eqVals = [50000, 50500, 52100, 52800, 53300, 54000, 53800, 53500, 55510.74];
+  var eqDates = ['07-04','07-08','07-14','07-20','07-23','07-27','07-31','08-04','08-07','08-10'];
+  var eqVals = [50000, 50500, 52100, 52800, 53300, 54000, 53800, 53500, 55510.74, 55536.74];
   c1.setOption({
     animation: false,
     tooltip: { trigger: 'axis', appendToBody: true, valueFormatter: function(v){ return '¥' + Number(v).toLocaleString(); } },
@@ -51,7 +51,7 @@
         data: [
           { coord: [eqDates.length - 1, eqVals[eqVals.length - 1]], symbol: 'circle', symbolSize: 10, itemStyle: { color: accent2 } }
         ],
-        label: { show: true, formatter: '¥55,511', position: 'top', color: accent2, fontFamily: 'JetBrainsMono', fontSize: 11 }
+        label: { show: true, formatter: '¥55,537', position: 'top', color: accent2, fontFamily: 'JetBrainsMono', fontSize: 11 }
       }
     }]
   });
@@ -60,8 +60,8 @@
   // ============ CHART 2: 盈亏构成 (diverging bar) ============
   var c2 = init('chart-pnl', 300);
   var pnlData = [
-    { name: '大金浮盈', v: 1686, c: green },
-    { name: '亨通浮盈', v: 4240, c: green },
+    { name: '大金浮盈', v: 1700, c: green },
+    { name: '亨通浮盈', v: 4300, c: green },
     { name: '兖矿分红', v: 352, c: green },
     { name: '兖矿亏损', v: -415, c: red },
     { name: '交易费用', v: -52, c: muted }
@@ -132,8 +132,8 @@
       type: 'bar', barWidth: 46,
       data: [
         { value: -415, itemStyle: { color: red, borderRadius: [4,4,0,0] } },
-        { value: 1686, itemStyle: { color: accent, borderRadius: [4,4,0,0] } },
-        { value: 4240, itemStyle: { color: accent2, borderRadius: [4,4,0,0] } }
+        { value: 1700, itemStyle: { color: accent, borderRadius: [4,4,0,0] } },
+        { value: 4300, itemStyle: { color: accent2, borderRadius: [4,4,0,0] } }
       ],
       label: { show: true, position: 'top', color: ink, fontFamily: 'JetBrainsMono', fontSize: 12, formatter: function(p){ return (p.value>=0?'+':'') + '¥' + p.value.toLocaleString(); } }
     }]
