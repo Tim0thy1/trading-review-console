@@ -15,6 +15,7 @@
     --rule:#223040;
     --accent:#4fd1c5;
     --accent2:#f5a623;
+    --warn:#f5a623;
     --green:#2fbf8f;
     --green-dim:rgba(47,191,143,.14);
     --red:#ef5350;
@@ -162,6 +163,19 @@
   tbody td{padding:11px 14px;border-top:1px solid var(--rule);white-space:nowrap}
   tbody tr:hover{background:var(--bg3)}
 
+  /* Intraday BS */
+  .tab-btn{background:var(--bg2);color:var(--muted);border:1px solid var(--rule);border-radius:999px;padding:7px 14px;font-size:12.5px;cursor:pointer;transition:all .15s}
+  .tab-btn:hover{color:var(--ink);border-color:var(--accent)}
+  .tab-btn.active{background:linear-gradient(135deg,rgba(79,209,197,.16),rgba(245,166,35,.12));color:var(--accent);border-color:var(--accent)}
+  .intraday-card{background:var(--bg2);border:1px solid var(--rule);border-radius:14px;padding:18px;margin-bottom:18px}
+  .intraday-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .intraday-title{font-size:15px;font-weight:700}
+  .intraday-sub{font-size:12px;color:var(--muted)}
+  .mark-legend{display:flex;gap:16px;align-items:center;margin-top:10px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+  .mark-chip{display:inline-flex;align-items:center;gap:5px}
+  .bs-dot{display:inline-block;width:11px;height:11px;border-radius:50%}
+  .intraday-card .chart-box{width:100%;min-height:300px}
+
   /* Scoring */
   .score-band{display:flex;gap:24px;align-items:center;background:var(--bg2);border:1px solid var(--rule);border-radius:12px;padding:22px}
   .ring-wrap{flex-shrink:0;text-align:center}
@@ -227,6 +241,27 @@
 
   .footer-note{margin-top:34px;padding-top:16px;border-top:1px solid var(--rule);font-size:12px;color:var(--muted);line-height:1.7}
 
+  /* ===== 修炼境界 ===== */
+  .realm-steps{display:flex;flex-direction:column;gap:14px}
+  .realm-step{background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;transition:border-color .2s ease}
+  .realm-step.on{border-color:var(--accent2);background:linear-gradient(135deg,rgba(245,166,35,.09),rgba(79,209,197,.05))}
+  .rs-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .rs-badge{font-family:'BricolageGrotesque';font-weight:700;font-size:14px;padding:4px 12px;border-radius:20px;background:var(--bg2);border:1px solid var(--rule);color:var(--ink)}
+  .realm-step.on .rs-badge{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0f15;border-color:transparent}
+  .rs-range{font-family:'JetBrainsMono';font-size:12px;color:var(--muted)}
+  .rs-status{font-size:11px;padding:2px 10px;border-radius:20px;font-weight:600}
+  .realm-step.on .rs-status{background:var(--accent2);color:#0b0f15}
+  .realm-step:not(.on) .rs-status{background:var(--bg2);color:var(--muted);border:1px solid var(--rule)}
+  .rs-title{font-family:'BricolageGrotesque';font-weight:700;font-size:16px;margin-bottom:12px}
+  .rs-ability{display:flex;flex-direction:column;gap:8px}
+  .rs-dim{display:flex;gap:14px;font-size:13px;line-height:1.6}
+  .rs-dim-name{flex:0 0 84px;font-size:12px;color:var(--muted);font-weight:600;padding-top:1px}
+  .realm-journal .rs-dim{border-bottom:1px solid var(--rule);padding:10px 0}
+  .realm-journal .rs-dim:last-child{border-bottom:none}
+  table .realm-dim{opacity:.55}
+  table .realm-on td{background:rgba(245,166,35,.08)}
+  table .realm-on td:first-child{color:var(--accent2)}
+
   @media (max-width:900px){
     .app{flex-direction:column}
     .sidebar{width:100%;height:auto;position:static;flex-direction:row;flex-wrap:wrap;align-items:center;padding:14px}
@@ -240,6 +275,39 @@
     .score-band{flex-direction:column;align-items:flex-start}
     .kpi-grid{grid-template-columns:repeat(2,1fr)}
   }
+
+  /* ===== 收益日历 ===== */
+  .cal-wrap{font-family:var(--font-sans);min-height:380px}
+  .cal-year{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+  @media(max-width:600px){.cal-year{grid-template-columns:repeat(3,1fr)}}
+  .cal-mc{background:var(--bg2);border:1px solid var(--rule);border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .15s}
+  .cal-mc:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(124,92,255,.12)}
+  .cal-mc.empty{cursor:default;opacity:.4}
+  .cal-mc.empty:hover{border-color:var(--rule);transform:none;box-shadow:none}
+  .cal-mc.now{border-color:var(--accent2);background:linear-gradient(135deg,rgba(245,166,35,.08),rgba(79,209,197,.06))}
+  .cal-mc .mc-name{font-size:13px;color:var(--muted);margin-bottom:6px}
+  .cal-mc .mc-ret{font-size:17px;font-weight:700;font-family:var(--font-mono,'JetBrainsMono',monospace)}
+  .cal-mc .mc-sub{font-size:11px;color:var(--muted);margin-top:4px}
+  .cal-summary{text-align:center;font-size:13px;color:var(--muted);padding:10px 0;border-top:1px solid var(--rule)}
+  .cal-month-view{animation:calFade .2s ease}
+  @keyframes calFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .cal-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .cal-back{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:6px 14px;font-size:13px;color:var(--muted);cursor:pointer;transition:all .15s}
+  .cal-back:hover{color:var(--accent);border-color:var(--accent)}
+  .cal-title{font-size:16px;font-weight:600;color:var(--ink);flex:1}
+  .cal-total{font-size:16px;font-weight:700;font-family:var(--font-mono,'JetBrainsMono',monospace)}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .cal-dow{text-align:center;font-size:11px;color:var(--muted);padding:6px 0;font-weight:600}
+  .cal-cell{aspect-ratio:1;border-radius:6px;padding:4px;display:flex;flex-direction:column;justify-content:center;align-items:center;border:1px solid transparent}
+  .cal-cell.non{background:var(--bg2);opacity:.35}
+  .cal-cell.blank{background:transparent;border:none}
+  .cal-cell.up{background:rgba(79,209,197,.14);border-color:rgba(79,209,197,.3)}
+  .cal-cell.dn{background:rgba(255,92,92,.12);border-color:rgba(255,92,92,.25)}
+  .cal-cell .dc-num{font-size:13px;font-weight:600;color:var(--ink)}
+  .cal-cell.non .dc-num{color:var(--muted)}
+  .cal-cell .dc-pct{font-size:10px;font-weight:600;font-family:var(--font-mono,'JetBrainsMono',monospace);margin-top:1px}
+  .cal-legend{display:flex;align-items:center;gap:16px;margin-top:14px;font-size:12px;color:var(--muted)}
+  .cal-legend .lg-box{display:inline-block;width:14px;height:14px;border-radius:4px;margin-right:4px;vertical-align:middle}
 </style>
 </head>
 <body>
@@ -272,6 +340,14 @@
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
         历史盈亏
       </div>
+      <div class="nav-item" data-target="winrate">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="6" r="3" fill="currentColor"/><circle cx="5" cy="16" r="3" fill="currentColor"/><circle cx="19" cy="16" r="3" fill="currentColor"/><path d="M12 12v6M8 19h8"/></svg>
+        胜率复盘
+      </div>
+      <div class="nav-item" data-target="intraday">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/><circle cx="7" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="8" r="1.5" fill="currentColor"/><circle cx="17" cy="12" r="1.5" fill="currentColor"/></svg>
+        分时BS
+      </div>
       <div class="nav-item" data-target="audit">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
         操作评估
@@ -280,34 +356,65 @@
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>
         全景评估
       </div>
+      <div class="nav-item" data-target="realm">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg>
+        修炼境界
+      </div>
     </nav>
     <div class="side-foot">
-      数据源：东方财富模拟盘<br>策略：右侧趋势 v3.0<br>更新：2026-08-10
+      组合：翻81681 · 聪明的企业家6<br>数据源：东方财富模拟组合API<br>更新：2026-08-12
     </div>
   </aside>
 
   <!-- ============ MAIN ============ -->
   <main class="main">
 
+    <!-- ===== 东财实时同步面板 ===== -->
+    <section class="panel" id="live-panel" style="margin-bottom:22px;border-color:rgba(79,209,197,.35);background:linear-gradient(180deg,rgba(79,209,197,.06),var(--bg2))">
+      <div class="m-kicker" style="margin-bottom:6px">🛰️ 东财实时同步</div>
+      <div class="panel-title" style="font-size:16px">组合「翻81681」· 官方持仓快照</div>
+      <div class="panel-sub" id="live-synced" style="margin-bottom:14px">正在连接东方财富组合接口…</div>
+      <div class="kpi-grid" id="live-account" style="margin-bottom:16px">
+        <div class="kpi"><div class="kpi-label">总资产(5万基数)</div><div class="kpi-value" id="lv-assets">—</div><div class="kpi-sub" id="lv-assets-sub">人为控制实际本金5万</div></div>
+        <div class="kpi"><div class="kpi-label">总收益率</div><div class="kpi-value" id="lv-zsyl">—</div><div class="kpi-sub">按5万本金核算</div></div>
+        <div class="kpi"><div class="kpi-label">仓位</div><div class="kpi-value" id="lv-pos">—</div><div class="kpi-sub" id="lv-pos-sub">持仓市值/总资产</div></div>
+        <div class="kpi"><div class="kpi-label">成交胜率</div><div class="kpi-value" id="lv-rate">—</div><div class="kpi-sub" id="lv-rate-sub">已了结单</div></div>
+        <div class="kpi"><div class="kpi-label">调仓总笔数</div><div class="kpi-value" id="lv-cnt">—</div><div class="kpi-sub">已全量同步</div></div>
+      </div>
+      <div id="live-positions"><!-- 持仓行 JS 填充 --></div>
+      <div id="live-trades" style="margin-top:12px"><!-- 最近调仓 JS 填充 --></div>
+    </section>
+
     <!-- ===== MODULE 1: 总览 ===== -->
     <section class="module active" id="module-overview">
       <div class="m-head">
         <div class="m-kicker">Overview · 账户总览</div>
-        <div class="m-title">模拟盘总览</div>
-        <div class="m-desc">账户从 5 万起步，目标 3 年 30–50 万。当前处于起步阶段，重点在于建立纪律而非追求收益。</div>
+        <div class="m-title">翻81681 · 复盘总览</div>
+        <div class="m-desc">东方财富模拟组合，管理人「聪明的企业家6」。名义账户为 100 万，但人为控制实际本金在 5 万以内，系统全部按 5 万基数核算。</div>
       </div>
 
       <div class="kpi-grid">
-        <div class="kpi"><div class="kpi-label">总资产</div><div class="kpi-value">¥55,536.74</div><div class="kpi-sub">较初始 +¥5,536.74</div></div>
-        <div class="kpi"><div class="kpi-label">总收益率</div><div class="kpi-value up">+11.07%</div><div class="kpi-sub">浮动已计入</div></div>
-        <div class="kpi"><div class="kpi-label">最大回撤</div><div class="kpi-value dn">-0.63%</div><div class="kpi-sub">风险可控</div></div>
-        <div class="kpi"><div class="kpi-label">累计交易费用</div><div class="kpi-value">¥100.26</div><div class="kpi-sub">模拟盘佣金万10</div></div>
-        <div class="kpi"><div class="kpi-label">纪律评分</div><div class="kpi-value" style="color:var(--accent2)">37 / 100</div><div class="kpi-sub">待改进</div></div>
+        <div class="kpi"><div class="kpi-label">总资产</div><div class="kpi-value dn">¥52,959.63</div><div class="kpi-sub">5万本金 + 累计盈亏(回撤)</div></div>
+        <div class="kpi"><div class="kpi-label">总收益率</div><div class="kpi-value up">+5.92%</div><div class="kpi-sub">app盈亏平移至5万本金</div></div>
+        <div class="kpi"><div class="kpi-label">累计总盈亏</div><div class="kpi-value up">+¥2,959.63</div><div class="kpi-sub">app口径(含分红除权)</div></div>
+        <div class="kpi"><div class="kpi-label">持仓仓位</div><div class="kpi-value" style="color:var(--accent)">93.36%</div><div class="kpi-sub">持仓市值49,443</div></div>
+        <div class="kpi"><div class="kpi-label">当日盈亏</div><div class="kpi-value dn">-¥4,247.99</div><div class="kpi-sub">08-19行情重挫 -8.50%</div></div>
+        <div class="kpi"><div class="kpi-label">现金</div><div class="kpi-value">¥3,516.63</div><div class="kpi-sub">52,959.63 - 49,443</div></div>
       </div>
 
       <figure class="chart-figure">
         <figcaption>账户净值曲线（初始 5 万 → 当前）</figcaption>
         <div id="chart-equity" class="chart-box" style="min-height:340px"></div>
+      </figure>
+
+      <figure class="chart-figure">
+        <figcaption>收益日历 · 点击月份查看每日收益</figcaption>
+        <div id="chart-monthly" class="cal-wrap"></div>
+        <div class="cal-legend">
+          <span><span class="lg-box" style="background:rgba(79,209,197,.14);border:1px solid rgba(79,209,197,.3)"></span>交易日盈利</span>
+          <span><span class="lg-box" style="background:rgba(255,92,92,.12);border:1px solid rgba(255,92,92,.25)"></span>交易日亏损</span>
+          <span><span class="lg-box" style="background:var(--bg2);opacity:.35"></span>非交易日</span>
+        </div>
       </figure>
 
       <div class="grid-2">
@@ -330,8 +437,7 @@
       </div>
 
       <div class="callout">
-        <strong>风险提示：</strong>当前仓位合计约 96%（大金 53.1% + 亨通 42.9%），现金仅约 4%。连续近一个月保持 90%+ 满仓运行，若市场回落，一次回撤可能吞噬起步阶段全部利润。建议逐步向目标仓位（单票 ≤ 30%）收敛。
-      </div>
+        <strong>风险提示：</strong>8/18 大盘回调（挨打日），三票两跌一涨：申菱收 96.79（-3.38%，险守关键位 92.5）、亨通逆势收 65.41（+0.54%，浮盈 +3,170，扛住回调）、星源收 14.71（-2.90%，假设建仓续跌）。核心短板：回调中纠结「减少操作 还是 日内做T降成本」本身即反映缺乏预写应对规则。星源为新加第 3 票，因东财组合明细接口下线，建仓参数仍为假设值（300 股 @15.00，成本 4,500*），需你确认。名义账户虽为 100 万，但按人为控制的 5 万本金核算，仓位（58.6%）与现金（41.4%）比例才是真实风险暴露。</div>
     </section>
 
     <!-- ===== MODULE 2: 持仓 ===== -->
@@ -339,41 +445,42 @@
       <div class="m-head">
         <div class="m-kicker">Positions · 当前持仓</div>
         <div class="m-title">持仓明细</div>
-        <div class="m-desc">两只持仓均处于浮盈状态。亨通光电为科技复苏主线，大金重工为风电设备。需重点管理止盈节奏与仓位集中度。</div>
+        <div class="m-desc">当前三票持仓：亨通光电为科技复苏主线大赚+20%，扛住本日回调；申菱环境为 8/17 FOMO 新建仓、今日跌破支撑转亏；星源材质为今日本地新增第 3 票（参数为假设值待确认）。三票齐开抬高仓位至 58.6%，集中度上行。</div>
       </div>
 
-      <!-- 大金重工 -->
+      <!-- 申菱环境 -->
       <div class="pos-card">
         <div class="pos-head">
           <div>
-            <div class="pos-name">大金重工 <span class="pos-code">sz002487</span></div>
-            <div class="pos-tag hold" style="margin-top:8px">持仓中 · 风电设备</div>
+            <div class="pos-name">申菱环境 <span class="pos-code">sz301018</span></div>
+            <div class="pos-tag" style="margin-top:8px">持仓中 · 数据中心温控</div>
           </div>
           <div style="text-align:right">
-            <div class="mono up" style="font-size:20px;font-weight:700">+¥1,700.30</div>
-            <div class="mono up" style="font-size:13px">+6.12%</div>
+            <div class="mono dn" style="font-size:20px;font-weight:700">-¥121.90</div>
+            <div class="mono dn" style="font-size:13px">-1.24%</div>
+            <div class="mono" style="font-size:11px;color:var(--muted)">8/17 建仓 · 8/18 险守92.5</div>
           </div>
         </div>
         <div class="pos-metrics">
-          <div class="pm"><div class="pm-label">现价</div><div class="pm-value">42.10</div></div>
-          <div class="pm"><div class="pm-label">持仓 / 成本</div><div class="pm-value">700 <span style="color:var(--muted);font-size:12px">股</span></div><div style="font-size:12px;color:var(--muted)">成本 39.67</div></div>
-          <div class="pm"><div class="pm-label">市值</div><div class="pm-value">¥29,470</div></div>
-          <div class="pm"><div class="pm-label">仓位占比</div><div class="pm-value" style="color:var(--accent2)">53.1%</div></div>
+          <div class="pm"><div class="pm-label">现价</div><div class="pm-value">96.79</div></div>
+          <div class="pm"><div class="pm-label">持仓 / 成本</div><div class="pm-value">100 <span style="color:var(--muted);font-size:12px">股</span></div><div style="font-size:12px;color:var(--muted)">成本 98.009</div></div>
+          <div class="pm"><div class="pm-label">市值</div><div class="pm-value">¥9,679</div></div>
+          <div class="pm"><div class="pm-label">仓位占比</div><div class="pm-value" style="color:var(--accent)">16.8%</div></div>
         </div>
-        <div class="panel-sub" style="margin-bottom:6px">ATR 阶梯止盈（当前：建仓期，未触发止盈）</div>
+        <div class="panel-sub" style="margin-bottom:6px">8/17 建仓：仅凭MACD走强+突破形态，介入偏晚，属情绪化FOMO。8/18 高开101.67冲高回落收96.79，险守关键支撑92.5。</div>
         <div class="ladder">
-          <div class="lstep on"><div class="st">建仓</div><div class="sv">39.67</div></div>
-          <div class="lstep"><div class="st">保本价</div><div class="sv">+1×ATR</div></div>
-          <div class="lstep"><div class="st">部分止盈</div><div class="sv">+2×ATR</div></div>
-          <div class="lstep"><div class="st">移动止损</div><div class="sv">37.50</div></div>
+          <div class="lstep on"><div class="st">建仓</div><div class="sv">98.009</div></div>
+          <div class="lstep on"><div class="st">突破新高</div><div class="sv">99.77 ✓</div></div>
+          <div class="lstep warn current"><div class="st">回踩支撑</div><div class="sv">92.5 ⚠ 险守</div></div>
+          <div class="lstep warn"><div class="st">目标区</div><div class="sv">105-110</div></div>
         </div>
-        <div class="callout" style="margin-top:14px">持仓逻辑：风电设备平稳走强，浮盈 +6%。个人判断可继续持有，等待浮盈 &gt;10% 再实现减仓。技术上未偏离 5 日线，趋势完好。</div>
+        <div class="callout" style="margin-top:14px">🔴 8/18 申菱高开 101.67 冲高回落收 96.79（-3.38%），现浮亏 -121.9（-1.24%）。原判定「强势突破中的正常回踩」，今日盘中最低 92.48、恰好触及之前判定的关键位 95 之下，收盘险守 92.5，回调性质需要重新确认——支撑已从「安全垫」变成「决策位」。按纪律：明日守住 92.5 则继续持、跌破并放量则执行止损，而非盘中情绪操作。买点偏高的代价在建仓第 2 天即显现。</div>
         <div class="note-editor">
           <div class="note-label"><span class="dot"></span>持续持有理由（可编辑，本地保存）</div>
-          <textarea data-key="hold-dajin" placeholder="记录你继续持有大金重工的理由，例如：板块逻辑、技术形态、目标价、止盈/止损计划..."></textarea>
+          <textarea data-key="hold-shenling" placeholder="记录你继续持有申菱环境的理由，例如：板块逻辑、技术形态、目标价、止盈/止损计划..."></textarea>
           <div class="note-toolbar">
-            <button class="note-save" data-key="hold-dajin">保存理由</button>
-            <span class="note-status" data-status="hold-dajin"></span>
+            <button class="note-save" data-key="hold-shenling">保存理由</button>
+            <span class="note-status" data-status="hold-shenling"></span>
           </div>
         </div>
       </div>
@@ -386,30 +493,67 @@
             <div class="pos-tag" style="margin-top:8px">持仓中 · 光通信/科技</div>
           </div>
           <div style="text-align:right">
-            <div class="mono up" style="font-size:20px;font-weight:700">+¥4,300.00</div>
-            <div class="mono up" style="font-size:13px">+21.98%</div>
+            <div class="mono up" style="font-size:20px;font-weight:700">+¥3,170.00</div>
+            <div class="mono up" style="font-size:13px">+19.27%</div>
+            <div class="mono" style="font-size:11px;color:var(--muted)">已实现 +¥2,456</div>
           </div>
         </div>
         <div class="pos-metrics">
-          <div class="pm"><div class="pm-label">现价</div><div class="pm-value">59.62</div></div>
-          <div class="pm"><div class="pm-label">持仓 / 成本</div><div class="pm-value">400 <span style="color:var(--muted);font-size:12px">股</span></div><div style="font-size:12px;color:var(--muted)">成本 48.87</div></div>
-          <div class="pm"><div class="pm-label">市值</div><div class="pm-value">¥23,848</div></div>
-          <div class="pm"><div class="pm-label">仓位占比</div><div class="pm-value" style="color:var(--accent2)">42.9%</div></div>
+          <div class="pm"><div class="pm-label">现价</div><div class="pm-value">65.41</div></div>
+          <div class="pm"><div class="pm-label">持仓 / 成本</div><div class="pm-value">300 <span style="color:var(--muted);font-size:12px">股</span></div><div style="font-size:12px;color:var(--muted)">成本 54.843</div></div>
+          <div class="pm"><div class="pm-label">市值</div><div class="pm-value">¥19,623</div></div>
+          <div class="pm"><div class="pm-label">仓位占比</div><div class="pm-value" style="color:var(--accent)">34.1%</div></div>
         </div>
-        <div class="panel-sub" style="margin-bottom:6px">ATR 阶梯止盈（当前：建仓期，未触发止盈）</div>
+        <div class="panel-sub" style="margin-bottom:6px">长短线双轨止盈（08-13减仓200股@60.39落袋+¥2,293；08-14做T卖出100股@59.54落袋+163）</div>
         <div class="ladder">
-          <div class="lstep on"><div class="st">建仓</div><div class="sv">48.87</div></div>
-          <div class="lstep"><div class="st">保本价</div><div class="sv">+1×ATR</div></div>
-          <div class="lstep"><div class="st">部分止盈</div><div class="sv">+2×ATR</div></div>
+          <div class="lstep on"><div class="st">建仓</div><div class="sv">54.843</div></div>
+          <div class="lstep done"><div class="st">机动仓兑现</div><div class="sv">60.39 ✓</div></div>
+          <div class="lstep done"><div class="st">做T卖出</div><div class="sv">59.54 ✓</div></div>
           <div class="lstep"><div class="st">移动止损</div><div class="sv">46.43</div></div>
         </div>
-        <div class="callout" style="margin-top:14px"><strong>操作提示：</strong>已浮盈 +22.0%，远超 +2×ATR 部分止盈触发区。今日（08-10）高开 +2.5% 至 60.99，最高触及 61.75（+3.75%），对应做 T 空间约 4.5 元/股（61.5→57.0），400 股可赚约 1,600 元，但再次因"不舍得抛"错过。同日大金重工窄幅震荡（42.54→41.00→42.10），不动完全正确。</div>
+        <div class="callout" style="margin-top:14px">✅ 8/18 亨通逆势走强收 65.41（+0.54%），剩余 300股 浮盈 +¥3,170（+19.27%）——今日回调挨打日里唯一扛住的红线，主线仓位持盈未乱动，是账户的定海神针。</div>
         <div class="note-editor">
           <div class="note-label"><span class="dot"></span>持续持有理由（可编辑，本地保存）</div>
           <textarea data-key="hold-hengtong" placeholder="记录你继续持有亨通光电的理由，例如：科技复苏主线、减仓计划、止盈档位..."></textarea>
           <div class="note-toolbar">
             <button class="note-save" data-key="hold-hengtong">保存理由</button>
             <span class="note-status" data-status="hold-hengtong"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 星源材质 -->
+      <div class="pos-card">
+        <div class="pos-head">
+          <div>
+            <div class="pos-name">星源材质 <span class="pos-code">sz300568</span> <span style="font-size:11px;color:var(--warn)">· 假设值*</span></div>
+            <div class="pos-tag" style="margin-top:8px">持仓中 · 锂电隔膜</div>
+          </div>
+          <div style="text-align:right">
+            <div class="mono dn" style="font-size:20px;font-weight:700">-¥87.00</div>
+            <div class="mono dn" style="font-size:13px">-1.93%</div>
+            <div class="mono" style="font-size:11px;color:var(--muted)">8/18 建仓·假设</div>
+          </div>
+        </div>
+        <div class="pos-metrics">
+          <div class="pm"><div class="pm-label">现价</div><div class="pm-value">14.71</div></div>
+          <div class="pm"><div class="pm-label">持仓 / 成本</div><div class="pm-value">300 <span style="color:var(--muted);font-size:12px">股</span>(假设)</div><div style="font-size:12px;color:var(--muted)">成本 15.00 假设</div></div>
+          <div class="pm"><div class="pm-label">市值</div><div class="pm-value">¥4,413</div></div>
+          <div class="pm"><div class="pm-label">仓位占比</div><div class="pm-value" style="color:var(--accent)">7.7%</div></div>
+        </div>
+        <div class="panel-sub" style="margin-bottom:6px">8/18 第3票建仓。因东财组合明细接口下线，股数/成本为假设值（300股@15.00），待你确认后修正。</div>
+        <div class="ladder">
+          <div class="lstep on"><div class="st">建仓</div><div class="sv">15.00(假设)</div></div>
+          <div class="lstep warn"><div class="st">关键支撑</div><div class="sv">14.20</div></div>
+          <div class="lstep warn"><div class="st">观察</div><div class="sv">回调企稳</div></div>
+        </div>
+        <div class="callout" style="margin-top:14px">⚠️ 8/18 星源材质收 14.71（-2.90%），假设建仓价 15.00，浮亏 -87（-1.93%）。<strong>此为占位卡片</strong>——你的实际张数/成本请告知以便更正。星源与申菱同属本日回调的新增仓位，且叠加在亨通大仓位之上，是三票状态下「仓位放大、波动放大」的代表。</div>
+        <div class="note-editor">
+          <div class="note-label"><span class="dot"></span>持续持有理由（可编辑，本地保存）</div>
+          <textarea data-key="hold-xingyuan" placeholder="记录你继续持有星源材质的理由，例如：隔膜逻辑、成本、目标、止损..."></textarea>
+          <div class="note-toolbar">
+            <button class="note-save" data-key="hold-xingyuan">保存理由</button>
+            <span class="note-status" data-status="hold-xingyuan"></span>
           </div>
         </div>
       </div>
@@ -422,19 +566,24 @@
             <thead><tr><th>标的</th><th>仓位</th><th>目标仓位</th><th>偏离</th><th>浮盈</th><th>当前止损</th><th>距止损空间</th><th>风险评级</th></tr></thead>
             <tbody>
               <tr>
-                <td>大金重工</td><td class="mono">53.1%</td><td class="mono">≤30%</td><td class="dn">+23.1pp</td>
-                <td class="up mono">+6.12%</td><td class="mono">37.50</td><td class="mono">-11.0%</td><td><span class="pill r">偏高</span></td>
+                <td>申菱环境</td><td class="mono">16.8%</td><td class="mono">无单票上限*</td><td class="up">—</td>
+                <td class="dn mono">-1.24%</td><td class="mono">92.50</td><td class="mono">-4.4%</td><td><span class="pill a">警示</span></td>
               </tr>
               <tr>
-                <td>亨通光电</td><td class="mono">42.9%</td><td class="mono">≤30%</td><td class="dn">+12.9pp</td>
-                <td class="up mono">+21.98%</td><td class="mono">46.43</td><td class="mono">-22.0%</td><td><span class="pill r">偏高</span></td>
+                <td>亨通光电</td><td class="mono">34.1%</td><td class="mono">无单票上限*</td><td class="up">—</td>
+                <td class="up mono">+19.27%</td><td class="mono">46.43</td><td class="mono">-29.0%</td><td><span class="pill a">中</span></td>
               </tr>
               <tr>
-                <td>现金</td><td class="mono">4.0%</td><td class="mono">≥20%</td><td class="dn">-16pp</td>
-                <td class="mono">—</td><td class="mono">—</td><td class="mono">—</td><td><span class="pill a">警惕</span></td>
+                <td>星源材质*</td><td class="mono">7.7%</td><td class="mono">无单票上限*</td><td class="up">—</td>
+                <td class="dn mono">-1.93%</td><td class="mono">14.20</td><td class="mono">-3.5%</td><td><span class="pill a">低</span></td>
+              </tr>
+              <tr>
+                <td>现金</td><td class="mono">41.4%</td><td class="mono">≥20%</td><td class="up">+21.4pp</td>
+                <td class="mono">—</td><td class="mono">—</td><td class="mono">—</td><td><span class="pill g">安全</span></td>
               </tr>
             </tbody>
           </table>
+          <div style="margin-top:8px;font-size:11.5px;color:var(--muted)">* 单票硬性上限已移除，改由「总仓位满 9 成不超 3 天 + 现金 ≥20% + 单日加仓 ≤10%」三条纪律兜底集中度风险。</div>
         </div>
       </div>
     </section>
@@ -452,6 +601,15 @@
           <table>
             <thead><tr><th>日期</th><th>操作</th><th>标的</th><th>方向</th><th>成交价</th><th>股数</th><th>金额</th><th>费用</th><th>操作逻辑</th><th>我的理由（可编辑）</th></tr></thead>
             <tbody>
+              <tr><td class="mono">08-18</td><td>建仓</td><td>星源材质*</td><td><span class="pill g">买入</span></td><td class="mono">15.00*</td><td class="mono">300</td><td class="mono">4,500</td><td class="mono">5.00</td><td>⚠️ 第3票建仓（假设值）。回调日叠加买入，三票齐开、仓位放大至58.6%</td><td class="note-inline"><input data-key="note-xy-buy" placeholder="填写星源建仓理由..."><span class="note-status" data-status="note-xy-buy"></span></td></tr>
+              <tr><td class="mono">08-17</td><td>建仓</td><td>申菱环境</td><td><span class="pill g">买入</span></td><td class="mono">97.91</td><td class="mono">100</td><td class="mono">9,791</td><td class="mono">5.00</td><td>⚠️ FOMO追高，仅凭MACD走强，介入偏晚，追高99+回落</td><td class="note-inline"><input data-key="note-sl-buy" placeholder="填写建仓理由..."><span class="note-status" data-status="note-sl-buy"></span></td></tr>
+              <tr><td class="mono">08-17</td><td>清仓</td><td>大金重工</td><td><span class="pill r">卖出</span></td><td class="mono">41.34</td><td class="mono">600</td><td class="mono">24,804</td><td class="mono">19.84</td><td>⚠️ 走弱迹象明显，浮盈落袋+437，但卖点不够好（午间反弹41.8+）</td><td class="note-inline"><input data-key="note-dj-sell-final" placeholder="填写清仓理由..."><span class="note-status" data-status="note-dj-sell-final"></span></td></tr>
+              <tr><td class="mono">08-14</td><td>加仓</td><td>大金重工</td><td><span class="pill g">买入</span></td><td class="mono">41.92</td><td class="mono">100</td><td class="mono">4,192</td><td class="mono">5.00</td><td>⚠️ 逢低补仓，摊低成本至40.578，但大金仍走弱、偏左侧</td><td class="note-inline"><input data-key="note-dj-buy3" placeholder="填写补仓理由..."><span class="note-status" data-status="note-dj-buy3"></span></td></tr>
+              <tr><td class="mono">08-14</td><td>减仓</td><td>亨通光电</td><td><span class="pill r">卖出</span></td><td class="mono">59.54</td><td class="mono">100</td><td class="mono">5,954</td><td class="mono">8.04</td><td>✅ 做T兑现昨日抄底仓，落袋+163，弥补抄底被动</td><td class="note-inline"><input data-key="note-ht-sell2" placeholder="填写做T理由..."><span class="note-status" data-status="note-ht-sell2"></span></td></tr>
+              <tr><td class="mono">08-13</td><td>加仓</td><td>亨通光电</td><td><span class="pill g">买入</span></td><td class="mono">57.83</td><td class="mono">200</td><td class="mono">11,566</td><td class="mono">5.12</td><td>⚠️ 下午冲动回补，尾盘收57.25被套</td><td class="note-inline"><input data-key="note-ht-buy2" placeholder="填写回补理由..."><span class="note-status" data-status="note-ht-buy2"></span></td></tr>
+              <tr><td class="mono">08-13</td><td>加仓</td><td>大金重工</td><td><span class="pill g">买入</span></td><td class="mono">42.81</td><td class="mono">100</td><td class="mono">4,281</td><td class="mono">5.00</td><td>⚠️ 下午冲动回补，尾盘收42.55被套</td><td class="note-inline"><input data-key="note-dj-buy2" placeholder="填写回补理由..."><span class="note-status" data-status="note-dj-buy2"></span></td></tr>
+              <tr><td class="mono">08-13</td><td>减仓</td><td>亨通光电</td><td><span class="pill r">卖出</span></td><td class="mono">60.39</td><td class="mono">200</td><td class="mono">12,078</td><td class="mono">11.16</td><td>长短线双轨止盈：机动仓兑现，落袋+2,293</td><td class="note-inline"><input data-key="note-ht-sell" placeholder="填写减仓理由..."><span class="note-status" data-status="note-ht-sell"></span></td></tr>
+              <tr><td class="mono">08-12</td><td>减仓</td><td>大金重工</td><td><span class="pill r">卖出</span></td><td class="mono">43.78</td><td class="mono">300</td><td class="mono">13,134</td><td class="mono">11.57</td><td>执行止盈：浮盈>10%减仓</td><td class="note-inline"><input data-key="note-dj-sell" placeholder="填写减仓理由..."><span class="note-status" data-status="note-dj-sell"></span></td></tr>
               <tr><td class="mono">08-04</td><td>建仓</td><td>亨通光电</td><td><span class="pill g">买入</span></td><td class="mono">48.87</td><td class="mono">400</td><td class="mono">19,548</td><td class="mono">19.74</td><td>科技复苏+MACD准备金叉+业绩支撑</td><td class="note-inline"><input data-key="note-ht-buy" placeholder="填写建仓理由..."><span class="note-status" data-status="note-ht-buy"></span></td></tr>
               <tr><td class="mono">08-04</td><td>清仓</td><td>兖矿能源</td><td><span class="pill r">卖出</span></td><td class="mono">18.67</td><td class="mono">1100</td><td class="mono">20,537</td><td class="mono">31.01</td><td>MACD死叉+趋势走坏+业绩预期一般</td><td class="note-inline"><input data-key="note-yk-sell" placeholder="填写清仓理由..."><span class="note-status" data-status="note-yk-sell"></span></td></tr>
               <tr><td class="mono">07-28</td><td>加仓</td><td>大金重工</td><td><span class="pill g">买入</span></td><td class="mono">40.01</td><td class="mono">100</td><td class="mono">4,001</td><td class="mono">4.04</td><td>加仓</td><td class="note-inline"><input data-key="note-dj-3" placeholder="填写加仓理由..."><span class="note-status" data-status="note-dj-3"></span></td></tr>
@@ -484,7 +642,7 @@
           <div class="tl-item">
             <div class="tl-dot buy"></div>
             <div class="tl-date">07-23 → 07-28 · 大金重工 sz002487</div>
-            <div class="tl-title">三次建仓共 700 股 @ 均 39.67</div>
+            <div class="tl-title">三次建仓共 700 股 @ 均 39.67（含分红摊薄后 36.71）</div>
             <div class="tl-meta">建仓 300 + 加仓 300 + 加仓 100 · 费用合计 ¥28.04</div>
             <div class="tl-reason">风电设备板块平稳走强，采用分批加仓摊薄成本</div>
           </div>
@@ -495,6 +653,62 @@
             <div class="tl-meta">金额 ¥19,548 · 费用 ¥19.74</div>
             <div class="tl-reason">科技 8 月复苏 + MACD 准备金叉 + 业绩支撑，做短线波段</div>
           </div>
+          <div class="tl-item">
+            <div class="tl-dot sell"></div>
+            <div class="tl-date">08-12 · 大金重工 sz002487</div>
+            <div class="tl-title up">减仓 300 股 @ 43.78 · 落袋 +¥1,221</div>
+            <div class="tl-meta">持有 20 天 · 费用 ¥11.57</div>
+            <div class="tl-reason">执行止盈计划：浮盈 &gt;10% 减仓，落袋部分利润，降低仓位集中度</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot sell"></div>
+            <div class="tl-date">08-13 · 亨通光电 sh600487</div>
+            <div class="tl-title up">减仓 200 股 @ 60.39 · 落袋 +¥2,293</div>
+            <div class="tl-meta">持有 9 天 · 费用 ¥11.16</div>
+            <div class="tl-reason">执行长短线双轨止盈：机动仓兑现部分利润，底仓 200 股保留博主线弹性</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot buy"></div>
+            <div class="tl-date">08-13 下午 · 大金重工 sz002487</div>
+            <div class="tl-title dn">冲动回补 100 股 @ 42.81 · 尾盘 42.55 被套</div>
+            <div class="tl-meta">金额 ¥4,281 · 费用 ¥5.00</div>
+            <div class="tl-reason">上午止盈后急于回补，属「止盈后追回」的冲动操作，违反止盈当日不追回纪律</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot buy"></div>
+            <div class="tl-date">08-13 下午 · 亨通光电 sh600487</div>
+            <div class="tl-title dn">冲动回补 200 股 @ 57.83 · 尾盘 57.25 被套</div>
+            <div class="tl-meta">金额 ¥11,566 · 费用 ¥5.12</div>
+            <div class="tl-reason">上午高抛 60.39，下午 57.83 接回，典型的「止盈后急于接回」，仓位拉回 79.3%</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot sell"></div>
+            <div class="tl-date">08-14 10:32 · 亨通光电 sh600487</div>
+            <div class="tl-title up">做T卖出 100 股 @ 59.54 · 落袋 +¥163</div>
+            <div class="tl-meta">金额 ¥5,954 · 费用 ¥8.04</div>
+            <div class="tl-reason">将昨日抄底的 100股@57.83 高抛做T，虽卖得早少赚（现价60.09），但弥补了昨日抄底被动，摊薄成本</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot buy"></div>
+            <div class="tl-date">08-14 10:33 · 大金重工 sz002487</div>
+            <div class="tl-title dn">逢低补仓 100 股 @ 41.92 · 仍走弱</div>
+            <div class="tl-meta">金额 ¥4,192 · 费用 ¥5.00</div>
+            <div class="tl-reason">大金回落至 41.92 摊低成本至 40.578，但现价 41.90 仍贴补仓价，补仓偏左侧，仓位升至 44.5% 超限</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot sell"></div>
+            <div class="tl-date">08-17 10:29 · 大金重工 sz002487</div>
+            <div class="tl-title up">清仓 600 股 @ 41.34 · 落袋 +¥437</div>
+            <div class="tl-meta">持有 25 天 · 费用 ¥19.84</div>
+            <div class="tl-reason">走弱迹象明显提前离场，浮盈落袋。但卖点不算好——卖在 41.34，午间反弹至 41.8+，属变弱预期提前离场而非放量滞涨确认</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot buy"></div>
+            <div class="tl-date">08-17 10:46 · 申菱环境 sz301018</div>
+            <div class="tl-title dn">FOMO建仓 100 股 @ 97.91 · 追高</div>
+            <div class="tl-meta">金额 ¥9,791 · 费用 ¥5.00</div>
+            <div class="tl-reason">卖完大金立刻买入，理由仅凭 MACD 走强+突破形态，介入偏晚（冲高99+回落）。建仓量小控制加仓冲动，但动机偏情绪化FOMO</div>
+          </div>
         </div>
       </div>
     </section>
@@ -504,14 +718,14 @@
       <div class="m-head">
         <div class="m-kicker">Closed P&L · 历史盈亏</div>
         <div class="m-title">已了结持仓盈亏</div>
-        <div class="m-desc">当前仅完成兖矿能源一段完整交易。已实现盈亏为负，主要原因是止盈纪律缺失，而非标的本身没有机会。</div>
+        <div class="m-desc">已了结持仓（兖矿）为负，但 8/12-8/13 两次减仓已累计落袋正利润 +¥3,514（大金 +1,221、亨通 +2,293），止盈纪律正逐步建立。</div>
       </div>
 
       <div class="kpi-grid">
-        <div class="kpi"><div class="kpi-label">已实现盈亏</div><div class="kpi-value dn">-¥415.48</div><div class="kpi-sub">兖矿能源</div></div>
-        <div class="kpi"><div class="kpi-label">持仓期现金分红</div><div class="kpi-value up">+¥352.00</div><div class="kpi-sub">已计入</div></div>
-        <div class="kpi"><div class="kpi-label">已结算交易费用</div><div class="kpi-value">¥52.48</div><div class="kpi-sub">含佣金+印花税</div></div>
-        <div class="kpi"><div class="kpi-label">已了结标的数</div><div class="kpi-value">1</div><div class="kpi-sub">兖矿能源</div></div>
+        <div class="kpi"><div class="kpi-label">已了结整段盈亏</div><div class="kpi-value dn">-¥415.48</div><div class="kpi-sub">兖矿能源</div></div>
+        <div class="kpi"><div class="kpi-label">减仓累计落袋</div><div class="kpi-value up">+¥3,514</div><div class="kpi-sub">大金1,221+亨通2,293</div></div>
+        <div class="kpi"><div class="kpi-label">持仓期现金分红</div><div class="kpi-value up">+¥352.00</div><div class="kpi-sub">兖矿已计入</div></div>
+        <div class="kpi"><div class="kpi-label">已结算交易费用</div><div class="kpi-value">¥73.64</div><div class="kpi-sub">兖矿+两次减仓</div></div>
       </div>
 
       <div class="grid-2">
@@ -544,6 +758,220 @@
       <div class="callout"><strong>教训：</strong>兖矿在持有期内多次出现 +10%~+20% 浮盈，均因等待更高点位而错过落袋，最终在 MACD 翻绿后以 -1.95% 离场。这正是「止盈纪律缺失」的典型样本——赚的时候不卖，亏的时候才认输。</div>
     </section>
 
+    <!-- ===== MODULE 4.5: 持仓时长与股票级胜率 ===== -->
+    <section class="module" id="module-winrate">
+      <div class="m-head">
+        <div class="m-kicker">Elapsed & Win Rate · 持仓时长与胜率</div>
+        <div class="m-title">从首笔建仓到现在：35天 / 26交易日</div>
+        <div class="m-desc">本模块提供<strong>两种口径</strong>的胜率：①「股票级」以每只股票为单位（4 票 3 盈 1 亏 = 75%）；②「交易级」以每一轮独立建仓为单位，同股多轮拆分不合并，可在下方逐笔拆解中核对每一笔买卖与做T。另含每只票的分段盈亏拆解、做T 次数与当前持仓摘要（对齐东财/同花顺对账单口径）。首笔建仓为 2026-07-14 兖矿能源，至今 35 天 / 26 交易日。</div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-label">首笔建仓日</div><div class="kpi-value">07-14</div><div class="kpi-sub">兖矿能源 sh600188</div></div>
+        <div class="kpi"><div class="kpi-label">已历自然日</div><div class="kpi-value">35 天</div><div class="kpi-sub">7/14 → 8/18</div></div>
+        <div class="kpi"><div class="kpi-label">实际交易日</div><div class="kpi-value">26 天</div><div class="kpi-sub">剔除周末与节假日</div></div>
+        <div class="kpi"><div class="kpi-label">股票级胜率</div><div class="kpi-value up">75%</div><div class="kpi-sub">3盈 / 4票(口径) · 星源*浮亏待确认</div></div>
+        <div class="kpi"><div class="kpi-label">已了结票胜率</div><div class="kpi-value" style="color:var(--accent2)">50%</div><div class="kpi-sub">大金盈 · 兖矿亏</div></div>
+        <div class="kpi"><div class="kpi-label">总收益率</div><div class="kpi-value up">+15.00%</div><div class="kpi-sub">5万基数核算</div></div>
+      </div>
+
+      <!-- ===== 交易级胜率 & 逐笔分段盈亏拆解（对账单口径） ===== -->
+      <div class="panel" style="margin-top:20px">
+        <div class="panel-title">交易级胜率 · 逐笔分段盈亏拆解</div>
+        <div class="panel-sub">按「每一轮独立建仓」记账，同一只股票重复买入拆成多轮、各行单独统计；同股多轮不合并，历史亏损不会被后来盈利洗白（对齐东财/同花顺对账单口径）。</div>
+
+        <div class="kpi-grid">
+          <div class="kpi"><div class="kpi-label">独立交易单元</div><div class="kpi-value">4 轮</div><div class="kpi-sub">4 只票各 1 轮建仓</div></div>
+          <div class="kpi"><div class="kpi-label">交易级胜率·含浮盈</div><div class="kpi-value up">75%</div><div class="kpi-sub">3盈 / 4单元 · 仅兖矿R1亏</div></div>
+          <div class="kpi"><div class="kpi-label">交易级胜率·已了结</div><div class="kpi-value" style="color:var(--accent2)">50%</div><div class="kpi-sub">大金R1盈 · 兖矿R1亏</div></div>
+          <div class="kpi"><div class="kpi-label">做T总笔数</div><div class="kpi-value">2 笔</div><div class="kpi-sub">均发生在亨通</div></div>
+          <div class="kpi"><div class="kpi-label">已落袋总收益</div><div class="kpi-value up">+¥4,114</div><div class="kpi-sub">兑出后不再随行情变动</div></div>
+        </div>
+
+        <!-- 逐股分段拆解卡片 -->
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:8px">
+          <!-- 兖矿能源 -->
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:16px 18px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <div style="font-weight:700;font-size:15px;color:var(--ink)">兖矿能源 <span style="font-size:11px;color:var(--muted);font-family:'JetBrainsMono'">sh600188</span></div>
+              <span class="pill r">已了结 · 亏</span>
+            </div>
+            <div class="table-wrap">
+              <table style="width:100%;font-size:12.5px;border-collapse:collapse">
+                <thead><tr><th style="text-align:left;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">日期</th><th style="text-align:left;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">动作</th><th style="text-align:right;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">股数</th><th style="text-align:right;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">价格</th><th style="text-align:right;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">盈亏</th></tr></thead>
+                <tbody>
+                  <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">07-14</td><td style="padding:5px;border-bottom:1px solid var(--rule)">建仓</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+1100</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">19.32</td><td style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">—</td></tr>
+                  <tr><td style="padding:5px">08-04</td><td style="padding:5px">清仓</td><td class="mono" style="text-align:right;padding:5px">-1100</td><td class="mono" style="text-align:right;padding:5px">18.67</td><td class="mono dn" style="text-align:right;padding:5px">-¥415</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:12.5px">
+              <span style="color:var(--muted)">做T <strong style="color:var(--ink)">0 次</strong></span>
+              <span style="color:var(--muted)">持股 R1 <strong style="color:var(--muted)">21 天</strong></span>
+              <span style="color:var(--muted)">单元净利 <strong class="dn">-¥415</strong></span>
+            </div>
+          </div>
+
+          <!-- 大金重工 -->
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:16px 18px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <div style="font-weight:700;font-size:15px;color:var(--ink)">大金重工 <span style="font-size:11px;color:var(--muted);font-family:'JetBrainsMono'">sz002487</span></div>
+              <span class="pill g">已了结 · 盈</span>
+            </div>
+            <div class="table-wrap">
+              <table style="width:100%;font-size:12.5px;border-collapse:collapse">
+                <thead><tr><th style="text-align:left;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">日期</th><th style="text-align:left;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">动作</th><th style="text-align:right;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">股数</th><th style="text-align:right;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">价格</th><th style="text-align:right;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">盈亏</th></tr></thead>
+                <tbody>
+                  <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">07-23</td><td style="padding:5px;border-bottom:1px solid var(--rule)">建仓</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+300</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">39.32</td><td style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">—</td></tr>
+                  <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">07-27</td><td style="padding:5px;border-bottom:1px solid var(--rule)">加仓</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+300</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">39.91</td><td style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">—</td></tr>
+                  <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">07-28</td><td style="padding:5px;border-bottom:1px solid var(--rule)">加仓</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+100</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">40.01</td><td style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">—</td></tr>
+                  <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">08-12</td><td style="padding:5px;border-bottom:1px solid var(--rule)">减仓</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">-300</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">43.78</td><td class="mono up" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+¥1,221</td></tr>
+                  <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">08-13</td><td style="padding:5px;border-bottom:1px solid var(--rule)">加仓</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+100</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">42.81</td><td style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">—</td></tr>
+                  <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">08-14</td><td style="padding:5px;border-bottom:1px solid var(--rule)">加仓</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+100</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">41.92</td><td style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">—</td></tr>
+                  <tr><td style="padding:5px">08-17</td><td style="padding:5px">清仓</td><td class="mono" style="text-align:right;padding:5px">-600</td><td class="mono" style="text-align:right;padding:5px">41.34</td><td class="mono up" style="text-align:right;padding:5px">+¥437</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:12.5px">
+              <span style="color:var(--muted)">做T <strong style="color:var(--ink)">0 次</strong></span>
+              <span style="color:var(--muted)">累计 <strong style="color:var(--ink)">5买2卖</strong></span>
+              <span style="color:var(--muted)">单元净利 <strong class="up">+¥1,658</strong></span>
+            </div>
+          </div>
+
+          <!-- 亨通光电 -->
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:16px 18px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <div style="font-weight:700;font-size:15px;color:var(--ink)">亨通光电 <span style="font-size:11px;color:var(--muted);font-family:'JetBrainsMono'">sh600487</span></div>
+              <span class="pill g">持有中 · 盈</span>
+            </div>
+            <div class="table-wrap">
+              <table style="width:100%;font-size:12.5px;border-collapse:collapse">
+                <thead><tr><th style="text-align:left;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">日期</th><th style="text-align:left;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">动作</th><th style="text-align:right;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">股数</th><th style="text-align:right;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">价格</th><th style="text-align:right;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">盈亏</th></tr></thead>
+                <tbody>
+                  <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">08-04</td><td style="padding:5px;border-bottom:1px solid var(--rule)">建仓</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+400</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">48.87</td><td style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">—</td></tr>
+                  <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">08-13</td><td style="padding:5px;border-bottom:1px solid var(--rule)">减仓(高抛)</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">-200</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">60.39</td><td class="mono up" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+¥2,293</td></tr>
+                  <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">08-13</td><td style="padding:5px;border-bottom:1px solid var(--rule)">加仓(接回)</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+200</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">57.83</td><td style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">—</td></tr>
+                  <tr><td style="padding:5px">08-14</td><td style="padding:5px">做T卖出</td><td class="mono" style="text-align:right;padding:5px">-100</td><td class="mono" style="text-align:right;padding:5px">59.54</td><td class="mono up" style="text-align:right;padding:5px">+¥163</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:12.5px">
+              <span style="color:var(--muted)">做T <strong style="color:var(--accent2)">2 次</strong></span>
+              <span style="color:var(--muted)">已实现 <strong class="up">+¥2,456</strong></span>
+              <span style="color:var(--muted)">浮盈 <strong class="up">+¥3,065</strong></span>
+            </div>
+          </div>
+
+          <!-- 申菱环境 -->
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:16px 18px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <div style="font-weight:700;font-size:15px;color:var(--ink)">申菱环境 <span style="font-size:11px;color:var(--muted);font-family:'JetBrainsMono'">sz301018</span></div>
+              <span class="pill g">持有中 · 盈</span>
+            </div>
+            <div class="table-wrap">
+              <table style="width:100%;font-size:12.5px;border-collapse:collapse">
+                <thead><tr><th style="text-align:left;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">日期</th><th style="text-align:left;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">动作</th><th style="text-align:right;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">股数</th><th style="text-align:right;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">价格</th><th style="text-align:right;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">盈亏</th></tr></thead>
+                <tbody>
+                  <tr><td style="padding:5px">08-17</td><td style="padding:5px">建仓</td><td class="mono" style="text-align:right;padding:5px">+100</td><td class="mono" style="text-align:right;padding:5px">97.91</td><td style="text-align:right;padding:5px">—</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:12.5px">
+              <span style="color:var(--muted)">做T <strong style="color:var(--ink)">0 次</strong></span>
+              <span style="color:var(--muted)">合计 <strong style="color:var(--ink)">1买0卖</strong></span>
+              <span style="color:var(--muted)">浮盈 <strong class="up">+¥227</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 当前持仓摘要 -->
+        <div style="margin-top:18px;padding:16px 20px;background:var(--bg2);border:1px solid var(--rule);border-radius:12px">
+          <h4 style="color:var(--accent2);margin-bottom:10px;font-size:14px">📦 当前持仓摘要（截至 08-18 收盘）</h4>
+          <div class="table-wrap">
+            <table style="width:100%;font-size:13px;border-collapse:collapse">
+              <thead><tr>
+                <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">股票</th>
+                <th style="text-align:right;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">持仓</th>
+                <th style="text-align:right;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">成本价</th>
+                <th style="text-align:right;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">现价</th>
+                <th style="text-align:right;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">市值</th>
+                <th style="text-align:right;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">盈亏</th>
+                <th style="text-align:right;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">盈亏%</th>
+                <th style="text-align:right;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">仓位</th>
+              </tr></thead>
+              <tbody>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>亨通光电</strong></td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">300 股</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">43.80</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">58.91</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">¥17,673</td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+¥4,532</td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+34.49%</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">33.4%</td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>申菱环境</strong></td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">200 股</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">97.30</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">86.80</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">¥17,360</td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-¥2,101</td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-10.79%</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">32.8%</td></tr>
+                <tr><td style="padding:8px"><strong>星源材质</strong></td><td class="mono" style="text-align:right;padding:8px">1000 股</td><td class="mono" style="text-align:right;padding:8px">15.05</td><td class="mono" style="text-align:right;padding:8px">14.41</td><td class="mono" style="text-align:right;padding:8px">¥14,410</td><td class="mono dn" style="text-align:right;padding:8px">-¥655</td><td class="mono dn" style="text-align:right;padding:8px">-4.35%</td><td class="mono" style="text-align:right;padding:8px">27.2%</td></tr>
+              </tbody>
+              <tfoot><tr>
+                <td style="padding:8px 8px 0"><strong>合计</strong></td>
+                <td style="text-align:right;padding:8px 8px 0" class="mono"><strong>1500 股</strong></td>
+                <td style="text-align:right;padding:8px 8px 0"></td>
+                <td style="text-align:right;padding:8px 8px 0"></td>
+                <td style="text-align:right;padding:8px 8px 0" class="mono"><strong>¥49,443</strong></td>
+                <td style="text-align:right;padding:8px 8px 0" class="mono"><strong>+¥1,777</strong></td>
+                <td style="text-align:right;padding:8px 8px 0"></td>
+                <td style="text-align:right;padding:8px 8px 0" class="mono"><strong>93.4%</strong></td>
+              </tr></tfoot>
+            </table>
+          </div>
+          <div style="margin-top:10px;font-size:12.5px;color:var(--muted)">当前总资产 <strong style="color:var(--ink);font-family:'JetBrainsMono'">¥52,959.63</strong> (5万本金+累计盈亏) · 持仓市值 <strong style="color:var(--ink);font-family:'JetBrainsMono'">¥49,443</strong> · 现金 <strong style="color:var(--ink);font-family:'JetBrainsMono'">¥3,516.63</strong> · 仓位 93.36%。<span style="color:var(--red)">8/19 大幅回撤，当日 <strong>-¥4,247.99（-8.50%）</strong>，累计盈亏 +¥2,959.63（app含分红除权口径）。</span></div>
+        </div>
+
+        <div class="callout" style="margin-top:14px"><strong>为什么不能只看股票级胜率：</strong>「股票级」把同一只股票的多轮交易<strong>合并</strong>成一条，正是你会担心的失真源——例如以后重新买入兖矿并盈利，股票级就会把 R1 的亏损和 R2 的盈利合并成「兖矿=赚」，胜率也随之拉成 100%，等于<strong>抹掉了上一轮 -¥415 的亏损事实</strong>。而「交易级」按<strong>每一轮独立建仓</strong>记账：兖矿以后重买会<strong>新增一行「兖矿 R2」</strong>，R1 亏损单独保留、R2 盈利单独记录，各轮胜率分开统计，历史亏损不被洗白。<strong style="color:var(--ink)">结论：股票级看「选股能力」，交易级看「每笔交易的真实执行质量」，以后台账请以交易级为准。</strong></div>
+      </div>
+
+      <figure class="chart-figure">
+        <figcaption>持仓时长 · 从首笔建仓(7/14)到现在的完整持仓区间（虚线=今天 8/19）</figcaption>
+        <div id="chart-elapsed" class="chart-box" style="min-height:300px"></div>
+      </figure>
+
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-title">股票级净收益</div>
+          <div class="panel-sub">已落袋 + 当前市值浮盈合并口径</div>
+          <figure class="chart-figure">
+            <figcaption style="font-size:12px;color:var(--muted)">每只股票的净盈亏（元）</figcaption>
+            <div id="chart-winrate-pnl" class="chart-box" style="min-height:300px"></div>
+          </figure>
+        </div>
+        <div class="panel">
+          <div class="panel-title">每只票的胜率明细</div>
+          <div class="panel-sub">以「票」为单位，不是每次操作</div>
+          <div class="table-wrap" style="max-height:360px;overflow:auto">
+            <table style="width:100%;font-size:13px;border-collapse:collapse">
+              <thead><tr><th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">股票</th><th style="padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">状态</th><th style="text-align:right;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">净收益</th><th style="text-align:right;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">盈亏%</th></tr></thead>
+              <tbody>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>兖矿能源</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill" style="background:rgba(239,83,80,.14);color:var(--red)">已清仓 · 亏</span></td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-¥363</td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-1.7%</td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>大金重工</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill g">已清仓 · 盈</span></td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+¥1,695</td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+4.7%</td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>亨通光电</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill g">持有中 · 盈</span></td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+¥6,436</td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+20.7%</td></tr>
+                <tr><td style="padding:8px"><strong>申菱环境</strong></td><td style="padding:8px"><span class="pill g">持有中 · 盈</span></td><td class="mono up" style="text-align:right;padding:8px">+¥227</td><td class="mono up" style="text-align:right;padding:8px">+2.3%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout"><strong>口径说明：</strong>本报告的<strong>「每只票」</strong>口径为 75%（4 票 3 盈 1 亏，含当前浮盈）。你 app 上看到的 <strong>80%</strong> 是<strong>「卖出操作」</strong>口径——总共 5 笔卖出（清仓兖矿、减仓大金、减仓亨通、做T卖出亨通、清仓大金），其中 4 笔盈利、1 笔亏损（8/4 清仓兖矿 -1.95%），即 <strong>4/5 = 80%</strong>。同理，若只看已落袋的两只整票，则是 50%（大金盈、兖矿亏）。三种口径分别衡量：选股质量（75%）、卖出执行（80%）、整段持有（50%）。股票级口径更能反映选股/持股的真实质量。亨通、申菱为当前持仓（净收益=已落袋+当前浮盈），兖矿、大金为已了结的确定性结果。</div>
+    </section>
+
+    <!-- ===== MODULE 5.5: 分时BS ===== -->
+    <section class="module" id="module-intraday">
+      <div class="m-head">
+        <div class="m-kicker">Intraday · 分时交易标记</div>
+        <div class="m-title">前5个交易日 · 分时线买卖点</div>
+        <div class="m-desc">报告日往前 5 个工作日内的成交，自动在对应股票当日分时线上标注 B（买入）/ S（卖出）点，复盘自己是在什么位置、什么时点出手。</div>
+      </div>
+
+      <div class="callout" id="intraday-no-trade" style="display:none"><strong>提示：</strong>前 5 个工作日（<span id="intraday-window"></span>）内没有交易记录，未生成分时买卖点图表。</div>
+
+      <div id="intraday-tabs" class="panel-tabs" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px"></div>
+
+      <div id="intraday-charts"></div>
+    </section>
+
     <!-- ===== MODULE 5: 操作评估 ===== -->
     <section class="module" id="module-audit">
       <div class="m-head">
@@ -558,6 +986,7 @@
         <figure class="chart-figure">
           <div id="chart-radar" class="chart-box" style="min-height:400px"></div>
         </figure>
+        <div class="callout" style="margin-top:14px;border-color:var(--red);background:rgba(255,92,92,.05)"><strong style="color:var(--red)">纪律评分 · 郑重记录（本次自评下调）：</strong>开仓、清仓减仓其实没有计划，基本<strong>看心情</strong>——赚了点才想起减仓清仓，跌了点才决定砍；从来没有严格的计划，更没有纪律；<strong>盘后从未为"明日不同走势"做过预判和应对预案</strong>（完全没有）。因此纪律六维整体处于<strong>基线期（平均 3.7/10，远低于合格线 8）</strong>。<strong style="color:var(--red)">即便当前浮盈 15%，也不代表已经成了</strong>——胜率和收益率在线仅代表顺风行情里具备能力，严格按照"三率同时在线"的验收标准，<strong>纪律并未达标，这套打法尚未真正闭环</strong>。下阶段的第一验收点：建立"买卖计划 + 盘后预案"的最小闭环。</div>
       </div>
 
       <div class="panel">
@@ -566,6 +995,15 @@
         <figure class="chart-figure">
           <div id="chart-tradescore" class="chart-box" style="min-height:320px"></div>
         </figure>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">决策质量评分 · 执行 vs 结果分离</div>
+        <div class="panel-sub">「执行正确度」按当时计划判断，「结果如意度」按事后涨跌判断。两者分开，避免用结果误伤正确决策</div>
+        <figure class="chart-figure">
+          <div id="chart-decision" class="chart-box" style="min-height:360px"></div>
+        </figure>
+        <div class="callout" style="margin-top:14px">✅ 8/14 亨通涨停看似「卖飞失败」，但按决策质量看：8/13 高抛止盈、8/14 T走都是计划内执行，<strong style="color:var(--green)">执行正确度 9/10</strong>；只是「结果如意度」仅 3/10（卖飞了涨停）。<strong style="color:var(--ink)">结论：执行对、结果不理想，不该自责执行，该练「卖完不回头看」的定力。</strong></div>
       </div>
 
       <div class="panel">
@@ -579,13 +1017,13 @@
           </li>
           <li>
             <span class="dim-name" style="color:var(--accent)">大金重工</span>
-            <div style="flex:1;font-size:13px;color:var(--muted)">分批建仓节奏合理，但持续加仓致仓位过重（近满仓）。<strong style="color:var(--ink)">判定：部分合格</strong></div>
+            <div style="flex:1;font-size:13px;color:var(--muted)">分批建仓节奏合理，8/12 减仓落袋 +¥1,221；8/14 逢低补仓偏左侧是一处瑕疵，但 8/17 识别走弱后及时清仓 600 股、落袋 +¥437 离场。<strong style="color:var(--ink)">判定：已离场（清仓果断，中途补仓偏左为瑕疵）</strong></div>
             <span class="pill a">6/10</span>
           </li>
           <li>
             <span class="dim-name" style="color:var(--accent2)">亨通光电</span>
-            <div style="flex:1;font-size:13px;color:var(--muted)">入场逻辑清晰（板块+技术+业绩），但浮盈 +22% 仍未止盈，今日高开 +3.75% 错过做 T 机会（潜在收益约 1,600 元），重复兖矿"浮盈不走"的旧模式。<strong style="color:var(--ink)">判定：不合格（止盈纪律缺失）</strong></div>
-            <span class="pill r">4/10</span>
+            <div style="flex:1;font-size:13px;color:var(--muted)">入场逻辑清晰（板块+技术+业绩）。8/13 双轨止盈兑现机动仓 +¥2,293，8/14 做T卖出 100股@59.54 落袋 +163，做T摊薄成本。8/18 亨通逆势收 65.41（+0.54%，回调挨打日里唯一扛住），剩余 300股 浮盈 +¥3,170（+19.27%），已实现 +¥2,456。<strong style="color:var(--ink)">判定：良好（选股主线正确、止盈节奏到位、回调不乱动）</strong></div>
+            <span class="pill a">7/10</span>
           </li>
         </ul>
       </div>
@@ -596,17 +1034,27 @@
         <ul class="dim-list">
           <li>
             <span class="dim-name">FOMO 追高 + 惜售</span>
-            <div style="flex:1;font-size:13px;color:var(--muted)">显著。兖矿在 +20% 时不卖是「贪」，今日亨通高点 +3.75% 时仍"不舍得抛"是同一模式——从"贪"演变为"惜售"（怕卖飞）。<strong style="color:var(--ink)">判定：高风险</strong></div>
-            <span class="pill r">高</span>
+            <div style="flex:1;font-size:13px;color:var(--muted)">曾显著。兖矿 +20% 不卖是「贪」，亨通也曾"惜售"（怕卖飞）。经 8/12-8/13 双轨止盈训练，惜售已明显松动；但 8/17 清仓大金后仅隔 17 分钟便 FOMO 追高建仓申菱，FOMO 心理又在新标的上复现。<strong style="color:var(--ink)">判定：中风险（FOMO 未根治）</strong></div>
+            <span class="pill a">中</span>
+          </li>
+          <li>
+            <span class="dim-name" style="color:var(--green)">止盈后急于回补 → 做T纠偏</span>
+            <div style="flex:1;font-size:13px;color:var(--muted)">8/13 止盈后冲动回补、8/17 清仓大金后仅隔 17 分钟又 FOMO 追高申菱——「止盈后拿不住现金」的老毛病仍在反复；8/14 做T卖出落袋 +163 是「主动纠错」的进步，但要警惕：止盈后不急于追新、先等回踩，才是根治之道。<strong style="color:var(--ink)">判定：中风险（仍反复）</strong></div>
+            <span class="pill a">中</span>
           </li>
           <li>
             <span class="dim-name">处置效应</span>
-            <div style="flex:1;font-size:13px;color:var(--muted)">明显。盈利时急于兑现冲动低（反而死扛死捂），亏损时也不愿及时认输，直至 MACD 明确走坏才离场。今日做 T 机会说明"浮盈换回现金"的意愿极低。<strong style="color:var(--ink)">判定：高风险</strong></div>
+            <div style="flex:1;font-size:13px;color:var(--muted)">明显。亏损时不愿及时认输，直至 MACD 走坏才离场。但盈利端已持续改善：8/12 大金、8/13 亨通主动落袋，8/17 大金走弱亦果断清仓离场（+437），止盈与止损意愿均提升。<strong style="color:var(--ink)">判定：中风险（改善中）</strong></div>
+            <span class="pill a">中</span>
+          </li>
+          <li>
+            <span class="dim-name" style="color:var(--red)">无计划交易 + 无盘后预案</span>
+            <div style="flex:1;font-size:13px;color:var(--muted)"><strong style="color:var(--ink)">核心硬伤，当前最该被如实记录的一笔。</strong>开仓、减仓、清仓并没有预先写好的触发计划，基本是"看心情"——赚钱了才想起减仓清仓、跌了点才决定砍仓止损；既没有严格的买卖计划，也没有纪律框架，更没有盘后对"明日不同走向"的预判与应对预案。现有的止盈/减仓更多是"涨到感觉够了"的即时反应，而非按既定规则触发。<strong style="color:var(--ink)">判定：高风险 · 纪律尚处基线期（这与"已赚 15%"无冲突——赚钱≠已成，纪律缺席意味着这套打法尚未闭环）</strong></div>
             <span class="pill r">高</span>
           </li>
           <li>
             <span class="dim-name">过度自信</span>
-            <div style="flex:1;font-size:13px;color:var(--muted)">仓位长期 90%+，对科技主线判断自信，但未给错误留出缓冲。<strong style="color:var(--ink)">判定：中风险</strong></div>
+            <div style="flex:1;font-size:13px;color:var(--muted)">对科技/风电主线自信本无可厚非，但 8/17 卖大金后反手即 FOMO 追高买申菱、介入偏晚接近当日高点，把「判断自信」错用成「操作自信」，追高风险高。<strong style="color:var(--ink)">判定：中风险（FOMO 再现）</strong>（注：盘面复核申菱属强势突破，但追高行为模式本身仍需收敛）</div>
             <span class="pill a">中</span>
           </li>
           <li>
@@ -631,17 +1079,163 @@
           <svg viewBox="0 0 120 120" width="132" height="132">
             <circle cx="60" cy="60" r="50" fill="none" stroke="var(--rule)" stroke-width="11"/>
             <circle cx="60" cy="60" r="50" fill="none" stroke="var(--accent2)" stroke-width="11"
-                    stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="197.8"
+                    stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="157"
                     transform="rotate(-90 60 60)"/>
-            <text x="60" y="66" text-anchor="middle" font-family="JetBrainsMono" font-size="26" font-weight="700" fill="var(--accent2)">37</text>
+            <text x="60" y="66" text-anchor="middle" font-family="JetBrainsMono" font-size="26" font-weight="700" fill="var(--accent2)">50</text>
           </svg>
           <div class="ring-grade">综合评分 / 100</div>
         </div>
         <div class="score-side">
-          <div class="grade">待改进</div>
-          <p>整体画像：<strong>「有策略、不执行」</strong>。盈利主要来自亨通的单边上涨与运气，而非纪律。核心短板是<strong>止盈纪律缺失</strong>与<strong>仓位过重</strong>两块。当前收益 +11% 建立在近满仓的基础上，若任一次回撤管理失当，可能吞噬全部利润。不是能力问题，是执行问题。</p>
+          <div class="grade">长板稳、短板明显</div>
+          <p>整体画像：<strong>「赚了 15% 但纪律缺席——开仓/减仓/清仓无计划、无盘后预案、看完心情」</strong>。8/17 会止盈（大金走弱清仓 +437、亨通 +2,293 兑现）、方向也踩中主线（亨通 +19.27%，但其中不乏 7 月科技深调后反抽的行情运气）；但清仓大金后仅隔 17 分钟便 FOMO 追高建仓申菱，随后 8/18 又叠加建仓星源、三票齐开，且当日正是回调挨打日（申菱-3.38%、星源-2.90%）。核心短板已从「单点情绪」上升为<strong>「系统性纪律缺失：没有严格买卖计划、没有盘后对不同走向的预判与应对」</strong>。选股主要靠 MACD + 板块热度，证据单薄、含运气，尚待多轮验证。当前收益 +15.00%、累计落袋 +¥4,114（5 万基数）。<strong style="color:var(--red)">提醒：别因浮盈 15% 就觉得已成——胜率与收益在线仅代表顺风里有能力，纪律缺席意味着这套打法尚未闭环，三率只有「纪律」这一率真正没过关。</strong></p>
         </div>
       </div>
+
+      <!-- ===== 回调应对复盘（8/18） ===== -->
+      <div class="panel" style="margin-top:20px;border-color:rgba(239,83,80,.45);background:linear-gradient(180deg,rgba(239,83,80,.06),var(--bg2))">
+        <div class="m-kicker" style="margin-bottom:6px">📉 回调应对复盘 · 8/18 收盘</div>
+        <div class="panel-title">「该减少操作，还是日内多做 T 降成本？」——这本身就是一个暴露纪律的问题</div>
+        <div class="panel-sub">今天的纠结点真实且典型，但它不该在盘中才去想。先看事实，再给结论。</div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px">
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px">
+            <div style="font-size:12px;color:var(--muted);letter-spacing:.05em">今日净值回撤</div>
+            <div class="mono dn" style="font-size:22px;font-weight:700;margin-top:4px">-¥323.00</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:4px">57,824 → 57,501（-0.56%）</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px">
+            <div style="font-size:12px;color:var(--muted);letter-spacing:.05em">当前持仓表现</div>
+            <div style="font-size:15px;font-weight:700;margin-top:4px">亨通 +3170 / 申菱 -122 / 星源 -87</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:4px">唯一扛住的是主线，其余两票皆回调</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px">
+            <div style="font-size:12px;color:var(--muted);letter-spacing:.05em">仓位变化</div>
+            <div style="font-size:15px;font-weight:700;margin-top:4px">50.9% → 58.6%</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:4px">三票齐开，风险敞口同步放大</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;font-size:13.5px;color:var(--ink);line-height:1.85">
+          <strong style="color:var(--red)">① 你的纠结本身没有对错，但「方向」要先定。</strong>「减少操作」是减法（降低频率、守住仓位），「日内做 T」是加法（高抛低吸、摊低成本）。两者指向不同，不能同一天既想少动手又想多做 T——那会落入既没少赚、也没降低成本的「高频瞎折腾」。<br>
+          <strong style="color:var(--red)">② 回调应对的正确顺序：先判性质，再定动作。</strong>今天唯一需要回答的是：<em>申菱跌破 95 是「主升前的洗盘」还是「趋势转弱」？星源是下跌中继还是企稳？</em>在搞清楚「这是不是还能拿的票」之前，无论减少操作还是做 T 都是空谈。<br>
+          <strong style="color:var(--red)">③ 仓位放大是今天最大的纪律缺口。</strong>三票齐开把仓位推到 58.6%，而其中两票（申菱、星源）都是回调中的新增仓。回调日不加大仓位暴露，是比「要不要做 T」更优先的一条铁律——你已经凭感觉破了一次。
+        </div>
+
+        <div class="callout" style="margin-top:14px;border-left:3px solid var(--accent)">
+          <strong>给明天写的应对预案（不是盘中想，是现在写）：</strong><br>
+          ・申菱：守住 95 且不放量 — 持有；跌破 95 或放量下杀 — 无条件止损，不猜底。<br>
+          ・星源：若为确认的假设仓，跌破 14.20 减/清；走势转稳则给 1-2 天观察期，不加仓。<br>
+          ・亨通：主线扛住，回撤不破 46.43 移动止损就持有，不因今天的波动去动它。<br>
+          ・总仓位：无论多空，今日不加到 9 成；新开仓前先把「这只票和申菱/星源的走势冲突吗」写在理由栏。<br>
+          ・心理锚点：<em>减少操作是本周基调</em>——已三票在手，接下来以「管住手、等明确信号」为主，日内做 T 仅限亨通现有底仓且按计划价位执行。
+        </div>
+      </div>
+
+      <!-- ===== 阶段目标 & 验收标准（顶层锚点） ===== -->
+      <div class="panel" style="margin-top:20px;border-color:rgba(245,166,35,.5);background:linear-gradient(180deg,rgba(245,166,35,.06),var(--bg2))">
+        <div class="m-kicker" style="margin-bottom:6px">🎯 阶段目标 · 全系统的验收标准</div>
+        <div class="panel-title" style="margin-bottom:4px">规模信号：用 5–7 个月完善交易系统，再上小资金实盘</div>
+        <div class="panel-sub">时间线、里程碑与三条硬验收线——这是整个训练/复盘系统为之服务的最终目标</div>
+
+        <div class="kpi-grid" style="margin-top:8px">
+          <div class="kpi"><div class="kpi-label">系统打磨期</div><div class="kpi-value" style="font-size:22px">5–7 个月</div><div class="kpi-sub">2026-08 → 约 2027-01~03</div></div>
+          <div class="kpi"><div class="kpi-label">当前进度</div><div class="kpi-value" style="font-size:22px">第 1 月</div><div class="kpi-sub">2026-07-14 启动 · 25 交易日</div></div>
+          <div class="kpi"><div class="kpi-label">达标后动作</div><div class="kpi-value" style="font-size:15px">小资金实盘</div><div class="kpi-sub">非模拟、非大资金，先用小额验证</div></div>
+          <div class="kpi"><div class="kpi-label">当前状态</div><div class="kpi-value" style="font-size:15px;color:var(--orange)">建设中</div><div class="kpi-sub">三率尚未全部达标</div></div>
+        </div>
+
+        <div style="margin-top:18px">
+          <div style="font-size:13px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:10px">✅ 合格标准 = 三率同时在线</div>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
+            <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:16px">
+              <div style="font-size:22px;font-family:'JetBrainsMono';font-weight:700;color:var(--accent2)">胜率</div>
+              <div style="font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.6">交易级胜率需稳定在线（当前 75%，已含浮盈）。胜率低 = 选股/择时不达标，无论账面赚多少都不过关。</div>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:16px">
+              <div style="font-size:22px;font-family:'JetBrainsMono';font-weight:700;color:var(--green)">收益率</div>
+              <div style="font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.6">需稳定在"复利正反馈"区间且跑赢基准（当前阶段 +15.00% 仅作参考）。收益率靠的是「拿住主线 + 少折腾」，不是高频短线。</div>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:16px">
+              <div style="font-size:22px;font-family:'JetBrainsMono';font-weight:700;color:var(--red)">纪律</div>
+              <div style="font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.6">是否执行到位：不满仓、不天天交易、止盈后不追新、回调不乱补、回归中线框架。纪律是三率里唯一"可被实时审计"也最容易被高估的一率——目前最不过关。</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout" style="margin-top:16px"><strong>三率缺一不可：</strong>胜率高但收益率低 = 不敢拿仓位（赚得少）；收益率高但胜率低 = 靠一两次大赚掩盖大量小亏（不稳定、扛不住回撤）；胜率、收益率都好但纪律差 = 迟早一次情绪化冲动把利润还回去。<strong style="color:var(--ink)">三个都在线，才允许进入小资金实盘——缺任一率，系统都不算建完。</strong></div>
+      </div>
+
+      <!-- ===== 阶段定位 & 毕业标准（v2 评分逻辑重构） ===== -->
+      <div class="panel" style="margin-top:20px;border-color:rgba(124,92,255,.4);background:linear-gradient(180deg,rgba(124,92,255,.06),var(--bg2))">
+        <div class="m-kicker" style="margin-bottom:6px">🧭 阶段定位 · 评分逻辑 v2</div>
+        <div class="panel-title" style="margin-bottom:4px">本阶段定义：不是「模拟盘赚钱阶段」，而是「交易系统暴露问题阶段」</div>
+        <div class="panel-sub">"20–30 个交易日 +15.00%"既不能证明会交易，也不必因是模拟盘而全盘否定。这段时间的真实产出，是暴露并记录下系统的问题——这才是模拟盘锻炼的真正目标。</div>
+
+        <div class="callout" style="margin-top:12px;border-color:var(--orange);background:rgba(245,166,35,.07)"><strong style="color:var(--orange)">⚠️ 复盘者偏差预警：</strong>本报告存在已知的"结果导向偏差"——<strong>有些买入是 AI 判断、有些是自己写给 AI 的，且是在已知结果以后再去解释"为什么买、为什么卖"，很容易把事后看到的逻辑包装成当时真正存在的逻辑。</strong>因此，报告中一切"能力/优点"类结论，读取时都应默认打折扣；真正可信的是"已发生的事实"层面（成交价、落袋金额、操作动作），而非"归因解释"层面。</div>
+
+        <!-- 五阶段路线 -->
+        <div style="margin-top:16px">
+          <div style="font-size:13px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:10px">🗺️ 五阶段成长路线 · 当前定位在第二阶段</div>
+          <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px">
+            <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px"><div style="font-family:'JetBrainsMono';font-weight:700;color:var(--green);font-size:13px">第一阶段</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin:4px 0">能不能交易</div><div style="font-size:12px;color:var(--muted);line-height:1.55">掌握基础买卖、能盈利</div><div style="margin-top:8px;font-size:12px;color:var(--green)">✓ 已完成一部分</div></div>
+            <div style="background:var(--bg3);border:1px solid rgba(124,92,255,.6);border-radius:12px;padding:14px;position:relative"><div style="position:absolute;top:-10px;right:8px;background:var(--accent2);color:#fff;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700">当前</div><div style="font-family:'JetBrainsMono';font-weight:700;color:var(--accent2);font-size:13px">第二阶段</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin:4px 0">能不能不乱交易</div><div style="font-size:12px;color:var(--muted);line-height:1.55">对抗想交易的冲动，建立"不做什么"的纪律</div><div style="margin-top:8px;font-size:12px;color:var(--orange)">▶ 正在进行</div></div>
+            <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px"><div style="font-family:'JetBrainsMono';font-weight:700;color:var(--muted);font-size:13px">第三阶段</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin:4px 0">跨市场环境</div><div style="font-size:12px;color:var(--muted);line-height:1.55">验证方法能否跨越顺风/震荡/回调</div><div style="margin-top:8px;font-size:12px;color:var(--muted)">○ 未开始</div></div>
+            <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px"><div style="font-family:'JetBrainsMono';font-weight:700;color:var(--muted);font-size:13px">第四阶段</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin:4px 0">小资金实盘</div><div style="font-size:12px;color:var(--muted);line-height:1.55">真金白银带来的心理反馈，是下一阶段的实验而非毕业考</div><div style="margin-top:8px;font-size:12px;color:var(--muted)">○ 未开始</div></div>
+            <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px"><div style="font-family:'JetBrainsMono';font-weight:700;color:var(--muted);font-size:13px">第五阶段</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin:4px 0">稳定优势·复利</div><div style="font-size:12px;color:var(--muted);line-height:1.55">确认有稳定优势后，再谈复利与大资金</div><div style="margin-top:8px;font-size:12px;color:var(--muted)">○ 未开始</div></div>
+          </div>
+        </div>
+
+        <!-- 及格线重定义 -->
+        <div style="margin-top:16px;background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:16px">
+          <div style="font-size:13px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:8px">✅ 及格线 · 重新定义</div>
+          <p style="font-size:13.5px;color:var(--ink);margin:0"><strong>不是</strong>"模拟盘连续几个月赚钱"；<strong>而是</strong>"<strong style="color:var(--accent2)">在不同市场环境下，能够按照预先写好的规则交易</strong>"。至少要<strong>经历过</strong>：顺风行情 → 震荡行情 → 明显回调 → 连续错误 → 持仓浮亏 → 错过一波行情 → 止盈以后股票继续涨。而且在上面每种情形里仍能<strong>做到</strong>：不报复性交易、不满仓、不为了追回亏损强行操作、不因为踏空而追高、不因为盈利而突然放松纪律。这些都做到，哪怕收益只是普通水平，<strong>才算模拟盘毕业</strong>。</p>
+        </div>
+
+        <div class="callout" style="margin-top:12px"><strong>如何对待眼下这 +15.00%：</strong>先放到一边，甚至可以故意告诉自己"这 15.00% 可能有很多运气成分，暂时不把它算作自己的能力"。等再做 3–6 个月、经历过真正的逆风行情后，如果还能稳定下来，再回看它是运气还是能力。<strong>现在继续练，别急着证明自己。</strong></div>
+      </div>
+      <!-- ===== /阶段定位 & 毕业标准 ===== -->
+
+      <!-- ===== 演进追踪 · 评分记忆 ===== -->
+      <div class="panel" style="margin-top:20px">
+        <div class="m-kicker" style="margin-bottom:6px">🧠 演进追踪 · 评分记忆</div>
+        <div class="panel-title" style="margin-bottom:4px">全景评估快照档案（跨复盘对比基线）</div>
+        <div class="panel-sub">每次复盘把「综合评分 + 六维纪律 + 核心指标」存成一份快照；下次复盘在同表追加新一行，即可直观对比"该期比上次好在哪、评分涨没涨"。本期为快照 #1，尚无历史，作为后续对比的起点。</div>
+
+        <div class="kpi-grid">
+          <div class="kpi"><div class="kpi-label">快照编号</div><div class="kpi-value">#1</div><div class="kpi-sub">2026-08-17</div></div>
+          <div class="kpi"><div class="kpi-label">综合评分</div><div class="kpi-value" style="color:var(--accent2)">50 <span style="font-size:12px">/100</span></div><div class="kpi-sub">首次基线 · 无环比</div></div>
+          <div class="kpi"><div class="kpi-label">环比趋势</div><div class="kpi-value" style="font-size:15px;color:var(--muted)">— 待下期 ——</div><div class="kpi-sub">下期填 vs 本期</div></div>
+          <div class="kpi"><div class="kpi-label">里程碑</div><div class="kpi-value" style="font-size:15px">系统打磨期第1月</div><div class="kpi-sub">距三率达标还有很长</div></div>
+        </div>
+
+        <!-- 快照对比表：本期 + 未来可增行 -->
+        <div class="table-wrap" style="margin-top:12px">
+          <table style="width:100%;font-size:12.5px;border-collapse:collapse">
+            <thead><tr>
+              <th style="text-align:left;padding:7px;color:var(--muted);border-bottom:1px solid var(--rule)">指标</th>
+              <th style="text-align:center;padding:7px;color:var(--muted);border-bottom:1px solid var(--rule)">#1 本期<br>08-17</th>
+              <th style="text-align:center;padding:7px;color:var(--muted);border-bottom:1px solid var(--rule)">#2 下期<br>（待填）</th>
+              <th style="text-align:center;padding:7px;color:var(--muted);border-bottom:1px solid var(--rule)">#3<br>（待填）</th>
+              <th style="text-align:center;padding:7px;color:var(--muted);border-bottom:1px solid var(--rule)">趋势</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style="padding:7px;border-bottom:1px solid var(--rule)"><strong>综合评分</strong>（/100）</td><td class="mono" style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">50</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">—</td></tr>
+              <tr><td style="padding:7px;border-bottom:1px solid var(--rule)"><strong>六维纪律平均</strong>（/10，合格8）</td><td class="mono" style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">3.7</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">—</td></tr>
+              <tr><td style="padding:7px;border-bottom:1px solid var(--rule)">　└ 仓位 / 止损 / 止盈</td><td class="mono" style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">6 / 3 / 6</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">—</td></tr>
+              <tr><td style="padding:7px;border-bottom:1px solid var(--rule)">　└ 加仓 / 情绪 / 计划</td><td class="mono" style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">2 / 3 / 2</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">—</td></tr>
+              <tr><td style="padding:7px;border-bottom:1px solid var(--rule)"><strong>交易级胜率</strong>（含浮盈）</td><td class="mono" style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">75%</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">—</td></tr>
+              <tr><td style="padding:7px;border-bottom:1px solid var(--rule)"><strong>卖出操作胜率</strong></td><td class="mono" style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">80%</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">—</td></tr>
+              <tr><td style="padding:7px;border-bottom:1px solid var(--rule)"><strong>累计落袋</strong>（¥）</td><td class="mono" style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">+4,114</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">—</td></tr>
+              <tr><td style="padding:7px;border-bottom:1px solid var(--rule)"><strong>仓位纪律执行</strong>（满9成3天/满仓公约）</td><td class="mono" style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">未触发</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">—</td></tr>
+              <tr><td style="padding:7px;border-bottom:1px solid var(--rule)"><strong>总资产（5万基数）</strong></td><td class="mono" style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">57,501</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">·</td><td style="text-align:center;padding:7px;border-bottom:1px solid var(--rule)">—</td></tr>
+              <tr><td style="padding:7px"><strong>一句话画像</strong></td><td colspan="3" style="padding:7px;border-right:1px solid var(--rule)"><span style="color:var(--muted)">暴露问题阶段：方向感待验证、止盈结果进步、8/18回调挨打日再现"想交易"冲动（三票齐开、两跌一涨），最大敌人是"想交易"，需建"不做什么"的纪律框架，+15.00% 暂不算能力</span></td><td style="text-align:center;padding:7px">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout" style="margin-top:14px"><strong>记忆机制说明：</strong>本表就是"记忆的存档位"。每次复盘（下次是 #2）把当期的综合评分、六维纪律、三率、累计落袋填进新一列，即可自动形成演进——比如"#2 比 #1 综合评分 +N 分，好在情绪/止损纪律提升了"。本期是第一份，只能作为 <strong>基线（快照 #1）</strong>，你还不能拿它和"更早"比，因为更早没有评测；但从下期起，趋势就真实可看了。建议把「综合评分」和「纪律六维」当作最核心的观测线——它们直接对应你三率目标里的"纪律是否在进步"。</div>
+      </div>
+      <!-- ===== /演进追踪 ===== -->
 
       <div class="grid-2">
         <div class="panel">
@@ -655,11 +1249,14 @@
           <div class="panel-title">优势 / 短板对照</div>
           <div class="panel-sub">评级基于全部已执行操作</div>
           <ul class="dim-list">
-            <li><span class="dim-name" style="color:var(--green)">板块选股</span><div style="flex:1;font-size:13px;color:var(--muted)">科技复苏、风电设备等主线判断准确</div><span class="pill g">强</span></li>
-            <li><span class="dim-name" style="color:var(--green)">入场时机</span><div style="flex:1;font-size:13px;color:var(--muted)">MACD 金叉、右侧信号执行到位</div><span class="pill g">强</span></li>
-            <li><span class="dim-name" style="color:var(--red)">止盈落袋</span><div style="flex:1;font-size:13px;color:var(--muted)">兖矿 +20% 未卖转亏，亨通 +21% 仍未减</div><span class="pill r">弱</span></li>
-            <li><span class="dim-name" style="color:var(--red)">仓位管理</span><div style="flex:1;font-size:13px;color:var(--muted)">长期 90%+ 满仓，单票超限</div><span class="pill r">弱</span></li>
-            <li><span class="dim-name" style="color:var(--accent2)">止损执行</span><div style="flex:1;font-size:13px;color:var(--muted)">有止损意识但偏晚，靠 MACD 确认</div><span class="pill a">中</span></li>
+            <li><span class="dim-name" style="color:var(--green)">方向判断</span><div style="flex:1;font-size:13px;color:var(--muted)">方向多踩中大逻辑（科技/风电/光通信），但<strong style="color:var(--ink)">证据单薄——买卖主要靠 MACD + 板块热度直觉，且恰逢 7 月科技深调后反抽，含较强运气成分</strong>，样本太少，尚无足够证据证明其可复制（v2 稳妥结论）。当前持仓（亨通 +19.27%、申菱 -1.24%、星源* -1.93%）</div><span class="pill a">值得研究·待验证</span></li>
+            <li><span class="dim-name" style="color:var(--accent2)">做T/短线判断</span><div style="flex:1;font-size:13px;color:var(--muted)">13号高抛低吸（60.39卖/57.83接回）节奏正确，方向判断准；但14号做T卖出 100股@59.54 卖在放量突破前的缩量回踩，卖点偏早。综合「会判断方向、卖点待优化」</div><span class="pill a">中</span></li>
+            <li><span class="dim-name" style="color:var(--accent2)">止盈落袋</span><div style="flex:1;font-size:13px;color:var(--muted)">累计落袋 +¥4,114（大金1,221 + 亨通2,293 + 大金清仓437 + 做T163），<strong style="color:var(--ink)">结果层面止盈确实比最初进步了（对比兖矿 +20% 做亏）</strong>；但需如实标注，这些止盈多为"涨到觉得够了"的即时反应，规则层纪律仍未建立</div><span class="pill a">结果强·规则待建</span></li>
+            <li><span class="dim-name" style="color:var(--red)">仓位管理</span><div style="flex:1;font-size:13px;color:var(--muted)">当前总仓位 58.6%（申菱16.8% + 亨通34.1% + 星源7.7%*）、现金 41.4%，<strong style="color:var(--ink)">8/18 三票齐开致仓位从前日 50.9% 升至 58.6%，敞口在回调挨打日同步放大</strong>。已移除"单票 30%"上限（改为总仓位持续天数纪律）；裁撤后靠<strong>总仓位满 9 成不超 3 天、满仓公约 8 成锚 + 单日加仓 ≤10%</strong>三条纪律来替代硬性单票限制</div><span class="pill g">健康</span></li>
+            <li><span class="dim-name" style="color:var(--red)">情绪控制</span><div style="flex:1;font-size:13px;color:var(--muted)">8/17 清仓大金后反手 FOMO 追高买申菱；次日 8/18 又叠加建仓星源、三票齐开把仓位推到 58.6%——<strong style="color:var(--ink)">「想交易」的冲动在回调日再度放大，这正是缺少"不做什么"框架的典型表现</strong>（虽申菱曾现强势突破，但止盈后不冷静等回踩、急于追新+加仓的模式属短板）</div><span class="pill r">短板</span></li>
+            <li><span class="dim-name" style="color:var(--orange)">逆风考验</span><div style="flex:1;font-size:13px;color:var(--muted)"><strong style="color:var(--ink)">尚未在真正的逆风局里验证过。</strong>目前仅 20+ 个交易日，且都发生在科技回暖的顺风行情里，你唯一踩过的"分歧"只是个股走弱（兖矿/大金），从没面对过大盘转差、方向不明、买入即套的连环逆风——<strong>那种局面下能否控住手，不杀跌、不满仓、不天天交易，仍是未知数</strong>。顺境学到的纪律，还没被逆境拷问过</div><span class="pill r">盲区·待验证</span></li>
+            <li><span class="dim-name" style="color:var(--orange)">框架定位</span><div style="flex:1;font-size:13px;color:var(--muted)"><strong style="color:var(--ink)">偏离初心：本要"以中线为主、抚平短线波动"，却向短线/日内滑去。</strong>25 个交易日里做T 2 笔、频繁高抛低吸回补，交易次数远超中线定位；且重技术面（MACD/形态）轻基本面（估值/业绩/景气度）——与"中线"所需的基本面支撑脱节。初衷与执行之间存在明显偏差，急需校准</div><span class="pill r">偏离初心</span></li>
+            <li><span class="dim-name" style="color:var(--red)">计划与纪律框架</span><div style="flex:1;font-size:13px;color:var(--muted)"><strong style="color:var(--ink)">最硬的一处短板。</strong>开仓/减仓/清仓没有预写触发计划，基本「看心情」——赚了点才想起减，跌了点才决定砍；<strong>盘后从未为明日不同走向做预判与应对，更没有纪律框架。</strong>现有的止盈/止损更多是"感觉够了/扛不住了"的即时反应，而非按规则触发。</div><span class="pill r">高风险</span></li>
           </ul>
         </div>
       </div>
@@ -667,26 +1264,257 @@
       <div class="panel" style="margin-top:20px">
         <div class="panel-title">改进建议</div>
         <div class="panel-sub">按优先级排序，可直接落地</div>
+        <div class="rec" style="border-color:rgba(245,166,35,.55);background:rgba(245,166,35,.06)">
+          <div class="rec-num" style="background:var(--orange);color:#fff">★</div>
+          <div><h4>📏 新增总仓位纪律：满 9 成后不得连续超过 3 个交易日，到期强制降仓</h4><p>这是本次新增的<strong>核心仓位纪律</strong>（替代已移除的"单票 30%"硬上限）：<strong>一旦总仓位 ≥ 90%，开始倒计时，最多允许连续 3 个交易日维持满仓；第 4 个交易日开盘前，必须把总仓位强制降到 ≤ 80%</strong>（卖掉最弱/最赚已兑现的，至少腾出 1 成现金）。逻辑：满仓 9 成以上意味着几乎没有回旋余地，一旦遇回调就会被动杀跌或扛单；用它逼自己"有后备，不梭哈"。执行记录应纳入每日复盘：标记满仓起算日与剩余天数。</p></div>
+        </div>
         <div class="rec">
           <div class="rec-num">1</div>
-          <div><h4>建立硬性止盈规则并机械执行</h4><p>采纳 v3.0 的 ATR 阶梯：浮盈 +1×ATR 保本、+2×ATR 减半仓、剩余挂移动止损。用「到价必卖」替代「感觉还能涨」。今日亨通高开 +3.75% 就是 +2×ATR 减仓点，错过了 1,600 元的做 T 空间。设好条件单，到了就执行，不做任何主观判断。</p></div>
+          <div><h4>⛔ 新增硬纪律：止盈落袋后「24 小时空仓冷却」，当日禁止回补</h4><p>8/17 上午 10:29 清仓大金落袋 +437 后，仅隔 17 分钟（10:46）就 FOMO 追高建仓申菱——止盈后急于追新正是本次新错误的根因。把「落袋后不追新、先等回踩」写成铁律：止盈后强制空仓等待至少一个交易日或等回踩，哪怕错过上涨也要守住。用制度对抗「怕错过」的 FOMO 情绪，这是当下最该补的一课。</p></div>
         </div>
         <div class="rec">
           <div class="rec-num">2</div>
-          <div><h4>仓位上限硬约束</h4><p>单票 ≤ 30%，总仓位 ≤ 80%，现金 ≥ 20%。把「满仓梭哈」从选项里拿掉。用凯利公式简化版：单笔风险不超过总资金 1–2%。</p></div>
+          <div><h4>🎯 新建仓/加仓都须避两端：补仓别偏左、追新别偏右（加仓统一走"金字塔加仓法"）</h4><p>8/14 大金逢低补仓属「左侧接刀」，8/17 申菱建仓又成「右侧追高」——一支偏左、一支追高，都是纪律失控。新建仓/加仓应等价格回踩关键均线（如 20 日线）获支撑、或放量转强后再介入，避免「补仓偏左、追新偏右」。加仓统一改走<strong>金字塔加仓法</strong>：<strong>首次建仓最大，只在股价走出浮盈、且趋势确认后顺势加仓，每次加仓量递减（如 4→3→2），禁止在无浮盈或追高时加仓。</strong>同时设置单日加仓额度上限：单日新增仓位不超过总仓位的 10%（已移除原"单票 30%"硬上限）。</p></div>
         </div>
         <div class="rec">
           <div class="rec-num">3</div>
-          <div><h4>用「卖出计划」替代「卖出冲动」</h4><p>每笔建仓时先写清：止盈档位、止损位、时间止损。操作前 30 分钟对照原计划，只执行预设动作，不临时改主意。可有效对抗 FOMO 与锚定效应。</p></div>
+          <div><h4>🧭 回归初心：把"以中线为主"重新立起来，短线只当配菜</h4><p>你们最初的定位是<strong>避开"整天盯分时的短线客"、以中线逻辑为主、用更长的持有周期抚平短线波动来实现盈利</strong>——但这段操作已明显滑向短线/日内。校正动作：① <strong>持股预期按"级别"定</strong>：把每只票明确标记为"底仓（周线趋势，持有 3 周+）"或"机动仓（日线波段，≤2 周）"，只有机动仓才允许做T/高抛低吸，底仓不折腾；② <strong>降低做T频率</strong>：认识到"交易次数多≠收益高"（这段 2 笔做T + 2 天来回，只比拿住多赚几百元，却徒增了踩错节奏的暴露），做T只在对冲套牢成本时用；③ <strong>给买入补上基本面这条腿</strong>：每笔建仓强制回答"估值贵不贵、业绩和景气度有没有支撑、中线逻辑是什么"，MACD/形态只能当<b>择时</b>辅助，不能当<b>选股</b>依据——否则就是"重技术、轻基本面"的空壳中线。</p></div>
         </div>
         <div class="rec">
           <div class="rec-num">4</div>
-          <div><h4>每日复盘固定模板</h4><p>收盘后按「持仓 → 当日操作 → 板块 → 情绪周期 → 明日计划」五段式记录，10 分钟即可。追踪自己是否「说了就做」。</p></div>
+          <div><h4>⚖️ 守住双轨框架：机动仓兑现 + 底仓移动止损</h4><p>双轨止盈已多次落地（亨通机动仓 +¥2,293、做T +163、大金清仓 +437），方向正确。大金已离场，关键是别用腾出的现金急着追新——<strong>但 8/18 三票齐开、仓位已从 50.9% 抬到 58.6%</strong>，这一步恰恰踩在了「急追新」上。底仓应严格挂移动止损（亨通 46.43，跌破即撤）；申菱已回落至关键位 95、跌破即止损，别因"账面还赢着"就放宽。当前现金 41.4% 仍留子弹，但下周基调应是<strong>等回踩而非再加仓</strong>。做T目的是摊薄成本而非频繁刷单——交易次数多≠收益高。</p></div>
+        </div>
+        <div class="rec">
+          <div class="rec-num">5</div>
+          <div><h4>每日复盘固定模板</h4><p>收盘后按「持仓 → 当日操作 → 板块 → 情绪周期 → 明日计划」五段式记录，10 分钟即可。尤其写下"今天是否有冲动下单"，把情绪纠偏纳入复盘。追踪自己是否「说了就做」。</p></div>
+        </div>
+        <div class="rec">
+          <div class="rec-num">6</div>
+          <div><h4>🌪️ 为逆风局先写好预案（当下最该做的"没吃过亏的那一课"）</h4><p>你目前只经历顺风/个股分歧，从没扛过大盘转差、方向不明、买入即套的连环逆风。把这套"雨天开法"提前写好，别等真正亏了才想——① <strong>大环境定仓位</strong>：上证/创业板跌破关键支撑、或连续缩量走弱时，强制把总仓位降到 3 成以下，宁可空仓；② <strong>满仓公约</strong>：与"满 9 成不超 3 天"配套——平日最多满 9 成且不得超过 3 天，遇逆风期直接压到 8 成以下、保留至少 2 成现金，杜绝满仓梭哈；③ <strong>杀跌红线</strong>：单票跌破移动止损（如 -8%）无条件执行，不因"舍不得/怕反弹"而补仓摊成本；④ <strong>交易频率上限</strong>：单日最多 2 笔、单票最多 1 次，靠制度掐断"天天交易"的手。顺境积累的纪律，要靠一次真正的逆风来验收——写清楚预案，等风来时不慌。</p></div>
+        </div>
+      </div>
+
+      <!-- ===== 每笔交易记录方法论（"不做什么"实战模板） ===== -->
+      <div class="panel" style="margin-top:20px;border-color:rgba(47,191,143,.4);background:linear-gradient(180deg,rgba(47,191,143,.05),var(--bg2))">
+        <div class="m-kicker" style="margin-bottom:6px">📒 每笔交易记录 · v2 方法论</div>
+        <div class="panel-title" style="margin-bottom:4px">从"为什么买"进化到"为什么这次不该买"</div>
+        <div class="panel-sub">你目前的问题不是没有交易机会，而是总能给自己找到一个交易理由——MACD 强了可以买、板块热了可以买、突破了可以买、跌下来觉得便宜可以买、止盈了觉得踏空可以再买。真正成熟的系统，应该能告诉你："<strong>这个票看起来不错，但今天就是不能买。</strong>"</div>
+        <p style="font-size:13.5px;color:var(--ink);margin-top:10px">因此，每一笔交易除了记录"为什么买"，从今以后必须追加两个反方向的问题：</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:16px">
+            <div style="font-family:'JetBrainsMono';font-weight:700;color:var(--accent2);font-size:13px">问题 ①</div>
+            <div style="font-size:14px;font-weight:700;color:var(--ink);margin:4px 0">如果我不买，会发生什么？</div>
+            <div style="font-size:12.5px;color:var(--muted);line-height:1.6">强迫区分"这笔收益会不会因为我不参与而真的损失"。多数情况下答案是：错过一个机会，或不发生什么——这会帮你划清"必要交易"与"可做可不做的交易"。</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid rgba(239,83,80,.4);border-radius:12px;padding:16px">
+            <div style="font-family:'JetBrainsMono';font-weight:700;color:var(--red);font-size:13px">问题 ②（对你尤其重要）</div>
+            <div style="font-size:14px;font-weight:700;color:var(--ink);margin:4px 0">什么情况下，我明确"不应该买"？</div>
+            <div style="font-size:12.5px;color:var(--muted);line-height:1.6">给每个候选标的预写"不该买的红线"：比如"MACD 虽强但已放量滞涨"、"已错过最佳买点、追高无安全垫"、"止盈后当天情绪上头"、"跌破止损位、加仓摊成本"、"重仓已接近上限"。写得越具体，越能掐断情绪化追高。</div>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:12px"><strong>核心认知：</strong>你缺的从来不是"买什么"的知识，而是"<strong style="color:var(--red)">不做什么</strong>"的纪律。这个可能比再学十个技术指标更重要。以后每次想下单，先过这两个反问题，能劝退自己，就说明系统真的在长大。</div>
+      </div>
+      <!-- ===== /每笔交易记录方法论 ===== -->
+
+      <div class="panel" style="margin-top:20px">
+        <div class="panel-title">📝 阶段总结（35天 · 5票 · +15.00%）</div>
+        <div class="panel-sub">2026-07-14 首笔建仓至今的完整复盘文字总结</div>
+
+        <div style="background:rgba(47,191,143,.07);border:1px solid rgba(47,191,143,.25);border-radius:12px;padding:18px 20px;margin-bottom:16px">
+          <h4 style="color:var(--green);margin-bottom:8px;font-size:15px">💚 优点 · 做得好的地方</h4>
+          <p style="font-size:14px;color:var(--ink);margin-bottom:6px"><strong>① 方向判断「貌似有效」，但含明显运气成分、且证据体系单一，需打折看待。</strong>从兖矿到风电（大金）到科技光通信（亨通）再到申菱，四只票都恰好落在有产业逻辑的方向上，亨通更是吃到 8 月科技主升浪（48.87→65.06，+33%）、贡献账户绝大部分收益。但必须诚实承认一个事实：<strong>这一轮 A 股科技刚经历 7 月深度回调，随后走的是反抽行情，而你买卖的唯一判断招式是 MACD + 板块热度直觉，属于马后炮式的「恰好奏效」。</strong>你自己也认可，除了这两个理由，拿不出更坚定的买入证据。方向感有天赋成分，但把它直接夸成「选股能力强」是不公允的——同样的 MACD 手法，在兖矿上就把 +20% 浮盈做成 -1.95% 亏损出场。结论（v2 稳妥版）：<strong>方向判断值得继续研究，但目前样本太少、且刚好碰上一段行情，尚无足够证据证明其可复制。</strong>这比"我有选股天赋"安全得多。<p style="font-size:14px;color:var(--ink);margin-bottom:6px"><strong>② 止盈"结果层"有进步，但属即时反应、规则层纪律仍未建立。</strong>相比首只兖矿「最高浮盈 +19.98% 却最终 -1.95% 离场」的惨痛教训，后续落袋确实变多了：8/12 大金 +10% 减仓 +1,221、8/13 亨通 +23.57% 高抛 +2,293、8/14 做T +163、8/17 大金清仓 +437，累计 +¥4,114，卖出的 5 笔 4 笔盈利（80%）。<strong style="color:var(--ink)">但必须诚实区分：这些止盈大多是"涨到觉得够了"的即时反应，而非按预先写好的触发计划执行——赚了点才想起减、跌了点才决定砍，这正是"止盈结果在"而"计划纪律缺失"的本质。</strong>结果可以凭盘感碰出来，但要可复制，必须升级成规则。<p style="font-size:14px;color:var(--ink);margin-bottom:6px"><strong>③ 愿意用小仓试错、控制单票风险。</strong>申菱 FOMO 建仓只买了 100 股（投入 9,791 元，占总仓 16.5%），且意识到"加仓太快不行"、主动克制了继续加仓的冲动。8/18 虽新增星源第三票，但星源也是小仓（7.7%）。仍留有现金子弹（41.4%），不孤注一掷——缺点是同日两票齐开，仓位整体抬到了 58.6%。<p style="font-size:14px;color:var(--ink);margin-bottom:0"><strong>④ 有进取心、能正视短板并主动补课。</strong>明知道自己日内买卖点判断不好，没有逃避或自欺，而是主动立项做了一个「日内分时专题训练系统」去刻意练习止盈/加仓判断——这是所有优点里最值钱的一条：<strong>交易者的进步不靠天分，靠"识别短板 → 设计训练 → 反复验证"的自驱闭环</strong>，你已经把它跑通了第一圈。</p>
+        </div>
+
+        <div style="background:rgba(239,83,80,.06);border:1px solid rgba(239,83,80,.22);border-radius:12px;padding:18px 20px">
+          <h4 style="color:var(--red);margin-bottom:8px;font-size:15px">⚠️ 缺点 · 需要改进的地方</h4>
+          <p style="font-size:14px;color:var(--ink);margin-bottom:6px"><strong>① 情绪化交易是最大短板，FOMO 反复出现。</strong>8/17 上午刚清仓大金落袋 +437，仅隔 17 分钟就反手追高建仓申菱；次日 8/18 又在回调中叠加建仓星源——「止盈后急于追新」「回调中加仓」反复出现，本质是把"怕错过"的情绪当成了判断依据。<p style="font-size:14px;color:var(--ink);margin-bottom:6px"><strong>② 买卖点两端都易失控——左侧接刀 + 右侧追高。</strong>8/13、8/14 大金重工补仓是「左侧接刀」（41.92 仍下跌中硬接，随后继续走弱）；8/17 申菱建仓又是「右侧追高」。一支买在下跌途中、一支买在上涨末端，都是没等回踩、没等确认，纯靠直觉出手。<p style="font-size:14px;color:var(--ink);margin-bottom:6px"><strong>③ 持仓过多且集中度上升。</strong>亨通单票 34.3% 本就偏高，8/18 又叠加申菱+星源三票齐开，仓位从 50.9% 抬到 58.6%、同时持有 3 票；在回调日扩大敞口，反而放大了净值波动。<p style="font-size:14px;color:var(--ink);margin-bottom:0"><strong>④ 偏离了最初的框架定位——本该"以中线为主、用中线抚平短线波动"，却滑向了短线/日内为主。</strong>起初的目标很明确：不要做一个整天盯着分时的短线客，而是<strong>选中线逻辑（科技/风电修复），靠时间换空间、用更长的持有周期去抚平单日波动</strong>，从而实现盈利。但实际操作明显偏离：这段 25 个交易日里，做T 2 笔、高抛低吸、8/13-8/14 连续回补又卖飞、T+0 频繁进出一只 33% 的票却只落袋 +2,456——交易次数远超"中线持有"该有的样子，几近滑向"短线客"。同时重技术面、轻基本面：买入理由几乎全是 MACD/形态/板块热度，几乎不谈估值、业绩、景气度，这与"中线"要求的第二条腿（基本面支撑）是脱节的。根子上仍是怕错过短期波动的情绪在推动交易频次。<p style="font-size:14px;color:var(--ink);margin-bottom:0"><strong>⑤ 全部经验只在顺风行情里，逆风尚未被验证。</strong>（见上方「逆风考验」维度——目前仅 20+ 交易日，都发生在科技回暖的顺风中，尚未面对大盘转差、方向不明、买入即套的连环逆风，能否控住手、不杀跌/不满仓/不天天交易仍未知。8/18 的一次普通日线回调就已让人在「减少操作 vs 多做T」之间摇摆，逆风应对力可见一斑。）</p>
+        </div>
+
+        <div style="margin-top:16px;padding:16px 20px;background:var(--bg2);border:1px solid var(--rule);border-radius:12px">
+          <h4 style="color:var(--accent2);margin-bottom:8px;font-size:14px">🎯 一句话结论</h4>
+          <p style="font-size:14.5px;color:var(--ink);margin:0">总结这 34 天，最准确的定性不是"模拟盘赚钱阶段"，而是<strong style="color:var(--accent2)">「交易系统暴露问题阶段」</strong>——它如实暴露了三个关键事实：① <strong>方向感可能只是行情运气</strong>（样本太少、正值科技反抽，尚无证据证明可复制）；② <strong>止盈确实比最初进步了</strong>（兖矿 +20% 不做成 -1.95%，到后来能落袋 +¥4,114，说明你并非完全不会处理盈利仓位）；③ <strong>真正的最大敌人是"想交易"</strong>——止盈后马上找下一只、下跌中接刀、上涨中追高、做T、FOMO、模拟盘亏钱没痛感，这些都指向同一个问题：你缺的不是"买什么"的知识，而是"<strong style="color:var(--red)">不做什么</strong>"的纪律。这笔 +15.00% 大概率含着很大运气成分，此刻最好先放一边，故意不把它算作自己的能力。<strong>现在的阶段任务是"证明自己能不乱交易"，建立按预先写好的规则、在不同市场环境下都不失控的纪律框架；8/18 一次普通日线回踩（申菱-3.38%、星源-2.90%）就能让你三票齐开、并在「减少操作 vs 日内做T」之间摇摆，正是这份纪律最缺的实锤。等再经历 3–6 个月的顺风/震荡/回调、甚至真金白银的实盘心理反馈后，才能判断它到底是运气还是能力。</strong>现在继续练，别急着证明自己。</p>
         </div>
       </div>
 
       <div class="footer-note">
-        本系统为个人模拟盘复盘工具，数据来自东方财富 A 股模拟盘，仅供学习记录，不构成投资建议。评分基于已执行操作的行为分析，动态更新。投资有风险，决策需谨慎。
+        本系统为「翻81681」组合复盘工具，数据来自东方财富模拟组合API（组合ID: 261944300000051189），仅供学习记录，不构成投资建议。评分基于已执行操作的行为分析，动态更新。投资有风险，决策需谨慎。
+      </div>
+    </section>
+
+    <!-- ===== MODULE 7: 修炼境界 ===== -->
+    <section class="module" id="module-realm">
+      <div class="m-head">
+        <div class="m-kicker">Realm · 修炼境界</div>
+        <div class="m-title">🛡️ 交易者修仙境界</div>
+        <div class="m-desc">把账户资金体量与交易能力映射为「修仙境界」，记录我们在复利之路上的修炼历程。境界不是终点，是本阶段的状态与下一关的考题。判断标准综合「资金体量 + 操作成熟度」双维度。</div>
+      </div>
+
+      <!-- 当前境界定位 -->
+      <div class="realm-current" style="display:flex;gap:20px;align-items:stretch;background:linear-gradient(135deg,rgba(245,166,35,.14),rgba(79,209,197,.08));border:1px solid rgba(245,166,35,.4);border-radius:14px;padding:22px;margin-bottom:22px;flex-wrap:wrap">
+        <div style="flex:1;min-width:240px">
+          <div style="font-size:12px;letter-spacing:.12em;color:var(--accent2);text-transform:uppercase;margin-bottom:8px">当前境界 · 修炼定位</div>
+          <div style="font-family:'BricolageGrotesque';font-weight:700;font-size:30px;color:var(--accent2)">炼气中期</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:6px">账户本金 5 万（名义 100 万）· 当前资产 ¥57,501 · 收益率 +15.00%</div>
+          <div style="margin-top:14px;font-size:13.5px;line-height:1.7">
+            已入市一段时间、吃过亏，开始接触指标与 K 线，正处在「从频繁换方法到沉淀一套自用逻辑」的转型期。8/18 识别止损纪律（申菱险守 92.5 决策位）、守住亨通科技主线逆势 +19.27%——「止盈」渐成定法、方向感也不错，但<strong>同日三票齐开把仓位推到 58.6%、且是回调挨打日（申菱-3.38%、星源-2.90%），说明"管住手"的敌人正从「怕踏空」升级为「想交易」：顶住新开仓的诱惑，正是当前关卡的核心考题。</strong>
+          </div>
+        </div>
+        <div style="flex:0 0 200px;display:flex;flex-direction:column;justify-content:center;gap:10px">
+          <div style="background:var(--bg3);border-radius:10px;padding:12px 16px">
+            <div style="font-size:11px;color:var(--muted)">修炼进度（炼气期）</div>
+            <div style="font-family:'JetBrainsMono';font-weight:700;font-size:20px;color:var(--accent2)">中期 · 56%</div>
+          </div>
+          <div style="background:var(--bg3);border-radius:10px;padding:12px 16px">
+            <div style="font-size:11px;color:var(--muted)">距下一关（炼气后期）</div>
+            <div style="font-family:'JetBrainsMono';font-weight:700;font-size:15px">本金 6 万</div>
+            <div style="font-size:11px;color:var(--muted)">当前 +1 万缺口</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 境界总览表 -->
+      <div class="panel">
+        <div class="panel-title">🗺️ 修仙境界总览 · 资金 × 能力</div>
+        <div class="panel-sub">每一重境界都是一次「资金体量 + 操作成熟度」的综合跃迁，越往上越考验心态与纪律</div>
+        <div class="table-wrap" style="overflow-x:auto">
+          <table>
+            <thead>
+              <tr>
+                <th>境界</th><th>账户总资产</th><th>人群画像</th><th>主要行为特征</th><th>核心痛点</th><th>本阶段核心目标</th><th>致命雷区</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="realm-on"><td><strong>炼气初期</strong></td><td>0–3万</td><td>新股民，刚入市</td><td>听消息、刷短视频学战法，追涨杀跌，交易随意，无固定规则，频繁满仓</td><td>本金太少赚不多，亏点百分比难回本；心态易被单日盈亏牵动</td><td>熟悉市场，建立基础风控，避免毁灭性亏损</td><td style="color:var(--red)">一把梭哈单只股票；频繁短线交易；借钱加杠杆</td></tr>
+              <tr class="realm-on"><td><strong>炼气中期</strong></td><td>3–6万</td><td>入市一段时间，吃过亏</td><td>开始接触指标、K线，到处搜集战法，不停换方法，时而赚时而亏</td><td>方法来回摇摆，赚靠行情、亏靠冲动，没有属于自己的规则</td><td>筛选出 1–2 套简单可执行的交易逻辑，学会仓位控制</td><td style="color:var(--red)">行情好就盲目加大仓位；亏损后急于回本频繁操作</td></tr>
+              <tr><td><strong>炼气后期</strong></td><td>6–10万</td><td>老散户，在炼气徘徊很久</td><td>懂得止损概念，偶尔盈利，但大跌依然回撤严重</td><td>盈利不稳定，小赚大亏循环；距筑基门槛近但易心态冒进</td><td>稳定控制最大回撤，优先靠场外工资输入增厚本金</td><td style="color:var(--red)">赚几笔就膨胀，模仿游资打法，企图快速冲筑基</td></tr>
+              <tr><td><strong>筑基初期</strong></td><td>10–25万</td><td>脱离纯小散，初步拥有选择权</td><td>适度分散持仓，不再完全听消息，买卖会做简单思考</td><td>遇到连续亏损容易推翻原有体系乱操作</td><td>固化自己的交易框架，分清哪些行情适合自己做</td><td style="color:var(--red)">盲目分散买一大堆股票，持仓管理混乱</td></tr>
+              <tr><td><strong>筑基中期</strong></td><td>25–50万</td><td>有一定实战沉淀</td><td>可多标的配置，对行业、基本面有基础认知，会主动空仓等机会</td><td>盈利预期抬升，易追求更高收益，忽视回撤风险</td><td>打磨止盈止损、仓位体系，形成自己的选股池</td><td style="color:var(--red)">看到别人高收益就随意切换成熟的模式</td></tr>
+              <tr><td><strong>筑基后期</strong></td><td>50–75万</td><td>开通科创板，正式进阶小大户</td><td>体系基本成型，懂得控制总仓位上限，重视流动性风险</td><td>账户盈亏绝对值不小，心理压力变大</td><td>严格执行纪律，控制年度最大回撤</td><td style="color:var(--red)">被短期暴利诱惑，尝试杠杆放大收益</td></tr>
+              <tr><td><strong>筑基大圆满</strong></td><td>75–100万</td><td>筑基天花板，准备冲击结丹</td><td>心态较成熟，能接受合理亏损，不强求每笔都赚</td><td>易骄傲自满，认为自己能驾驭更大资金</td><td>守住复利，为结丹做准备，拒绝赌性交易</td><td style="color:var(--red)">牛市过度重仓，忽视熊市风险</td></tr>
+              <tr class="realm-dim"><td><strong>结丹初期</strong></td><td>100–250万</td><td>中大户</td><td>完整交易体系，重视冲击成本，不再一键满仓清仓</td><td>膨胀，想更快财富增长</td><td>抵抗杠杆诱惑，守住回撤底线</td><td style="color:var(--red)">使用融资杠杆放大仓位</td></tr>
+              <tr class="realm-dim"><td><strong>结丹中–大圆满</strong></td><td>250万–1000万</td><td>牛散雏形/大户</td><td>会做周期布局，懂得空仓，对市场大局有理解</td><td>一笔亏损的绝对金额非常高</td><td>把稳定复利落地执行，敬畏黑天鹅</td><td style="color:var(--red)">路径固化，拒绝更新认知</td></tr>
+              <tr class="realm-dim"><td><strong>元婴期</strong></td><td>1000万–1亿</td><td>牛散、小型游资</td><td>交易会冲击小盘分时，必须考虑流动性冲击成本</td><td>大起大落的心理压力</td><td>大局观优先，克制主观情绪</td><td style="color:var(--red)">过度自信，企图操控市场</td></tr>
+              <tr class="realm-dim"><td><strong>化神期</strong></td><td>1–10亿</td><td>正式游资</td><td>分批建仓、分批出货，选股池收缩</td><td>易陷入路径依赖</td><td>规避傲慢，尊重市场规律</td><td style="color:var(--red)">固守老战法，无视市场风格切换</td></tr>
+              <tr class="realm-dim"><td><strong>炼虚及以上</strong></td><td>&gt;10亿</td><td>机构、大型私募、顶级游资</td><td>以宏观、行业配置为主，极少短线博弈</td><td>资金容量约束大</td><td>追求长期复合收益，控制组合风险</td><td style="color:var(--red)">规模变大之后策略失效</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 炼气期细分详解 -->
+      <div class="panel">
+        <div class="panel-title">🔥 炼气期 · 细分层次与能力</div>
+        <div class="panel-sub">我们在炼气期的每一层，都在解决「方法飘忽」与「心态不稳」两个根本问题。修炼核心：从「向外找方法」转向「向内建规则」。</div>
+        <div class="realm-steps">
+          <div class="realm-step on">
+            <div class="rs-head"><span class="rs-badge">炼气初期</span><span class="rs-range">0–3万</span><span class="rs-status">已通关</span></div>
+            <div class="rs-title">修「存活」——先学会不亏</div>
+            <div class="rs-ability">
+              <div class="rs-dim"><span class="rs-dim-name">核心能力</span><span>建立基础风控意识，单笔止损、仓位上限等概念从「知道」到「会设」</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">本层考题</span><span>能否在连续亏损后不上头、不梭哈、不加杠杆？能否接受「慢就是快」？</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">常见心魔</span><span style="color:var(--red)">一把梭哈单只；频繁短线；借钱/加杠杆企图一夜暴富</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">通关标志</span><span>单笔最大亏损可控在 2% 以内，不再因为亏钱而报复性操作</span></div>
+            </div>
+          </div>
+
+          <div class="realm-step on">
+            <div class="rs-head"><span class="rs-badge">炼气中期</span><span class="rs-range">3–6万</span><span class="rs-status">当前关卡</span></div>
+            <div class="rs-title">修「定法」——收敛方法，沉淀自己的规则</div>
+            <div class="rs-ability">
+              <div class="rs-dim"><span class="rs-dim-name">核心能力</span><span>从无数战法中筛选出 1–2 套简单可执行、且自己能守住的交易逻辑</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">本层考题</span><span>能否不再「赚靠行情、亏靠冲动」？能否写出一套固定的买/卖/止损规则并照做？</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">常见心魔</span><span style="color:var(--red)">行情好就盲目加仓；亏损后急于回本频繁操作</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">通关标志</span><span>形成文字化的交易体系草稿，连续 1 个月按既定规则执行、不随意推翻</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">你的进度</span><span style="color:var(--accent2)">已建立「长短线双轨止盈」雏形（亨通机动仓兑现 +¥2,293 ✅），但 8/13 下午冲动回补暴露「止盈后拿不住现金」的短板——离过关还差「止盈当日不追回」这条铁律 ⚠️</span></div>
+            </div>
+          </div>
+
+          <div class="realm-step">
+            <div class="rs-head"><span class="rs-badge">炼气后期</span><span class="rs-range">6–10万</span><span class="rs-status">下一关</span></div>
+            <div class="rs-title">修「守成」——稳住回撤，增厚本金</div>
+            <div class="rs-ability">
+              <div class="rs-dim"><span class="rs-dim-name">核心能力</span><span>稳定控制最大回撤（如 ≤8%），盈利从「靠运气」转向「靠体系复利」</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">本层考题</span><span>能否在赚几笔后不自满、不模仿游资快打？能否靠场外收入与纪律同时增厚本金？</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">常见心魔</span><span style="color:var(--red)">赚几笔就自我膨胀，企图快速冲到筑基</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">通关标志</span><span>连续两个季度最大回撤可控、收益为正，本金稳步积累至 10 万</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 筑基期细分详解 -->
+      <div class="panel">
+        <div class="panel-title">💎 筑基期 · 细分层次与能力</div>
+        <div class="panel-sub">筑基期是「从散户思维走向交易者思维」的质变期。核心从「怎么买」升级为「怎么管」——仓位、止盈止损、选股池、节奏控制。</div>
+        <div class="realm-steps">
+          <div class="realm-step">
+            <div class="rs-head"><span class="rs-badge">筑基初期</span><span class="rs-range">10–25万</span><span class="rs-status">未到</span></div>
+            <div class="rs-title">修「框架」——固化自己的交易体系</div>
+            <div class="rs-ability">
+              <div class="rs-dim"><span class="rs-dim-name">核心能力</span><span>拥有属于自己的成熟交易框架，能区分「这波行情适不适合我做」</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">本层考题</span><span>连续亏损时能否坚持框架不乱操作？能否识别并放弃看不懂的机会？</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">常见心魔</span><span style="color:var(--red)">盲目分散买一大堆股票，持仓管理混乱</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">通关标志</span><span>交易框架书面化，能清楚说出买入/卖出/止损标准和对应的行情前提</span></div>
+            </div>
+          </div>
+
+          <div class="realm-step">
+            <div class="rs-head"><span class="rs-badge">筑基中期</span><span class="rs-range">25–50万</span><span class="rs-status">未到</span></div>
+            <div class="rs-title">修「配置」——多标的与选股池</div>
+            <div class="rs-ability">
+              <div class="rs-dim"><span class="rs-dim-name">核心能力</span><span>多标的配置、行业/基本面基础认知、主动空仓等待机会</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">本层考题</span><span>盈利预期提升时，能否仍守住回撤底线、不追更高收益而忽视风险？</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">常见心魔</span><span style="color:var(--red)">看别人高收益就随意切换自己成熟的模式</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">通关标志</span><span>形成固定选股池，空仓成为常态而非异常，仓位管理可量化</span></div>
+            </div>
+          </div>
+
+          <div class="realm-step">
+            <div class="rs-head"><span class="rs-badge">筑基后期</span><span class="rs-range">50–75万</span><span class="rs-status">未到</span></div>
+            <div class="rs-title">修「纪律」——总仓位上限与流动性</div>
+            <div class="rs-ability">
+              <div class="rs-dim"><span class="rs-dim-name">核心能力</span><span>控制总仓位上限、重视流动性风险，体系基本成型</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">本层考题</span><span>账户盈亏绝对值变大带来的心理压力，能否靠纪律而非情绪应对？</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">常见心魔</span><span style="color:var(--red)">被短期暴利诱惑，尝试杠杆放大收益</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">通关标志</span><span>年度最大回撤有明确预算，杠杆诱惑能够理性拒绝</span></div>
+            </div>
+          </div>
+
+          <div class="realm-step">
+            <div class="rs-head"><span class="rs-badge">筑基大圆满</span><span class="rs-range">75–100万</span><span class="rs-status">未到</span></div>
+            <div class="rs-title">修「复利」——为冲击结丹做准备</div>
+            <div class="rs-ability">
+              <div class="rs-dim"><span class="rs-dim-name">核心能力</span><span>心态成熟，能接受合理亏损，不强求每笔都赚，专注复利</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">本层考题</span><span>能否坐拥百级资金而不骄傲自满、不赌性交易？能否守住复利不为暴利动摇？</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">常见心魔</span><span style="color:var(--red)">牛市过度重仓，忽视熊市风险</span></div>
+              <div class="rs-dim"><span class="rs-dim-name">通关标志</span><span>复利稳定滚动，心态与纪律足以驾驭更大资金而不变形</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 修炼手记 -->
+      <div class="panel">
+        <div class="panel-title">📜 修炼手记</div>
+        <div class="panel-sub">记录每一关的感悟与突破，见证从炼气到筑基的成长轨迹</div>
+        <div class="realm-journal">
+          <div class="rs-dim"><span class="rs-dim-name">2026-08-18</span><span>回调挨打日，三票齐开（申菱 16.8%、亨通 34.1%、星源* 7.7%），仓位 58.6%，现金 41.4%。亨通逆势收 65.41（+0.54%）浮盈 +3,170 扛住（本部唯一亮点）；申菱高开 101.67 冲高回落收 96.79（-3.38%）、险守关键支撑 92.5，建仓 2 天转亏 -1.24%；星源* 收 14.71（-2.90%）。当日最大的问题是<strong style="color:var(--red)">应对路径不清</strong>——在「减少操作」和「日内多做T降成本」之间摇摆，本质是缺一份事先写好的预案；同时回调挨打日还新增/持有第三票，敞口不减反增、两新仓同跌。<strong style="color:var(--accent2)">教训：明天写预案而非盘中想——申菱 92.5 跌破即止损，星源 14.20 减/清，亨通守 46.43，本周基调是管住手、等信号。</strong></span></div>
+          <div class="rs-dim"><span class="rs-dim-name">2026-08-17</span><span>上午 10:29 清仓大金 600股@41.34 落袋 +¥437（识别走弱及时离场，止损纪律落地 ✅）；仅隔 17 分钟 10:46 便 <strong style="color:var(--red)">FOMO 追高建仓</strong>申菱 100股@97.91（成本98.009）——卖走弱的大金后反手买更弱理由的申菱，交易逻辑不一致。「会止盈」进步大（亨通 +17.33%），但方向感里含运气成分（7月科技深调后反抽）需多轮验证，而「止盈后不急于追新」是本次新考题。记住：<strong style="color:var(--accent2)">落袋后先等回踩，管住追高的那只手。</strong></span></div>
+          <div class="rs-dim"><span class="rs-dim-name">2026-08-14</span><span>亨通做T卖出 100股@59.54 落袋 +¥163，主动纠错弥补昨日抄底被动——「定法」小有进步；但大金仍走弱却逢低补仓至 44.5% 超限，暴露「下跌补仓」的老毛病。记住：<strong style="color:var(--accent2)">交易次数多≠收益高，做T为摊薄成本，补仓要等右侧信号。</strong></span></div>
+          <div class="rs-dim"><span class="rs-dim-name">2026-08-13</span><span>上午亨通减仓 200 股@60.39 落袋 +¥2,293，双轨止盈首次落地；但下午 14:42-14:43 <strong style="color:var(--red)">冲动回补</strong>大金 100股@42.81、亨通 200股@57.83（约 1.58 万），仓位拉回 79.3%。「止盈」学会了，但「止盈后拿住现金」还没学会——这是情绪失控的实录，记下教训。</span></div>
+          <div class="rs-dim"><span class="rs-dim-name">2026-08-12</span><span>大金减仓 300 股落袋 +¥1,221 ——「炼气中期」修「定法」的里程碑：开始执行机动仓兑现，不再死捂浮盈。</span></div>
+          <div class="rs-dim"><span class="rs-dim-name">核心心法</span><span>境界由「资金 × 能力」共同决定。资金靠复利与场外收入积累，能力靠每一笔写下来的规则与复盘沉淀。最忌「资金先到、能力未到」——那往往是最容易亏大钱的时刻。</span></div>
+        </div>
+        <div style="margin-top:14px"><textarea data-key="realm-note" placeholder="记录你的修炼感悟：这一关你学到了什么？下一步想修什么？..." style="width:100%;min-height:90px;background:var(--bg3);border:1px solid var(--rule);border-radius:9px;color:var(--ink);padding:12px 14px;font-size:13.5px;font-family:inherit;resize:vertical"></textarea>
+          <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:10px;align-items:center">
+            <span class="note-status" data-status="realm-note" style="font-size:12px;color:var(--muted)"></span>
+            <button class="note-save" data-key="realm-note" style="background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0f15;border:none;border-radius:8px;padding:8px 18px;font-weight:700;font-size:13px;cursor:pointer">保存修炼手记</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        修炼境界为「资金体量 × 操作成熟度」的成长映射，用于记录与自省，非评级标签。当前定位为炼气中期（本金 5 万、资产 ¥57,407）。境界会随复利与能力提升逐级跃迁，本系统持续追踪。
       </div>
     </section>
 
@@ -697,5 +1525,57 @@
 <script src="./assets/echarts.min.js"></script>
 <script src="assets/charts.js"></script>
 <script src="assets/editor.js"></script>
+<script src="assets/intraday-bs-data.js"></script>
+<script src="assets/intraday-bs.js"></script>
+<script>
+(function(){
+  function fmt(n){ return n==null ? '—' : Number(n).toLocaleString('zh-CN'); }
+  function load(){
+    fetch('live-snapshot.json', {cache:'no-store'})
+      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(d){
+        var a = d.account || {}, fmtp = d.recent_trades || [];
+        document.getElementById('live-synced').textContent =
+          '已同步 · 同步时间 ' + d.synced_at + ' · 数据来源：东方财富组合详情接口（组合ID ' + d.combin_id + '）';
+        document.getElementById('lv-assets').textContent = '¥' + fmt(a.total_assets);
+        document.getElementById('lv-assets-sub').textContent = '人为控制实际本金5万 · 管理人 ' + (d.manager||'');
+        var z = a.total_return_pct; document.getElementById('lv-zsyl').textContent = (z>0?'+':'') + z + '%';
+        document.getElementById('lv-pos').textContent = (a.position_pct==null?'—':a.position_pct+'%');
+        document.getElementById('lv-pos-sub').textContent = '实际动用资金';
+        document.getElementById('lv-rate').textContent = (a.deal_rate==null?'—':a.deal_rate+'%');
+        document.getElementById('lv-rate-sub').textContent = a.deal_win + '胜 / ' + a.deal_fail + '负';
+        document.getElementById('lv-cnt').textContent = d.trade_count + ' 笔';
+
+        // 持仓表
+        var pos = d.positions || [];
+        var ph = '<div style="font-size:12px;color:var(--muted);letter-spacing:.05em;margin-bottom:8px">官方当前持仓</div>';
+        pos.forEach(function(p){
+          var up = p.return_pct>=0;
+          ph += '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px dashed var(--rule)">'
+            + '<div style="min-width:84px"><div style="font-weight:700">'+p.name+'</div><div style="font-size:11px;color:var(--muted)">'+p.code+' · 持'+p.days+'天</div></div>'
+            + '<div style="flex:1;text-align:center;color:var(--muted);font-size:12px">'+p.shares+'股 · 成本'+p.cost+'</div>'
+            + '<div style="text-align:right;min-width:120px"><div class="mono" style="font-weight:700">¥'+p.price+' <span style="font-size:12px">('+(p.pct>0?'+':'')+p.pct+'%)</span></div>'
+            + '<div style="font-size:12px;'+(up?'color:var(--green)':'color:var(--red)')+'">持仓收益 '+(p.return_pct>0?'+':'')+p.return_pct+'%</div></div></div>';
+        });
+        document.getElementById('live-positions').innerHTML = ph;
+
+        // 最近调仓
+        var tr = '<div style="font-size:12px;color:var(--muted);letter-spacing:.05em;margin-bottom:8px">最近调仓（东财记录）</div>';
+        fmtp.forEach(function(t){
+          var isBuy = t.mmbz==='买';
+          tr += '<div style="display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--rule);border-radius:8px;padding:6px 10px;margin:0 8px 8px 0;font-size:12px">'
+            + '<span style="color:'+(isBuy?'var(--green)':'var(--red)')+';font-weight:700">'+t.mmbz+'</span>'
+            + '<span>'+(t.name||'')+'</span><span class="mono" style="color:var(--muted)">@'+t.price+'</span><span class="mono" style="color:var(--muted)">'+t.time+'</span></div>';
+        });
+        document.getElementById('live-trades').innerHTML = tr;
+      })
+      .catch(function(){
+        document.getElementById('live-synced').textContent =
+          '快照文件(live-snapshot.json)未找到或读取失败——请先运行 sync_eastmoney.py 生成，或稍后刷新。当前为静态占位。';
+      });
+  }
+  load();
+})();
+</script>
 </body>
 </html>
