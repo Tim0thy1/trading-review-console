@@ -35,8 +35,8 @@
 
   // ============ CHART 1: 账户净值曲线 ============
   var c1 = init('chart-equity', 340);
-  var eqDates = ['07-14','07-15','07-16','07-17','07-20','07-21','07-22','07-23','07-24','07-27','07-28','07-29','07-30','07-31','08-03','08-04','08-05','08-06','08-07','08-10','08-11','08-12','08-13','08-14','08-17','08-18','08-19'];
-  var eqVals = [49899.85,51001.5,50100.15,49499.25,51602.4,51802.7,53305.0,53104.7,50400.6,51602.4,51101.7,51602.4,51402.1,51101.7,50701.1,51402.1,53805.7,53905.9,55508.3,55508.3,54406.6,56100.0,55825.0,56650.0,57300.0,57207.62,52959.63];
+  var eqDates = ['07-14','07-15','07-16','07-17','07-20','07-21','07-22','07-23','07-24','07-27','07-28','07-29','07-30','07-31','08-03','08-04','08-05','08-06','08-07','08-10','08-11','08-12','08-13','08-14','08-17','08-18','08-19','08-20'];
+  var eqVals = [49899.85,51001.5,50100.15,49499.25,51602.4,51802.7,53305.0,53104.7,50400.6,51602.4,51101.7,51602.4,51402.1,51101.7,50701.1,51402.1,53805.7,53905.9,55508.3,55508.3,54406.6,56100.0,55825.0,56650.0,57300.0,57207.62,52959.63,53992.63];
   c1.setOption({
     animation: false,
     tooltip: { trigger: 'axis', appendToBody: true, valueFormatter: function(v){ return '¥' + Number(v).toLocaleString(); } },
@@ -52,7 +52,7 @@
         data: [
           { coord: [eqDates.length - 1, eqVals[eqVals.length - 1]], symbol: 'circle', symbolSize: 10, itemStyle: { color: accent2 } }
         ],
-        label: { show: true, formatter: '¥52,960', position: 'top', color: accent2, fontFamily: 'JetBrainsMono', fontSize: 11 }
+        label: { show: true, formatter: '¥53,993', position: 'top', color: accent2, fontFamily: 'JetBrainsMono', fontSize: 11 }
       }
     }]
   });
@@ -61,9 +61,9 @@
   // ============ CHART 2: 盈亏构成 (diverging bar) ============
   var c2 = init('chart-pnl', 300);
   var pnlData = [
-    { name: '亨通光电浮盈', v: 4532, c: green },
-    { name: '申菱环境浮亏', v: -2101, c: red },
-    { name: '星源材质浮亏', v: -655, c: red },
+    { name: '亨通光电浮盈', v: 5465, c: green },
+    { name: '申菱环境浮亏', v: -2161, c: red },
+    { name: '星源材质浮亏', v: -495, c: red },
     { name: '已实现落袋', v: 1183, c: green }
   ];
   c2.setOption({
@@ -91,10 +91,10 @@
       label: { show: true, formatter: '{b}\n{d}%', color: ink, fontSize: 11 },
       labelLine: { lineStyle: { color: rule } },
       data: [
-        { value: 32.8, name: '申菱环境', itemStyle: { color: accent } },
-        { value: 33.4, name: '亨通光电', itemStyle: { color: accent2 } },
-        { value: 27.2, name: '星源材质', itemStyle: { color: warn } },
-        { value: 6.6, name: '现金', itemStyle: { color: muted } }
+        { value: 32.0, name: '申菱环境', itemStyle: { color: accent } },
+        { value: 34.5, name: '亨通光电', itemStyle: { color: accent2 } },
+        { value: 27.0, name: '星源材质', itemStyle: { color: warn } },
+        { value: 6.5, name: '现金', itemStyle: { color: muted } }
       ]
     }]
   });
@@ -134,9 +134,9 @@
       data: [
         { value: -415, itemStyle: { color: red, borderRadius: [4,4,0,0] } },
         { value: 1658, itemStyle: { color: green, borderRadius: [4,4,0,0], opacity: 0.7 } },
-        { value: -2101, itemStyle: { color: red, borderRadius: [4,4,0,0] } },
-        { value: 4532, itemStyle: { color: accent2, borderRadius: [4,4,0,0] } },
-        { value: -655, itemStyle: { color: warn, borderRadius: [4,4,0,0] } }
+        { value: -2161, itemStyle: { color: red, borderRadius: [4,4,0,0] } },
+        { value: 5465, itemStyle: { color: accent2, borderRadius: [4,4,0,0] } },
+        { value: -495, itemStyle: { color: warn, borderRadius: [4,4,0,0] } }
       ],
       label: { show: true, position: 'top', color: ink, fontFamily: 'JetBrainsMono', fontSize: 12, formatter: function(p){ return (p.value>=0?'+':'') + '¥' + p.value.toLocaleString(); } }
     }]
@@ -279,7 +279,7 @@
         h += '</div>';
       }
       h += '</div>';
-      h += '<div class="cal-summary">本金 ¥50,000 → 当前 ¥' + eqVals[eqVals.length-1].toLocaleString(undefined,{maximumFractionDigits:0}) + ' · 累计 <strong style="color:var(--green)">+5.92%</strong></div>';
+      h += '<div class="cal-summary">本金 ¥50,000 → 当前 ¥' + eqVals[eqVals.length-1].toLocaleString(undefined,{maximumFractionDigits:0}) + ' · 累计 <strong style="color:var(--green)">+7.99%</strong></div>';
       calEl.innerHTML = h;
       calEl.querySelectorAll('.cal-mc[data-ym]').forEach(function(c) {
         c.addEventListener('click', function() { renderMonth(this.getAttribute('data-ym')); });
@@ -361,13 +361,13 @@
   if (c11El) {
     var c11 = echarts.init(c11El, null, { renderer: 'svg' });
     // 日期点位映射（交易日序号）
-    var evMap = { '7/14': 0, '7/23': 1.2, '8/4': 2.6, '8/12': 3.8, '8/13': 4.6, '8/14': 5.4, '8/17': 6.6, '8/19': 8.0 };
+    var evMap = { '7/14': 0, '7/23': 1.2, '8/4': 2.6, '8/12': 3.8, '8/13': 4.6, '8/14': 5.4, '8/17': 6.6, '8/19': 8.0, '8/20': 8.8 };
     var stocks = [
       { name: '兖矿能源', from: '7/14', to: '8/4', color: red },
       { name: '大金重工', from: '7/23', to: '8/17', color: green },
-      { name: '亨通光电', from: '8/4', to: '8/19', color: accent },
-      { name: '申菱环境', from: '8/17', to: '8/19', color: accent2 },
-      { name: '星源材质', from: '8/17', to: '8/19', color: warn }
+      { name: '亨通光电', from: '8/4', to: '8/20', color: accent },
+      { name: '申菱环境', from: '8/17', to: '8/20', color: accent2 },
+      { name: '星源材质', from: '8/17', to: '8/20', color: warn }
     ];
     var custom = stocks.map(function(s, i) {
       var row = 5 - i;
@@ -389,7 +389,7 @@
     });
     var today = {
       type: 'line',
-      data: [[evMap['8/19'], -0.6], [evMap['8/19'], 5.6]],
+      data: [[evMap['8/20'], -0.6], [evMap['8/20'], 5.6]],
       symbol: 'none', lineStyle: { color: accent2, width: 2, type: 'dashed' }, z: 3
     };
     c11.setOption({
@@ -400,7 +400,7 @@
       },
       grid: { left: 8, right: 24, top: 22, bottom: 12, containLabel: true },
       xAxis: {
-        type: 'value', min: -0.3, max: 8.4, interval: 1.4,
+        type: 'value', min: -0.3, max: 9.2, interval: 1.4,
         axisLabel: {
           color: muted, fontSize: 10.5, fontFamily: 'JetBrainsMono',
           formatter: function(v) {
@@ -428,7 +428,7 @@
   var c12El = document.getElementById('chart-winrate-pnl');
   if (c12El) {
     var c12 = echarts.init(c12El, null, { renderer: 'svg' });
-    var WR = { names: ['兖矿能源','大金重工','亨通光电','申菱环境','星源材质'], pnl: [-415, 1658, 4532, -2101, -655], pct: [-1.95, 4.6, 34.49, -10.79, -4.35] };
+    var WR = { names: ['兖矿能源','大金重工','亨通光电','申菱环境','星源材质'], pnl: [-415, 1658, 5465, -2161, -495], pct: [-1.95, 4.6, 41.59, -11.10, -3.29] };
     var allPos = WR.pnl.every(function(v) { return v >= 0; });
     c12.setOption({
       animation: false,
