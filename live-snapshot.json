@@ -1,20 +1,20 @@
 {
-  "synced_at": "2026-08-20 08:13:32",
+  "synced_at": "2026-08-21 07:23:28",
   "combin_id": "261944300000051189",
   "combin_name": "翻81681",
   "manager": "聪明的企业家6",
   "account": {
     "initial_principal": 50000,
     "principal_label": "人为控制实际本金5万",
-    "total_assets": 53992.630000000005,
-    "total_return_pct": 7.99,
-    "position_pct": 93.49,
+    "total_assets": 54570.630000000005,
+    "total_return_pct": 9.14,
+    "position_pct": 93.56,
     "cash": 3516.63,
     "start_date": "2026-07-14",
     "deal_rate": 40.0,
     "deal_win": 2,
     "deal_fail": 3,
-    "basis": "盈亏绝对平移：真实总资产=5万+app累计盈亏3,992.63=53,992.63，收益率7.99%。累计盈亏含分红/除权/手续费等一切，持仓市值50,476.00/持仓盈亏+3,992.63均来自东财app口径"
+    "basis": "盈亏绝对平移：真实总资产=5万+app累计盈亏4,570.63=54,570.63，收益率9.14%。累计盈亏含分红/除权/手续费等一切，持仓市值51,054.00/持仓盈亏+4,570.63均来自东财app口径"
   },
   "prev_snapshot_note": "如需当日盈亏需与前一日快照对照：当日真实盈亏 = 今日真实总资产 - 昨日真实总资产",
   "positions": [
@@ -23,30 +23,30 @@
       "code": "300568",
       "shares": 1000,
       "cost": 15.065,
-      "price": 14.57,
-      "pct": 1.11,
-      "return_pct": -3.29,
-      "days": 4
+      "price": 14.48,
+      "pct": -0.62,
+      "return_pct": -3.88,
+      "days": 5
     },
     {
       "name": "申菱环境",
       "code": "301018",
       "shares": 200,
       "cost": 97.303,
-      "price": 86.5,
-      "pct": -0.35,
-      "return_pct": -11.1,
-      "days": 4
+      "price": 89.6,
+      "pct": 3.58,
+      "return_pct": -7.92,
+      "days": 5
     },
     {
       "name": "亨通光电",
       "code": "600487",
       "shares": 300,
       "cost": 43.802,
-      "price": 62.02,
-      "pct": 5.28,
-      "return_pct": 41.59,
-      "days": 17
+      "price": 62.18,
+      "pct": 0.26,
+      "return_pct": 41.96,
+      "days": 18
     }
   ],
   "recent_trades": [
