@@ -7,20 +7,20 @@
 <title>模拟盘交易系统 · 复盘终端</title>
 <style>
   :root{
-    --bg:#0b0f15;
-    --bg2:#121a24;
-    --bg3:#1a2430;
-    --ink:#e8edf3;
-    --muted:#8794a3;
-    --rule:#223040;
-    --accent:#4fd1c5;
-    --accent2:#f5a623;
-    --warn:#f5a623;
-    --green:#2fbf8f;
-    --green-dim:rgba(47,191,143,.14);
-    --red:#ef5350;
-    --red-dim:rgba(239,83,80,.14);
-    --amber-dim:rgba(245,166,35,.13);
+    --bg:#FBFAF8;
+    --bg2:#ffffff;
+    --bg3:#F5F2EE;
+    --ink:#403C38;
+    --muted:#66615A;
+    --rule:#EBE7E2;
+    --accent:#0D9488;
+    --accent2:#D97706;
+    --warn:#D97706;
+    --green:#16A34A;
+    --green-dim:rgba(22,163,74,.12);
+    --red:#DC2626;
+    --red-dim:rgba(220,38,38,.12);
+    --amber-dim:rgba(217,119,6,.10);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
@@ -76,7 +76,7 @@
     width:38px;height:38px;border-radius:10px;flex-shrink:0;
     background:linear-gradient(135deg,var(--accent),var(--accent2));
     display:flex;align-items:center;justify-content:center;
-    font-family:'BricolageGrotesque';font-weight:700;color:#0b0f15;font-size:19px;
+    font-family:'BricolageGrotesque';font-weight:700;color:#ffffff;font-size:19px;
   }
   .brand-name{font-family:'BricolageGrotesque';font-weight:700;font-size:16px;line-height:1.2}
   .brand-sub{font-size:11px;color:var(--muted);letter-spacing:.04em}
@@ -87,7 +87,7 @@
     border:1px solid transparent;transition:all .18s ease;user-select:none;
   }
   .nav-item:hover{color:var(--ink);background:var(--bg3)}
-  .nav-item.active{color:var(--accent);background:var(--amber-dim)0;border-color:var(--rule);background:linear-gradient(135deg,rgba(79,209,197,.12),rgba(245,166,35,.08))}
+  .nav-item.active{color:var(--accent);border-color:var(--rule);background:linear-gradient(135deg,rgba(13,148,136,.12),rgba(217,119,6,.08))}
   .nav-item.active .nav-icon{color:var(--accent)}
   .nav-icon{width:18px;height:18px;flex-shrink:0;opacity:.9}
   .nav-item.active .nav-icon{opacity:1}
@@ -124,8 +124,8 @@
   .pos-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
   .pos-name{font-family:'BricolageGrotesque';font-weight:700;font-size:18px}
   .pos-code{font-size:12px;color:var(--muted);font-family:'JetBrainsMono'}
-  .pos-tag{font-size:11px;padding:3px 9px;border-radius:20px;background:var(--green-dim);color:var(--green);border:1px solid rgba(47,191,143,.35)}
-  .pos-tag.hold{background:var(--amber-dim);color:var(--accent2);border-color:rgba(245,166,35,.35)}
+  .pos-tag{font-size:11px;padding:3px 9px;border-radius:20px;background:var(--green-dim);color:var(--green);border:1px solid rgba(22,163,74,.35)}
+  .pos-tag.hold{background:var(--amber-dim);color:var(--accent2);border-color:rgba(217,119,6,.35)}
   .pos-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
   .pm{background:var(--bg3);border-radius:9px;padding:11px 13px}
   .pm-label{font-size:11px;color:var(--muted);margin-bottom:3px}
@@ -137,7 +137,7 @@
   .lstep{flex:1;text-align:center;padding:10px 6px;border-radius:8px;background:var(--bg3);border:1px solid var(--rule)}
   .lstep .st{font-size:11px;color:var(--muted)}
   .lstep .sv{font-family:'JetBrainsMono';font-weight:700;font-size:13px;margin-top:2px}
-  .lstep.on{border-color:var(--accent);background:linear-gradient(135deg,rgba(79,209,197,.14),rgba(79,209,197,.05))}
+  .lstep.on{border-color:var(--accent);background:linear-gradient(135deg,rgba(13,148,136,.14),rgba(13,148,136,.05))}
   .lstep.on .sv{color:var(--accent)}
   .lstep.done .sv{color:var(--green)}
 
@@ -166,7 +166,7 @@
   /* Intraday BS */
   .tab-btn{background:var(--bg2);color:var(--muted);border:1px solid var(--rule);border-radius:999px;padding:7px 14px;font-size:12.5px;cursor:pointer;transition:all .15s}
   .tab-btn:hover{color:var(--ink);border-color:var(--accent)}
-  .tab-btn.active{background:linear-gradient(135deg,rgba(79,209,197,.16),rgba(245,166,35,.12));color:var(--accent);border-color:var(--accent)}
+  .tab-btn.active{background:linear-gradient(135deg,rgba(13,148,136,.16),rgba(217,119,6,.12));color:var(--accent);border-color:var(--accent)}
   .intraday-card{background:var(--bg2);border:1px solid var(--rule);border-radius:14px;padding:18px;margin-bottom:18px}
   .intraday-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:12px}
   .intraday-title{font-size:15px;font-weight:700}
@@ -204,7 +204,7 @@
   /* Recommendation blocks */
   .rec{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--rule)}
   .rec:last-child{border-bottom:none}
-  .rec-num{width:30px;height:30px;border-radius:8px;flex-shrink:0;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0f15;font-family:'BricolageGrotesque';font-weight:700;display:flex;align-items:center;justify-content:center}
+  .rec-num{width:30px;height:30px;border-radius:8px;flex-shrink:0;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#ffffff;font-family:'BricolageGrotesque';font-weight:700;display:flex;align-items:center;justify-content:center}
   .rec h4{font-size:15px;margin-bottom:4px}
   .rec p{font-size:13px;color:var(--muted)}
 
@@ -223,12 +223,12 @@
   .note-editor textarea:focus{outline:none;border-color:var(--accent)}
   .note-toolbar{display:flex;align-items:center;gap:12px;margin-top:10px}
   .note-save{
-    background:linear-gradient(135deg,rgba(79,209,197,.2),rgba(245,166,35,.14));
-    color:var(--accent);border:1px solid rgba(79,209,197,.4);border-radius:7px;
+    background:linear-gradient(135deg,rgba(13,148,136,.2),rgba(217,119,6,.14));
+    color:var(--accent);border:1px solid rgba(13,148,136,.4);border-radius:7px;
     padding:6px 16px;font-size:13px;font-weight:600;cursor:pointer;transition:all .18s ease;
   }
-  .note-save:hover{background:linear-gradient(135deg,rgba(79,209,197,.32),rgba(245,166,35,.22))}
-  .note-save.saved{color:var(--green);border-color:rgba(47,191,143,.5)}
+  .note-save:hover{background:linear-gradient(135deg,rgba(13,148,136,.32),rgba(217,119,6,.22))}
+  .note-save.saved{color:var(--green);border-color:rgba(22,163,74,.5)}
   .note-status{font-size:12px;color:var(--muted);transition:all .2s ease}
   .note-status.saved{color:var(--green)}
   .note-inline input{
@@ -244,13 +244,13 @@
   /* ===== 修炼境界 ===== */
   .realm-steps{display:flex;flex-direction:column;gap:14px}
   .realm-step{background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;transition:border-color .2s ease}
-  .realm-step.on{border-color:var(--accent2);background:linear-gradient(135deg,rgba(245,166,35,.09),rgba(79,209,197,.05))}
+  .realm-step.on{border-color:var(--accent2);background:linear-gradient(135deg,rgba(217,119,6,.09),rgba(13,148,136,.05))}
   .rs-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
   .rs-badge{font-family:'BricolageGrotesque';font-weight:700;font-size:14px;padding:4px 12px;border-radius:20px;background:var(--bg2);border:1px solid var(--rule);color:var(--ink)}
-  .realm-step.on .rs-badge{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0f15;border-color:transparent}
+  .realm-step.on .rs-badge{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#ffffff;border-color:transparent}
   .rs-range{font-family:'JetBrainsMono';font-size:12px;color:var(--muted)}
   .rs-status{font-size:11px;padding:2px 10px;border-radius:20px;font-weight:600}
-  .realm-step.on .rs-status{background:var(--accent2);color:#0b0f15}
+  .realm-step.on .rs-status{background:var(--accent2);color:#ffffff}
   .realm-step:not(.on) .rs-status{background:var(--bg2);color:var(--muted);border:1px solid var(--rule)}
   .rs-title{font-family:'BricolageGrotesque';font-weight:700;font-size:16px;margin-bottom:12px}
   .rs-ability{display:flex;flex-direction:column;gap:8px}
@@ -259,7 +259,7 @@
   .realm-journal .rs-dim{border-bottom:1px solid var(--rule);padding:10px 0}
   .realm-journal .rs-dim:last-child{border-bottom:none}
   table .realm-dim{opacity:.55}
-  table .realm-on td{background:rgba(245,166,35,.08)}
+  table .realm-on td{background:rgba(217,119,6,.08)}
   table .realm-on td:first-child{color:var(--accent2)}
 
   @media (max-width:900px){
@@ -281,10 +281,10 @@
   .cal-year{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
   @media(max-width:600px){.cal-year{grid-template-columns:repeat(3,1fr)}}
   .cal-mc{background:var(--bg2);border:1px solid var(--rule);border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .15s}
-  .cal-mc:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(124,92,255,.12)}
+  .cal-mc:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(13,148,136,.12)}
   .cal-mc.empty{cursor:default;opacity:.4}
   .cal-mc.empty:hover{border-color:var(--rule);transform:none;box-shadow:none}
-  .cal-mc.now{border-color:var(--accent2);background:linear-gradient(135deg,rgba(245,166,35,.08),rgba(79,209,197,.06))}
+  .cal-mc.now{border-color:var(--accent2);background:linear-gradient(135deg,rgba(217,119,6,.08),rgba(13,148,136,.06))}
   .cal-mc .mc-name{font-size:13px;color:var(--muted);margin-bottom:6px}
   .cal-mc .mc-ret{font-size:17px;font-weight:700;font-family:var(--font-mono,'JetBrainsMono',monospace)}
   .cal-mc .mc-sub{font-size:11px;color:var(--muted);margin-top:4px}
@@ -301,7 +301,7 @@
   .cal-cell{aspect-ratio:1;border-radius:6px;padding:4px;display:flex;flex-direction:column;justify-content:center;align-items:center;border:1px solid transparent}
   .cal-cell.non{background:var(--bg2);opacity:.35}
   .cal-cell.blank{background:transparent;border:none}
-  .cal-cell.up{background:rgba(79,209,197,.14);border-color:rgba(79,209,197,.3)}
+  .cal-cell.up{background:rgba(13,148,136,.14);border-color:rgba(13,148,136,.3)}
   .cal-cell.dn{background:rgba(255,92,92,.12);border-color:rgba(255,92,92,.25)}
   .cal-cell .dc-num{font-size:13px;font-weight:600;color:var(--ink)}
   .cal-cell.non .dc-num{color:var(--muted)}
@@ -370,7 +370,7 @@
   <main class="main">
 
     <!-- ===== 东财实时同步面板 ===== -->
-    <section class="panel" id="live-panel" style="margin-bottom:22px;border-color:rgba(79,209,197,.35);background:linear-gradient(180deg,rgba(79,209,197,.06),var(--bg2))">
+    <section class="panel" id="live-panel" style="margin-bottom:22px;border-color:rgba(13,148,136,.35);background:linear-gradient(180deg,rgba(13,148,136,.06),var(--bg2))">
       <div class="m-kicker" style="margin-bottom:6px">🛰️ 东财实时同步</div>
       <div class="panel-title" style="font-size:16px">组合「翻81681」· 官方持仓快照</div>
       <div class="panel-sub" id="live-synced" style="margin-bottom:14px">正在连接东方财富组合接口…</div>
@@ -411,7 +411,7 @@
         <figcaption>收益日历 · 点击月份查看每日收益</figcaption>
         <div id="chart-monthly" class="cal-wrap"></div>
         <div class="cal-legend">
-          <span><span class="lg-box" style="background:rgba(79,209,197,.14);border:1px solid rgba(79,209,197,.3)"></span>交易日盈利</span>
+          <span><span class="lg-box" style="background:rgba(13,148,136,.14);border:1px solid rgba(13,148,136,.3)"></span>交易日盈利</span>
           <span><span class="lg-box" style="background:rgba(255,92,92,.12);border:1px solid rgba(255,92,92,.25)"></span>交易日亏损</span>
           <span><span class="lg-box" style="background:var(--bg2);opacity:.35"></span>非交易日</span>
         </div>
@@ -946,7 +946,7 @@
             <table style="width:100%;font-size:13px;border-collapse:collapse">
               <thead><tr><th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">股票</th><th style="padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">状态</th><th style="text-align:right;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">净收益</th><th style="text-align:right;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">盈亏%</th></tr></thead>
               <tbody>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>兖矿能源</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill" style="background:rgba(239,83,80,.14);color:var(--red)">已清仓 · 亏</span></td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-¥415</td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-1.95%</td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>兖矿能源</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill" style="background:rgba(220,38,38,.14);color:var(--red)">已清仓 · 亏</span></td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-¥415</td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-1.95%</td></tr>
                 <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>大金重工</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill g">已清仓 · 盈</span></td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+¥1,658</td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+4.6%</td></tr>
                 <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>亨通光电</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill g">持有中 · 盈</span></td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+¥4,532.40</td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+34.49%</td></tr>
                 <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>申菱环境</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill r">持有中 · 亏</span></td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-¥2,100.60</td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-10.79%</td></tr>
@@ -1105,7 +1105,7 @@
       </div>
 
       <!-- ===== 回调应对复盘（8/21） ===== -->
-      <div class="panel" style="margin-top:20px;border-color:rgba(79,209,197,.45);background:linear-gradient(180deg,rgba(79,209,197,.06),var(--bg2))">
+      <div class="panel" style="margin-top:20px;border-color:rgba(13,148,136,.45);background:linear-gradient(180deg,rgba(13,148,136,.06),var(--bg2))">
         <div class="m-kicker" style="margin-bottom:6px">📈 回撤后复盘 · 8/21 收盘</div>
         <div class="panel-title">「续涨日验证了什么？」——亨通利润垫继续增厚，申菱反弹收窄亏损</div>
         <div class="panel-sub">8/21 亨通续涨 +0.26%、申菱反弹 +3.58%，账户继续回升。复盘执行了什么、什么没执行。</div>
@@ -1145,7 +1145,7 @@
       </div>
 
       <!-- ===== 阶段目标 & 验收标准（顶层锚点） ===== -->
-      <div class="panel" style="margin-top:20px;border-color:rgba(245,166,35,.5);background:linear-gradient(180deg,rgba(245,166,35,.06),var(--bg2))">
+      <div class="panel" style="margin-top:20px;border-color:rgba(217,119,6,.5);background:linear-gradient(180deg,rgba(217,119,6,.06),var(--bg2))">
         <div class="m-kicker" style="margin-bottom:6px">🎯 阶段目标 · 全系统的验收标准</div>
         <div class="panel-title" style="margin-bottom:4px">规模信号：用 5–7 个月完善交易系统，再上小资金实盘</div>
         <div class="panel-sub">时间线、里程碑与三条硬验收线——这是整个训练/复盘系统为之服务的最终目标</div>
@@ -1179,19 +1179,19 @@
       </div>
 
       <!-- ===== 阶段定位 & 毕业标准（v2 评分逻辑重构） ===== -->
-      <div class="panel" style="margin-top:20px;border-color:rgba(124,92,255,.4);background:linear-gradient(180deg,rgba(124,92,255,.06),var(--bg2))">
+      <div class="panel" style="margin-top:20px;border-color:rgba(13,148,136,.4);background:linear-gradient(180deg,rgba(13,148,136,.06),var(--bg2))">
         <div class="m-kicker" style="margin-bottom:6px">🧭 阶段定位 · 评分逻辑 v2</div>
         <div class="panel-title" style="margin-bottom:4px">本阶段定义：不是「模拟盘赚钱阶段」，而是「交易系统暴露问题阶段」</div>
         <div class="panel-sub">"28 个交易日 +9.14%"既不能证明会交易，也不必因是模拟盘而全盘否定。这段时间的真实产出，是暴露并记录下系统的问题——8/19 一记重挫就把此前 14.42% 的浮盈打成 5.92%，8/21 续涨至 9.14%，但仓位纪律问题始终未解决。</div>
 
-        <div class="callout" style="margin-top:12px;border-color:var(--orange);background:rgba(245,166,35,.07)"><strong style="color:var(--orange)">⚠️ 复盘者偏差预警：</strong>本报告存在已知的"结果导向偏差"——<strong>有些买入是 AI 判断、有些是自己写给 AI 的，且是在已知结果以后再去解释"为什么买、为什么卖"，很容易把事后看到的逻辑包装成当时真正存在的逻辑。</strong>因此，报告中一切"能力/优点"类结论，读取时都应默认打折扣；真正可信的是"已发生的事实"层面（成交价、落袋金额、操作动作），而非"归因解释"层面。</div>
+        <div class="callout" style="margin-top:12px;border-color:var(--orange);background:rgba(217,119,6,.07)"><strong style="color:var(--orange)">⚠️ 复盘者偏差预警：</strong>本报告存在已知的"结果导向偏差"——<strong>有些买入是 AI 判断、有些是自己写给 AI 的，且是在已知结果以后再去解释"为什么买、为什么卖"，很容易把事后看到的逻辑包装成当时真正存在的逻辑。</strong>因此，报告中一切"能力/优点"类结论，读取时都应默认打折扣；真正可信的是"已发生的事实"层面（成交价、落袋金额、操作动作），而非"归因解释"层面。</div>
 
         <!-- 五阶段路线 -->
         <div style="margin-top:16px">
           <div style="font-size:13px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:10px">🗺️ 五阶段成长路线 · 当前定位在第二阶段</div>
           <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px">
             <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px"><div style="font-family:'JetBrainsMono';font-weight:700;color:var(--green);font-size:13px">第一阶段</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin:4px 0">能不能交易</div><div style="font-size:12px;color:var(--muted);line-height:1.55">掌握基础买卖、能盈利</div><div style="margin-top:8px;font-size:12px;color:var(--green)">✓ 已完成一部分</div></div>
-            <div style="background:var(--bg3);border:1px solid rgba(124,92,255,.6);border-radius:12px;padding:14px;position:relative"><div style="position:absolute;top:-10px;right:8px;background:var(--accent2);color:#fff;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700">当前</div><div style="font-family:'JetBrainsMono';font-weight:700;color:var(--accent2);font-size:13px">第二阶段</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin:4px 0">能不能不乱交易</div><div style="font-size:12px;color:var(--muted);line-height:1.55">对抗想交易的冲动，建立"不做什么"的纪律</div><div style="margin-top:8px;font-size:12px;color:var(--orange)">▶ 正在进行</div></div>
+            <div style="background:var(--bg3);border:1px solid rgba(13,148,136,.6);border-radius:12px;padding:14px;position:relative"><div style="position:absolute;top:-10px;right:8px;background:var(--accent2);color:#fff;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700">当前</div><div style="font-family:'JetBrainsMono';font-weight:700;color:var(--accent2);font-size:13px">第二阶段</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin:4px 0">能不能不乱交易</div><div style="font-size:12px;color:var(--muted);line-height:1.55">对抗想交易的冲动，建立"不做什么"的纪律</div><div style="margin-top:8px;font-size:12px;color:var(--orange)">▶ 正在进行</div></div>
             <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px"><div style="font-family:'JetBrainsMono';font-weight:700;color:var(--muted);font-size:13px">第三阶段</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin:4px 0">跨市场环境</div><div style="font-size:12px;color:var(--muted);line-height:1.55">验证方法能否跨越顺风/震荡/回调</div><div style="margin-top:8px;font-size:12px;color:var(--muted)">○ 未开始</div></div>
             <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px"><div style="font-family:'JetBrainsMono';font-weight:700;color:var(--muted);font-size:13px">第四阶段</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin:4px 0">小资金实盘</div><div style="font-size:12px;color:var(--muted);line-height:1.55">真金白银带来的心理反馈，是下一阶段的实验而非毕业考</div><div style="margin-top:8px;font-size:12px;color:var(--muted)">○ 未开始</div></div>
             <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px"><div style="font-family:'JetBrainsMono';font-weight:700;color:var(--muted);font-size:13px">第五阶段</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin:4px 0">稳定优势·复利</div><div style="font-size:12px;color:var(--muted);line-height:1.55">确认有稳定优势后，再谈复利与大资金</div><div style="margin-top:8px;font-size:12px;color:var(--muted)">○ 未开始</div></div>
@@ -1277,7 +1277,7 @@
       <div class="panel" style="margin-top:20px">
         <div class="panel-title">改进建议</div>
         <div class="panel-sub">按优先级排序，可直接落地</div>
-        <div class="rec" style="border-color:rgba(245,166,35,.55);background:rgba(245,166,35,.06)">
+        <div class="rec" style="border-color:rgba(217,119,6,.55);background:rgba(217,119,6,.06)">
           <div class="rec-num" style="background:var(--orange);color:#fff">★</div>
           <div><h4>📏 新增总仓位纪律：满 9 成后不得连续超过 3 个交易日，到期强制降仓</h4><p>这是本次新增的<strong>核心仓位纪律</strong>（替代已移除的"单票 30%"硬上限）：<strong>一旦总仓位 ≥ 90%，开始倒计时，最多允许连续 3 个交易日维持满仓；第 4 个交易日开盘前，必须把总仓位强制降到 ≤ 80%</strong>（卖掉最弱/最赚已兑现的，至少腾出 1 成现金）。逻辑：满仓 9 成以上意味着几乎没有回旋余地，一旦遇回调就会被动杀跌或扛单；用它逼自己"有后备，不梭哈"。执行记录应纳入每日复盘：标记满仓起算日与剩余天数。</p></div>
         </div>
@@ -1308,7 +1308,7 @@
       </div>
 
       <!-- ===== 每笔交易记录方法论（"不做什么"实战模板） ===== -->
-      <div class="panel" style="margin-top:20px;border-color:rgba(47,191,143,.4);background:linear-gradient(180deg,rgba(47,191,143,.05),var(--bg2))">
+      <div class="panel" style="margin-top:20px;border-color:rgba(22,163,74,.4);background:linear-gradient(180deg,rgba(22,163,74,.05),var(--bg2))">
         <div class="m-kicker" style="margin-bottom:6px">📒 每笔交易记录 · v2 方法论</div>
         <div class="panel-title" style="margin-bottom:4px">从"为什么买"进化到"为什么这次不该买"</div>
         <div class="panel-sub">你目前的问题不是没有交易机会，而是总能给自己找到一个交易理由——MACD 强了可以买、板块热了可以买、突破了可以买、跌下来觉得便宜可以买、止盈了觉得踏空可以再买。真正成熟的系统，应该能告诉你："<strong>这个票看起来不错，但今天就是不能买。</strong>"</div>
@@ -1319,7 +1319,7 @@
             <div style="font-size:14px;font-weight:700;color:var(--ink);margin:4px 0">如果我不买，会发生什么？</div>
             <div style="font-size:12.5px;color:var(--muted);line-height:1.6">强迫区分"这笔收益会不会因为我不参与而真的损失"。多数情况下答案是：错过一个机会，或不发生什么——这会帮你划清"必要交易"与"可做可不做的交易"。</div>
           </div>
-          <div style="background:var(--bg3);border:1px solid rgba(239,83,80,.4);border-radius:12px;padding:16px">
+          <div style="background:var(--bg3);border:1px solid rgba(220,38,38,.4);border-radius:12px;padding:16px">
             <div style="font-family:'JetBrainsMono';font-weight:700;color:var(--red);font-size:13px">问题 ②（对你尤其重要）</div>
             <div style="font-size:14px;font-weight:700;color:var(--ink);margin:4px 0">什么情况下，我明确"不应该买"？</div>
             <div style="font-size:12.5px;color:var(--muted);line-height:1.6">给每个候选标的预写"不该买的红线"：比如"MACD 虽强但已放量滞涨"、"已错过最佳买点、追高无安全垫"、"止盈后当天情绪上头"、"跌破止损位、加仓摊成本"、"重仓已接近上限"。写得越具体，越能掐断情绪化追高。</div>
@@ -1333,12 +1333,12 @@
         <div class="panel-title">📝 阶段总结（37天 · 5票 · +9.14%）</div>
         <div class="panel-sub">2026-07-14 首笔建仓至今的完整复盘文字总结</div>
 
-        <div style="background:rgba(47,191,143,.07);border:1px solid rgba(47,191,143,.25);border-radius:12px;padding:18px 20px;margin-bottom:16px">
+        <div style="background:rgba(22,163,74,.07);border:1px solid rgba(22,163,74,.25);border-radius:12px;padding:18px 20px;margin-bottom:16px">
           <h4 style="color:var(--green);margin-bottom:8px;font-size:15px">💚 优点 · 做得好的地方</h4>
           <p style="font-size:14px;color:var(--ink);margin-bottom:6px"><strong>① 方向判断「貌似有效」，但含明显运气成分、且证据体系单一，需打折看待。</strong>从兖矿到风电（大金）到科技光通信（亨通）再到申菱，四只票都恰好落在有产业逻辑的方向上，亨通更是吃到 8 月科技主升浪（48.87→65.06，+33% + 8/21 收 62.18）、贡献账户绝大部分收益。但必须诚实承认一个事实：<strong>这一轮 A 股科技刚经历 7 月深度回调，随后走的是反抽行情，而你买卖的唯一判断招式是 MACD + 板块热度直觉，属于马后炮式的「恰好奏效」。</strong>你自己也认可，除了这两个理由，拿不出更坚定的买入证据。方向感有天赋成分，但把它直接夸成「选股能力强」是不公允的——同样的 MACD 手法，在兖矿上就把 +20% 浮盈做成 -1.95% 亏损出场。结论（v2 稳妥版）：<strong>方向判断值得继续研究，但目前样本太少、且刚好碰上一段行情，尚无足够证据证明其可复制。</strong>这比"我有选股天赋"安全得多。<p style="font-size:14px;color:var(--ink);margin-bottom:6px"><strong>② 止盈"结果层"有进步，但属即时反应、规则层纪律仍未建立。</strong>相比首只兖矿「最高浮盈 +19.98% 却最终 -1.95% 离场」的惨痛教训，后续落袋确实变多了：8/12 大金 +10% 减仓 +1,221、8/13 亨通 +23.57% 高抛 +2,293、8/14 做T +163、8/17 大金清仓 +437，累计 +¥4,114，卖出的 5 笔 4 笔盈利（80%）。<strong style="color:var(--ink)">但必须诚实区分：这些止盈大多是"涨到觉得够了"的即时反应，而非按预先写好的触发计划执行——赚了点才想起减、跌了点才决定砍，这正是"止盈结果在"而"计划纪律缺失"的本质。</strong>结果可以凭盘感碰出来，但要可复制，必须升级成规则。<p style="font-size:14px;color:var(--ink);margin-bottom:6px"><strong>③ 愿意用小仓试错、控制单票风险。</strong>申菱 FOMO 建仓只买了 100 股（投入 9,791 元，占总仓 16.5%），且意识到"加仓太快不行"、主动克制了继续加仓的冲动。8/18 虽新增星源第三票，但星源也是小仓（7.7%）。仍留有现金子弹（41.4%），不孤注一掷——缺点是同日两票齐开，仓位整体抬到了 58.6%。<p style="font-size:14px;color:var(--ink);margin-bottom:0"><strong>④ 有进取心、能正视短板并主动补课。</strong>明知道自己日内买卖点判断不好，没有逃避或自欺，而是主动立项做了一个「日内分时专题训练系统」去刻意练习止盈/加仓判断——这是所有优点里最值钱的一条：<strong>交易者的进步不靠天分，靠"识别短板 → 设计训练 → 反复验证"的自驱闭环</strong>，你已经把它跑通了第一圈。</p>
         </div>
 
-        <div style="background:rgba(239,83,80,.06);border:1px solid rgba(239,83,80,.22);border-radius:12px;padding:18px 20px">
+        <div style="background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.22);border-radius:12px;padding:18px 20px">
           <h4 style="color:var(--red);margin-bottom:8px;font-size:15px">⚠️ 缺点 · 需要改进的地方</h4>
           <p style="font-size:14px;color:var(--ink);margin-bottom:6px"><strong>① 情绪化交易是最大短板，FOMO 反复出现。</strong>8/17 上午刚清仓大金落袋 +437，仅隔 17 分钟就反手追高建仓申菱；次日 8/18 又在回调中叠加建仓星源——「止盈后急于追新」「回调中加仓」反复出现，本质是把"怕错过"的情绪当成了判断依据。<p style="font-size:14px;color:var(--ink);margin-bottom:6px"><strong>② 买卖点两端都易失控——左侧接刀 + 右侧追高。</strong>8/13、8/14 大金重工补仓是「左侧接刀」（41.92 仍下跌中硬接，随后继续走弱）；8/17 申菱建仓又是「右侧追高」。一支买在下跌途中、一支买在上涨末端，都是没等回踩、没等确认，纯靠直觉出手。<p style="font-size:14px;color:var(--ink);margin-bottom:6px"><strong>③ 持仓过多且集中度上升。</strong>亨通单票一度偏高，8/19 三票齐跌、总仓位 93.56% 逼近满仓、现金仅 6.44%；在重挫日满仓暴露，直接放大了单日 -8.50% 的净值回撤。<p style="font-size:14px;color:var(--ink);margin-bottom:0"><strong>④ 偏离了最初的框架定位——本该"以中线为主、用中线抚平短线波动"，却滑向了短线/日内为主。</strong>起初的目标很明确：不要做一个整天盯着分时的短线客，而是<strong>选中线逻辑（科技/风电修复），靠时间换空间、用更长的持有周期去抚平单日波动</strong>，从而实现盈利。但实际操作明显偏离：这段 28 个交易日里，做T 2 笔、高抛低吸、8/13-8/14 连续回补又卖飞、T+0 频繁进出一只 41% 的票却只落袋 +2,456——交易次数远超"中线持有"该有的样子，几近滑向"短线客"。同时重技术面、轻基本面：买入理由几乎全是 MACD/形态/板块热度，几乎不谈估值、业绩、景气度，这与"中线"要求的第二条腿（基本面支撑）是脱节的。根子上仍是怕错过短期波动的情绪在推动交易频次。<p style="font-size:14px;color:var(--ink);margin-bottom:0"><strong>⑤ 全部经验只在顺风行情里，逆风尚未被验证。</strong>（见上方「逆风考验」维度——目前仅 28 个交易日，都发生在科技回暖的顺风中，尚未面对大盘转差、方向不明、买入即套的连环逆风，能否控住手、不杀跌/不满仓/不天天交易仍未知。8/18 的一次普通日线回调就已让人在「减少操作 vs 多做T」之间摇摆，逆风应对力可见一斑。）</p>
         </div>
@@ -1363,7 +1363,7 @@
       </div>
 
       <!-- 当前境界定位 -->
-      <div class="realm-current" style="display:flex;gap:20px;align-items:stretch;background:linear-gradient(135deg,rgba(245,166,35,.14),rgba(79,209,197,.08));border:1px solid rgba(245,166,35,.4);border-radius:14px;padding:22px;margin-bottom:22px;flex-wrap:wrap">
+      <div class="realm-current" style="display:flex;gap:20px;align-items:stretch;background:linear-gradient(135deg,rgba(217,119,6,.14),rgba(13,148,136,.08));border:1px solid rgba(217,119,6,.4);border-radius:14px;padding:22px;margin-bottom:22px;flex-wrap:wrap">
         <div style="flex:1;min-width:240px">
           <div style="font-size:12px;letter-spacing:.12em;color:var(--accent2);text-transform:uppercase;margin-bottom:8px">当前境界 · 修炼定位</div>
           <div style="font-family:'BricolageGrotesque';font-weight:700;font-size:30px;color:var(--accent2)">炼气中期</div>
@@ -1522,7 +1522,7 @@
         <div style="margin-top:14px"><textarea data-key="realm-note" placeholder="记录你的修炼感悟：这一关你学到了什么？下一步想修什么？..." style="width:100%;min-height:90px;background:var(--bg3);border:1px solid var(--rule);border-radius:9px;color:var(--ink);padding:12px 14px;font-size:13.5px;font-family:inherit;resize:vertical"></textarea>
           <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:10px;align-items:center">
             <span class="note-status" data-status="realm-note" style="font-size:12px;color:var(--muted)"></span>
-            <button class="note-save" data-key="realm-note" style="background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0f15;border:none;border-radius:8px;padding:8px 18px;font-weight:700;font-size:13px;cursor:pointer">保存修炼手记</button>
+            <button class="note-save" data-key="realm-note" style="background:linear-gradient(135deg,var(--accent),var(--accent2));color:#ffffff;border:none;border-radius:8px;padding:8px 18px;font-weight:700;font-size:13px;cursor:pointer">保存修炼手记</button>
           </div>
         </div>
       </div>
