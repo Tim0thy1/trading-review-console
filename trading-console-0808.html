@@ -294,6 +294,35 @@
   .cal-cell .dc-pct{font-size:10px;font-weight:600;font-family:var(--font-mono,'JetBrainsMono',monospace);margin-top:1px}
   .cal-legend{display:flex;align-items:center;gap:16px;margin-top:14px;font-size:12px;color:var(--muted)}
   .cal-legend .lg-box{display:inline-block;width:14px;height:14px;border-radius:4px;margin-right:4px;vertical-align:middle}
+
+  /* ===== 东财实时同步抽屉 ===== */
+  .live-fab{
+    position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:120;
+    display:flex;align-items:center;gap:7px;
+    padding:11px 16px;border-radius:999px;border:1px solid rgba(13,148,136,.45);
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;
+    box-shadow:0 6px 20px rgba(13,148,136,.35);transition:transform .2s,box-shadow .2s;
+  }
+  .live-fab:hover{transform:translateY(-50%) scale(1.06);box-shadow:0 8px 26px rgba(13,148,136,.45)}
+  .live-drawer{
+    position:fixed;top:0;left:0;right:0;z-index:110;
+    background:var(--bg);border-bottom:1px solid var(--rule);
+    box-shadow:0 14px 44px rgba(0,0,0,.14);
+    max-height:0;overflow:hidden;opacity:0;visibility:hidden;
+    transition:max-height .42s cubic-bezier(.4,0,.2,1),opacity .3s ease,visibility .3s;
+  }
+  .live-drawer.open{max-height:78vh;opacity:1;visibility:visible;overflow-y:auto}
+  .live-drawer-head{
+    display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+    padding:16px 22px 0;position:sticky;top:0;background:var(--bg);z-index:1;
+  }
+  .live-drawer-close{
+    background:var(--bg3);border:1px solid var(--rule);border-radius:8px;
+    width:32px;height:32px;font-size:14px;color:var(--muted);cursor:pointer;transition:all .15s;flex-shrink:0;
+  }
+  .live-drawer-close:hover{color:var(--red);border-color:var(--red)}
+  .live-drawer-body{padding:12px 22px 22px}
 </style>
 <script>
 /* 主题跟随：读取工作台 localStorage 的 wb_theme_v1，同 origin 共享 */
@@ -366,22 +395,6 @@
 
   <!-- ============ MAIN ============ -->
   <main class="main">
-
-    <!-- ===== 东财实时同步面板 ===== -->
-    <section class="panel" id="live-panel" style="margin-bottom:22px;border-color:rgba(13,148,136,.35);background:linear-gradient(180deg,rgba(13,148,136,.06),var(--bg2))">
-      <div class="m-kicker" style="margin-bottom:6px">🛰️ 东财实时同步</div>
-      <div class="panel-title" style="font-size:16px">组合「翻81681」· 官方持仓快照</div>
-      <div class="panel-sub" id="live-synced" style="margin-bottom:14px">正在连接东方财富组合接口…</div>
-      <div class="kpi-grid" id="live-account" style="margin-bottom:16px">
-        <div class="kpi"><div class="kpi-label">总资产(5万基数)</div><div class="kpi-value" id="lv-assets">—</div><div class="kpi-sub" id="lv-assets-sub">人为控制实际本金5万</div></div>
-        <div class="kpi"><div class="kpi-label">总收益率</div><div class="kpi-value" id="lv-zsyl">—</div><div class="kpi-sub">按5万本金核算</div></div>
-        <div class="kpi"><div class="kpi-label">仓位</div><div class="kpi-value" id="lv-pos">—</div><div class="kpi-sub" id="lv-pos-sub">持仓市值/总资产</div></div>
-        <div class="kpi"><div class="kpi-label">成交胜率</div><div class="kpi-value" id="lv-rate">—</div><div class="kpi-sub" id="lv-rate-sub">已了结单</div></div>
-        <div class="kpi"><div class="kpi-label">调仓总笔数</div><div class="kpi-value" id="lv-cnt">—</div><div class="kpi-sub">已全量同步</div></div>
-      </div>
-      <div id="live-positions"><!-- 持仓行 JS 填充 --></div>
-      <div id="live-trades" style="margin-top:12px"><!-- 最近调仓 JS 填充 --></div>
-    </section>
 
     <!-- ===== MODULE 1: 总览 ===== -->
     <section class="module active" id="module-overview">
@@ -1585,6 +1598,30 @@
   </main>
 </div>
 
+<!-- ===== 东财实时同步抽屉（默认收起，点击悬浮按钮拉出） ===== -->
+<button class="live-fab" id="live-fab" aria-expanded="false" title="东财实时同步">🛰️ 实时</button>
+<div class="live-drawer" id="live-drawer" aria-hidden="true">
+  <div class="live-drawer-head">
+    <div>
+      <div class="m-kicker" style="margin-bottom:4px">🛰️ 东财实时同步</div>
+      <div class="panel-title" style="font-size:16px">组合「翻81681」· 官方持仓快照</div>
+    </div>
+    <button class="live-drawer-close" id="live-close" aria-label="收起">✕</button>
+  </div>
+  <div class="live-drawer-body">
+    <div class="panel-sub" id="live-synced" style="margin-bottom:14px">正在连接东方财富组合接口…</div>
+    <div class="kpi-grid" id="live-account" style="margin-bottom:16px">
+      <div class="kpi"><div class="kpi-label">总资产(5万基数)</div><div class="kpi-value" id="lv-assets">—</div><div class="kpi-sub" id="lv-assets-sub">人为控制实际本金5万</div></div>
+      <div class="kpi"><div class="kpi-label">总收益率</div><div class="kpi-value" id="lv-zsyl">—</div><div class="kpi-sub">按5万本金核算</div></div>
+      <div class="kpi"><div class="kpi-label">仓位</div><div class="kpi-value" id="lv-pos">—</div><div class="kpi-sub" id="lv-pos-sub">持仓市值/总资产</div></div>
+      <div class="kpi"><div class="kpi-label">成交胜率</div><div class="kpi-value" id="lv-rate">—</div><div class="kpi-sub" id="lv-rate-sub">已了结单</div></div>
+      <div class="kpi"><div class="kpi-label">调仓总笔数</div><div class="kpi-value" id="lv-cnt">—</div><div class="kpi-sub">已全量同步</div></div>
+    </div>
+    <div id="live-positions"><!-- 持仓行 JS 填充 --></div>
+    <div id="live-trades" style="margin-top:12px"><!-- 最近调仓 JS 填充 --></div>
+  </div>
+</div>
+
 <!-- REQUIRED: ECharts -->
 <script src="./assets/echarts.min.js"></script>
 <script src="assets/charts.js"></script>
@@ -1639,6 +1676,27 @@
       });
   }
   load();
+})();
+</script>
+<script>
+/* 东财实时同步抽屉：默认收起，点击悬浮按钮拉出；状态记忆在 localStorage */
+(function(){
+  var fab = document.getElementById('live-fab');
+  var drawer = document.getElementById('live-drawer');
+  var closeBtn = document.getElementById('live-close');
+  function setOpen(open){
+    drawer.classList.toggle('open', open);
+    drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    fab.innerHTML = open ? '✕ 收起' : '🛰️ 实时';
+    try{ localStorage.setItem('live_drawer_open', open ? '1' : '0'); }catch(e){}
+  }
+  fab.addEventListener('click', function(){ setOpen(!drawer.classList.contains('open')); });
+  closeBtn.addEventListener('click', function(){ setOpen(false); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') setOpen(false); });
+  var saved = '0';
+  try{ saved = localStorage.getItem('live_drawer_open') || '0'; }catch(e){}
+  setOpen(saved === '1');
 })();
 </script>
 </body>
