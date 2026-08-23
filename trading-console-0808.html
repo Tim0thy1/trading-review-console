@@ -5,23 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>模拟盘交易系统 · 复盘终端</title>
+<link rel="stylesheet" href="design-system.css">
 <style>
-  :root{
-    --bg:#FBFAF8;
-    --bg2:#ffffff;
-    --bg3:#F5F2EE;
-    --ink:#403C38;
-    --muted:#66615A;
-    --rule:#EBE7E2;
-    --accent:#0D9488;
-    --accent2:#D97706;
-    --warn:#D97706;
-    --green:#16A34A;
-    --green-dim:rgba(22,163,74,.12);
-    --red:#DC2626;
-    --red-dim:rgba(220,38,38,.12);
-    --amber-dim:rgba(217,119,6,.10);
-  }
+  :root{}
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
   body{
@@ -309,6 +295,18 @@
   .cal-legend{display:flex;align-items:center;gap:16px;margin-top:14px;font-size:12px;color:var(--muted)}
   .cal-legend .lg-box{display:inline-block;width:14px;height:14px;border-radius:4px;margin-right:4px;vertical-align:middle}
 </style>
+<script>
+/* 主题跟随：读取工作台 localStorage 的 wb_theme_v1，同 origin 共享 */
+(function(){
+  try{
+    var t = localStorage.getItem('wb_theme_v1') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
+    window.addEventListener('storage', function(e){
+      if(e.key === 'wb_theme_v1') document.documentElement.setAttribute('data-theme', e.newValue || 'light');
+    });
+  }catch(e){}
+})();
+</script>
 </head>
 <body>
 <div class="app">
