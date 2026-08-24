@@ -36,7 +36,7 @@
   // ============ CHART 1: 账户净值曲线 ============
   var c1 = init('chart-equity', 340);
   var eqDates = ['07-14','07-15','07-16','07-17','07-20','07-21','07-22','07-23','07-24','07-27','07-28','07-29','07-30','07-31','08-03','08-04','08-05','08-06','08-07','08-10','08-11','08-12','08-13','08-14','08-17','08-18','08-19','08-20','08-21'];
-  var eqVals = [49899.85,51001.5,50100.15,49499.25,51602.4,51802.7,53305.0,53104.7,50400.6,51602.4,51101.7,51602.4,51402.1,51101.7,50701.1,51402.1,53805.7,53905.9,55508.3,55508.3,54406.6,56100.0,55825.0,56650.0,57300.0,57207.62,52959.63,53992.63,54570.63];
+  var eqVals = [49899.85,51001.5,50100.15,49499.25,51602.4,51802.7,53305.0,53104.7,50400.6,51602.4,51101.7,51602.4,51402.1,51101.7,50701.1,51402.1,53805.7,53905.9,55508.3,55508.3,54406.6,56100.0,55825.0,56650.0,57300.0,57207.62,52959.63,53992.63,53665.63];
   c1.setOption({
     animation: false,
     tooltip: { trigger: 'axis', appendToBody: true, valueFormatter: function(v){ return '¥' + Number(v).toLocaleString(); } },
@@ -279,7 +279,7 @@
         h += '</div>';
       }
       h += '</div>';
-      h += '<div class="cal-summary">本金 ¥50,000 → 当前 ¥' + eqVals[eqVals.length-1].toLocaleString(undefined,{maximumFractionDigits:0}) + ' · 累计 <strong style="color:var(--green)">+9.14%</strong></div>';
+      h += '<div class="cal-summary">本金 ¥50,000 → 当前 ¥' + eqVals[eqVals.length-1].toLocaleString(undefined,{maximumFractionDigits:0}) + ' · 累计 <strong style="color:var(--green)">+7.33%</strong></div>';
       calEl.innerHTML = h;
       calEl.querySelectorAll('.cal-mc[data-ym]').forEach(function(c) {
         c.addEventListener('click', function() { renderMonth(this.getAttribute('data-ym')); });
