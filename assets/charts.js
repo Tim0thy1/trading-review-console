@@ -463,4 +463,90 @@
     });
     window.addEventListener('resize', function() { c12.resize(); });
   }
+
+  // ============ LIVE: 由 live-snapshot.json 统一刷新所有持仓相关图表与KPI ============
+  // 触发时机：页面 load() 成功拉取快照后调用 window.__applySnapshot(d)
+  window.__applySnapshot = function(d) {
+    if (!d || !d.positions || !d.account) return;
+    var a = d.account;
+    var pos = d.positions || [];
+    var fmt = function(n) { return Number(n).toLocaleString('zh-CN'); };
+
+    // 1) 净值曲线末点（若日期新于现存末点则追加，否则覆盖末点）
+    if (d.equity_point && d.equity_point.value != null) {
+      var epd = d.equity_point.label;
+      var lastD = eqDates[eqDates.length - 1];
+      if (epd !== lastD) { eqDates.push(epd); eqVals.push(Number(d.equity_point.value)); }
+      else { eqVals[eqVals.length - 1] = Number(d.equity_point.value); }
+      var lastPair = { coord: [eqDates.length - 1, eqVals[eqVals.length - 1]] };
+      c1.setOption({
+        xAxis: { data: eqDates },
+        series: [{ data: eqVals, markPoint: { data: [lastPair], label: { formatter: '¥' + fmt(Math.round(eqVals[eqVals.length - 1])) } } }]
+      });
+    }
+
+    // 2) 逐持仓浮盈亏 = (price-cost) * shares，驱动盈亏构成/逐标的/股票级净收益
+    var perPos = pos.map(function(p) {
+      var pnl = Math.round((p.price - p.cost) * p.shares);
+      var pct = p.return_pct;
+      var mv = Math.round(p.price * p.shares);
+      return { name: p.name, pnl: pnl, pct: pct, mv: mv, cost: Math.round(p.cost * p.shares) };
+    });
+
+    // 3) 盈亏构成图（c2）：浮盈 + ，浮亏 -；已实现用累计总盈亏减浮盈亏近似
+    var floatPnl = perPos.reduce(function(s, x) { return s + x.pnl; }, 0);
+    var realized = Math.round(a.total_assets - 50000 - floatPnl);
+    var pnlRows = [];
+    perPos.forEach(function(x) { pnlRows.push({ name: x.name + ' ' + (x.pnl >= 0 ? '浮盈' : '浮亏'), v: x.pnl, c: x.pnl >= 0 ? green : red }); });
+    pnlRows.push({ name: '已实现落袋', v: realized, c: realized >= 0 ? green : red });
+    c2.setOption({
+      yAxis: { data: pnlRows.map(function(r) { return r.name; }) },
+      series: [{
+        data: pnlRows.map(function(r) { return { value: r.v, itemStyle: { color: r.c, borderRadius: r.v >= 0 ? [0,4,4,0] : [4,0,0,4] } }; })
+      }]
+    });
+
+    // 4) 仓位配置 donut（c3）：持仓市值占比 + 现金
+    var posVal = perPos.reduce(function(s, x) { return s + x.mv; }, 0);
+    var cash = Math.max(0, a.total_assets - posVal);
+    var allocData = perPos.map(function(x, i) {
+      return { value: +(x.mv / a.total_assets * 100).toFixed(1),
+               name: x.name,
+               itemStyle: { color: i === 0 ? accent : (i === 1 ? accent2 : warn) } };
+    });
+    allocData.push({ value: +(cash / a.total_assets * 100).toFixed(1), name: '现金', itemStyle: { color: muted } });
+    c3.setOption({ series: [{ data: allocData }] });
+
+    // 5) 逐标的盈亏图（c5）：保持已实现标的用近似，浮动标的按快照
+    var c5Data = [];
+    [['兖矿能源', null], ['大金重工', null]].forEach(function(st) { c5Data.push({ value: realized, name: st[0] }); });
+    perPos.forEach(function(x) {
+      c5Data.push({ value: x.pnl, name: x.name, return_pct: x.pct });
+    });
+    c5.setOption({
+      xAxis: { data: c5Data.map(function(x) { return x.name + (x.return_pct === undefined ? '\n(已实现)' : '\n(浮动)'); }) },
+      series: [{
+        data: c5Data.map(function(x) {
+          return { value: x.value,
+                   itemStyle: { color: x.value >= 0 ? green : (x.name === '星源材质' ? warn : red), borderRadius: [4,4,0,0] } };
+        })
+      }]
+    });
+
+    // 6) 股票级净收益图（c12）：已实现合并 + 浮动按快照
+    if (c12El) {
+      var c12names = ['已实现2票', '亨通光电', '申菱环境', '星源材质'];
+      var c12pnl = [realized];
+      perPos.forEach(function(x) { c12pnl.push(x.pnl); });
+      var c12pct = [null].concat(perPos.map(function(x) { return x.pct; }));
+      WR.names = c12names; WR.pnl = c12pnl; WR.pct = c12pct;
+      var allP = WR.pnl.every(function(v) { return v >= 0; });
+      c12.setOption({
+        xAxis: { data: WR.names },
+        yAxis: allP ? { min: 0, name: '元', nameTextStyle: { color: muted }, axisLabel: { color: muted, fontSize: 10, fontFamily: 'JetBrainsMono' } }
+                    : { name: '元', nameTextStyle: { color: muted }, axisLabel: { color: muted, fontSize: 10, fontFamily: 'JetBrainsMono' } },
+        series: [{ data: WR.pnl.map(function(v, i) { return { value: v, itemStyle: { color: v >= 0 ? green : red, borderRadius: [6,6,0,0] } }; }) }]
+      });
+    }
+  };
 })();

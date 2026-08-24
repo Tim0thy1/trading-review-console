@@ -433,12 +433,12 @@
       </div>
 
       <div class="kpi-grid">
-        <div class="kpi"><div class="kpi-label">总资产</div><div class="kpi-value up">¥53,665.63</div><div class="kpi-sub">5万本金 + 累计盈亏(回撤)</div></div>
-        <div class="kpi"><div class="kpi-label">总收益率</div><div class="kpi-value up">+7.33%</div><div class="kpi-sub">app盈亏平移至5万本金</div></div>
-        <div class="kpi"><div class="kpi-label">累计总盈亏</div><div class="kpi-value up">+¥3,665.63</div><div class="kpi-sub">app口径(含分红除权)</div></div>
-        <div class="kpi"><div class="kpi-label">持仓仓位</div><div class="kpi-value" style="color:var(--accent)">93.45%</div><div class="kpi-sub">持仓市值50,149</div></div>
-        <div class="kpi"><div class="kpi-label">最近盈亏</div><div class="kpi-value up">-¥905.00</div><div class="kpi-sub">8/21收盘 相对上期回落</div></div>
-        <div class="kpi"><div class="kpi-label">现金</div><div class="kpi-value">¥3,516.63</div><div class="kpi-sub">53,665.63 - 50,149</div></div>
+        <div class="kpi"><div class="kpi-label">总资产</div><div class="kpi-value up" id="k-total">¥53,665.63</div><div class="kpi-sub" id="k-total-sub">5万本金 + 累计盈亏(回撤)</div></div>
+        <div class="kpi"><div class="kpi-label">总收益率</div><div class="kpi-value up" id="k-return">+7.33%</div><div class="kpi-sub">app盈亏平移至5万本金</div></div>
+        <div class="kpi"><div class="kpi-label">累计总盈亏</div><div class="kpi-value up" id="k-pnl">+¥3,665.63</div><div class="kpi-sub">app口径(含分红除权)</div></div>
+        <div class="kpi"><div class="kpi-label">持仓仓位</div><div class="kpi-value" style="color:var(--accent)" id="k-pos">93.45%</div><div class="kpi-sub" id="k-pos-sub">持仓市值50,149</div></div>
+        <div class="kpi"><div class="kpi-label">当日盈亏</div><div class="kpi-value" id="k-daily">—</div><div class="kpi-sub" id="k-daily-sub">对比上次同步</div></div>
+        <div class="kpi"><div class="kpi-label">现金</div><div class="kpi-value" id="k-cash">¥3,516.63</div><div class="kpi-sub" id="k-cash-sub">53,665.63 - 50,149</div></div>
       </div>
 
       <figure class="chart-figure">
@@ -1406,7 +1406,7 @@
         <div style="flex:1;min-width:240px">
           <div style="font-size:12px;letter-spacing:.12em;color:var(--accent2);text-transform:uppercase;margin-bottom:8px">当前境界 · 修炼定位</div>
           <div style="font-family:'BricolageGrotesque';font-weight:700;font-size:30px;color:var(--accent2)">炼气中期</div>
-          <div style="font-size:13px;color:var(--muted);margin-top:6px">账户本金 5 万（名义 100 万）· 当前资产 ¥53,665.63 · 收益率 +7.33%</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:6px">账户本金 5 万（名义 100 万）· 当前资产 <span id="realm-assets" class="mono">¥53,665.63</span> · 收益率 <span id="realm-return" class="mono">+7.33%</span></div>
           <div style="margin-top:14px;font-size:13.5px;line-height:1.7">
             已入市一段时间、吃过亏，开始接触指标与 K 线，正处在「从频繁换方法到沉淀一套自用逻辑」的转型期。8/19 行情重挫日单日回撤 -8.50%（总资产 57,208 → 52,960），守住亨通主线仓位、未在恐慌开盘割肉是正确的，但<strong>三票全绿、总仓位 93.36% 逼近满仓、两只新仓（申菱-10.79%、星源-4.35%）深套且无利润垫，说明"想交易"已升级为"仓位失控"：回调日不该满仓暴露，正是当前关卡的核心考题。</strong>
           </div>
@@ -1619,7 +1619,7 @@
       </div>
 
       <div class="footer-note">
-        修炼境界为「资金体量 × 操作成熟度」的成长映射，用于记录与自省，非评级标签。当前定位为炼气中期（本金 5 万、资产 ¥53,665.63）。境界会随复利与能力提升逐级跃迁，本系统持续追踪。
+        修炼境界为「资金体量 × 操作成熟度」的成长映射，用于记录与自省，非评级标签。当前定位为炼气中期（本金 5 万、资产 <span id="foot-assets" class="mono">¥53,665.63</span>）。境界会随复利与能力提升逐级跃迁，本系统持续追踪。
       </div>
     </section>
 
@@ -1697,6 +1697,33 @@
             + '<span>'+(t.name||'')+'</span><span class="mono" style="color:var(--muted)">@'+t.price+'</span><span class="mono" style="color:var(--muted)">'+t.time+'</span></div>';
         });
         document.getElementById('live-trades').innerHTML = tr;
+
+        // ---- 总览 KPI / 页脚统一刷新（跟随快照，不再硬编码）----
+        if(typeof window.__applySnapshot === 'function'){ window.__applySnapshot(d); }
+        var posVal = (d.positions||[]).reduce(function(s,p){ return s + p.price*p.shares; }, 0);
+        var cash = a.total_assets - posVal;
+        var set = function(id, txt){ var el=document.getElementById(id); if(el) el.textContent = txt; };
+        set('k-total', '¥' + fmt(a.total_assets));
+        set('k-return', (a.total_return_pct>0?'+':'') + a.total_return_pct + '%');
+        set('k-pnl', (a.total_assets-50000>0?'+':'') + '¥' + fmt(a.total_assets-50000));
+        set('k-pos', (a.position_pct==null?'—':a.position_pct+'%'));
+        set('k-pos-sub', '持仓市值' + fmt(Math.round(posVal)));
+        var dp = a.daily_pnl;
+        var dEl = document.getElementById('k-daily');
+        if(dEl){
+          if(dp==null){ dEl.textContent='—'; dEl.className='kpi-value'; }
+          else {
+            dEl.textContent = (dp>0?'+':'') + '¥' + fmt(Math.round(dp*100)/100);
+            dEl.className = 'kpi-value ' + (dp>0?'up':(dp<0?'dn':''));
+            dEl.style.color = ''; dEl.style.color = dp>0?'var(--green)':(dp<0?'var(--red)':'');
+            document.getElementById('k-daily-sub').textContent = '相对上次同步(总资产 '+fmt(Math.round((a.prev_total_assets||0)*100)/100)+')';
+          }
+        }
+        set('k-cash', '¥' + fmt(Math.round(cash*100)/100));
+        set('k-cash-sub', fmt(a.total_assets) + ' - ' + fmt(Math.round(posVal)));
+        set('realm-assets', '¥' + fmt(a.total_assets));
+        set('realm-return', (a.total_return_pct>0?'+':'') + a.total_return_pct + '%');
+        set('foot-assets', '¥' + fmt(a.total_assets));
       })
       .catch(function(){
         document.getElementById('live-synced').textContent =
