@@ -667,33 +667,15 @@
         <div class="m-desc">已了结持仓（兖矿）为负，但 8/12–8/17 四次减仓/清仓已累计落袋正利润 +¥4,114（大金 +1,658、亨通 +2,456），止盈纪律正逐步建立。</div>
       </div>
 
-      <div class="kpi-grid">
-        <div class="kpi"><div class="kpi-label">已了结整段盈亏</div><div class="kpi-value dn">-¥415.48</div><div class="kpi-sub">兖矿能源</div></div>
-        <div class="kpi"><div class="kpi-label">减仓累计落袋</div><div class="kpi-value up">+¥4,114</div><div class="kpi-sub">大金1,658+亨通2,456</div></div>
-        <div class="kpi"><div class="kpi-label">持仓期现金分红</div><div class="kpi-value up">+¥352.00</div><div class="kpi-sub">兖矿已计入</div></div>
-        <div class="kpi"><div class="kpi-label">已结算交易费用</div><div class="kpi-value">¥73.64</div><div class="kpi-sub">兖矿+两次减仓</div></div>
+      <div class="kpi-grid" id="history-kpis">
+        <div class="kpi"><div class="kpi-label">已了结整段盈亏</div><div class="kpi-value dn">—</div><div class="kpi-sub">从 ledger 加载</div></div>
+        <div class="kpi"><div class="kpi-label">今日清仓落袋</div><div class="kpi-value up">—</div><div class="kpi-sub">8/25 三票全部清仓</div></div>
+        <div class="kpi"><div class="kpi-label">已了结票数</div><div class="kpi-value">—</div><div class="kpi-sub">盈/亏</div></div>
+        <div class="kpi"><div class="kpi-label">总收益(5万口径)</div><div class="kpi-value">—</div><div class="kpi-sub">从 ledger 加载</div></div>
       </div>
 
-      <div class="grid-2">
-        <div class="panel">
-          <div class="panel-title">兖矿能源 · 整段交易复盘</div>
-          <div class="panel-sub">2026-07-14 至 08-04，持有 21 天</div>
-          <div class="pos-metrics" style="grid-template-columns:repeat(2,1fr)">
-            <div class="pm"><div class="pm-label">建仓价</div><div class="pm-value">19.32</div></div>
-            <div class="pm"><div class="pm-label">清仓价</div><div class="pm-value dn">18.67</div></div>
-            <div class="pm"><div class="pm-label">股数</div><div class="pm-value">1100</div></div>
-            <div class="pm"><div class="pm-label">价差</div><div class="pm-value dn">0.65 元/股</div></div>
-          </div>
-          <div class="callout" style="margin-top:14px"><strong>亏损分解：</strong>价差亏损约 -¥715，加上分红 +¥352、交易费用 -¥52.48，净亏损 -¥415.48。即：若不动用分红，实际价差亏幅更大。<span class="pill g" style="margin-left:8px">数据与 app 一致</span></div>
-        </div>
-        <div class="panel">
-          <div class="panel-title">已实现盈亏分解</div>
-          <div class="panel-sub">价差 / 分红 / 费用三项</div>
-          <figure class="chart-figure">
-            <figcaption style="font-size:12px;color:var(--muted)">兖矿整段盈亏构成（元）</figcaption>
-            <div id="chart-yk-break" class="chart-box" style="min-height:280px"></div>
-          </figure>
-        </div>
+      <div id="history-closed-list" class="grid-2">
+        <!-- 由 ledger.json 动态渲染 -->
       </div>
 
       <figure class="chart-figure">
@@ -701,7 +683,7 @@
         <div id="chart-pnlstock" class="chart-box" style="min-height:320px"></div>
       </figure>
 
-      <div class="callout"><strong>教训：</strong>兖矿在持有期内多次出现 +10%~+20% 浮盈，均因等待更高点位而错过落袋，最终在 MACD 翻绿后以 -1.95% 离场。这正是「止盈纪律缺失」的典型样本——赚的时候不卖，亏的时候才认输。</div>
+      <div class="callout" id="history-lesson"><strong>教训：</strong>从 data/ledger.json 动态加载。</div>
     </section>
 
     <!-- ===== MODULE 4.5: 持仓时长与股票级胜率 ===== -->
@@ -1137,15 +1119,16 @@
           <svg viewBox="0 0 120 120" width="132" height="132">
             <circle cx="60" cy="60" r="50" fill="none" stroke="var(--rule)" stroke-width="11"/>
             <circle cx="60" cy="60" r="50" fill="none" stroke="var(--accent2)" stroke-width="11"
-                    stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="157"
+                    stroke-linecap="round" id="pano-ring"
+                    stroke-dasharray="314" stroke-dashoffset="157"
                     transform="rotate(-90 60 60)"/>
-            <text x="60" y="66" text-anchor="middle" font-family="JetBrainsMono" font-size="26" font-weight="700" fill="var(--accent2)">50</text>
+            <text x="60" y="66" text-anchor="middle" font-family="JetBrainsMono" font-size="26" font-weight="700" fill="var(--accent2)" id="pano-score">—</text>
           </svg>
           <div class="ring-grade">综合评分 / 100</div>
         </div>
         <div class="score-side">
-          <div class="grade">长板稳、短板明显</div>
-          <p>整体画像：<strong>「曾经 +14.42% 又回吐到 +5.92%，8/21 反弹至 +9.14%——纪律缺席：开仓/减仓/清仓无计划、无盘后预案、看完心情」</strong>。8/17 会止盈（大金走弱清仓 +437、亨通 +2,293 兑现）、方向也踩中主线（亨通 +41.96%，但其中不乏 7 月科技深调后反抽的行情运气）；但清仓大金后仅隔 17 分钟便 FOMO 追高建仓申菱，8/18 又在回调半山腰加仓申菱 100 股，8/19 行情重挫日两只新仓深套、账户单日回撤 -8.50%。8/21 亨通续涨 +0.26% 带动账户回升至 +9.14%，但核心短板未变：<strong>「系统性纪律缺失 + 仓位失控：没有严格买卖计划、没有盘后预案，总仓位 93.56% 逼近满仓」</strong>。选股主要靠 MACD + 板块热度，证据单薄、含运气，尚待多轮验证。当前收益 +9.14%、已实现盈亏 +¥1,182.83（app净口径）。<strong style="color:var(--red)">提醒：8/19 一天回撤 -8.50% 就已把此前 14.42% 的浮盈回吐大半，8/21 的续涨只是暂缓了风险——胜率与收益在线仅代表顺风里有能力，纪律缺席意味着这套打法尚未闭环。</strong></p>
+          <div class="grade" id="pano-grade">从 ledger/snapshot 加载</div>
+          <p id="pano-verdict">加载中...</p>
         </div>
       </div>
 
@@ -1163,43 +1146,44 @@
         <div id="pano-fc-verdict" style="margin-top:12px;font-size:13px;line-height:1.8"></div>
       </div>
 
-      <!-- ===== 回调应对复盘（8/21） ===== -->
+      <!-- ===== 清仓复盘（8/25） ===== -->
       <div class="panel" style="margin-top:20px;border-color:rgba(13,148,136,.45);background:linear-gradient(180deg,rgba(13,148,136,.06),var(--bg2))">
-        <div class="m-kicker" style="margin-bottom:6px">📈 回撤后复盘 · 8/21 收盘</div>
-        <div class="panel-title">「续涨日验证了什么？」——亨通利润垫继续增厚，申菱反弹收窄亏损</div>
-        <div class="panel-sub">8/21 亨通续涨 +0.26%、申菱反弹 +3.58%，账户继续回升。复盘执行了什么、什么没执行。</div>
+        <div class="m-kicker" style="margin-bottom:6px">📈 清仓复盘 · 8/25 收盘</div>
+        <div class="panel-title">「大盘低开高走的进攻日，我却全清仓了」——反弹拿不住的最典型样本</div>
+        <div class="panel-sub">8/25 大盘低开高走、英维克涨停带队，亨通/申菱/星源三票全部清仓，后段反弹没吃到，卖飞。</div>
 
         <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px">
           <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px">
-            <div style="font-size:12px;color:var(--muted);letter-spacing:.05em">今日净值回升</div>
-            <div class="mono up" style="font-size:22px;font-weight:700;margin-top:4px">+¥1,578.00</div>
-            <div style="font-size:12px;color:var(--muted);margin-top:4px">53,993 → 54,571（+1.07%）</div>
+            <div style="font-size:12px;color:var(--muted);letter-spacing:.05em">今日账户</div>
+            <div class="mono up" style="font-size:22px;font-weight:700;margin-top:4px">+¥1,933.25</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:4px">53,665 → 55,599（+3.6%）</div>
           </div>
           <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px">
-            <div style="font-size:12px;color:var(--muted);letter-spacing:.05em">三票当日表现</div>
-            <div style="font-size:15px;font-weight:700;margin-top:4px">亨通 +0.26% / 申菱 +3.58% / 星源 -0.62%</div>
-            <div style="font-size:12px;color:var(--muted);margin-top:4px">申菱反弹较强，亨通小幅续涨</div>
+            <div style="font-size:12px;color:var(--muted);letter-spacing:.05em">三票清仓盈亏</div>
+            <div style="font-size:15px;font-weight:700;margin-top:4px">亨通 +6,182 / 申菱 -592 / 星源 -1,215</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:4px">申菱卖后涨停、星源割在低点</div>
           </div>
           <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px">
             <div style="font-size:12px;color:var(--muted);letter-spacing:.05em">仓位状态</div>
-            <div style="font-size:15px;font-weight:700;margin-top:4px;color:var(--red)">93.56% 仍逼近满仓</div>
+            <div style="font-size:15px;font-weight:700;margin-top:4px;color:var(--accent)">0% 全现金</div>
             <div style="font-size:12px;color:var(--muted);margin-top:4px">现金仅 6.44%，纪律缺口未改</div>
           </div>
         </div>
 
         <div style="margin-top:16px;font-size:13.5px;color:var(--ink);line-height:1.85">
-          <strong style="color:var(--green)">① 亨通利润垫继续增厚 ✅ 正确持有。</strong>亨通小幅续涨 +0.26%，+41.96% 利润垫证明了中线持仓的价值——利润垫越厚，越能扛波动。<br>
-          <strong style="color:var(--orange)">② 申菱反弹收窄亏损 ⚠️ 仍需观察。</strong>8/21 申菱随大盘反弹 +3.58%，亏损从 -11.10% 收窄至 -7.92%，但尚未突破 92.5 关键位。仍需观察能否放量突破，否则仍按减仓预案执行。<br>
-          <strong style="color:var(--red)">③ 现金纪律 93.56% 仓位未动。</strong>续涨日虽然账户回升，但 93.56% 仓位、6.44% 现金的问题没有解决。如果再来一次 8/19 重挫，同样会裸泳。续涨只是暂缓了风险，真正需要做的是利用反弹减弱仓、回现金。
+          <strong style="color:var(--green)">① 亨通清仓获利 +¥6,182 ✅ 方向对，但卖早了。</strong>以平均 64.41 清仓（成本 43.802，+47%），是唯一大赢家，利润垫证明中线持有价值。但 10:33 卖 63.22 后午后延续到 65.60、收盘 64.60，若拿住到收盘能多 200 股×~0.2≈¥60 且未吃到尾段最高抛。<br>
+          <strong style="color:var(--orange)">② 申菱清仓 -¥592 ❌ 卖后继续冲。</strong>10:01 卖 93.24、10:33 卖 95.45，两笔均价 94.34，但收盘冲到 104.20（+5%）。卖在拉升早段，错过后半段约 ¥2,000 利润。<br>
+          <strong style="color:var(--red)">③ 星源割肉 -¥1,215 ❌ 止损对、点位错。</strong>10:01 割在 13.85，随后大盘开V反弹、星源收复，收盘 14.40。止损方向没毛病，但割在杀跌最低点、而非反弹减仓位。<br>
+          <strong style="color:var(--red)">④ 空仓后未回补 ⚠️ 反弹后半段空仓位。</strong>全清后仓位 0%，7/17 镑如龙头涨停带领的 V 型反弹，后半段没参与。这是「恐慌性全清 + 反弹踏空」的典型组合。
         </div>
 
         <div class="callout" style="margin-top:14px;border-left:3px solid var(--accent)">
           <strong>给明天的应对预案（不是盘中想，是现在写）：</strong><br>
-          ・申菱：反弹日已跟涨 +3.58%，但 92.5 之下仍是减仓信号。明日若仍低于 92.5，执行减半/清仓，不等突破确认。<br>
-          ・星源：守住 14.20 继续观察，不加仓摊薄。<br>
-          ・亨通：中线逻辑未破，利润垫厚，破 46.43 移动止损前持有不动。<br>
-          ・总仓位：续涨日没减，明日优先把现金比例修回 ≥20%，先减弱的票、再谈加仓。<br>
-          ・明日盘前 8 点：看纳指收盘 + A50，做好预案。
+          ・申菱：已清仓，观望。若回踩 92.5-95 支撑不破且尾盘翻红，可考虑半仓接回做反弹，不追 104 上方的涨停。<br>
+          ・星源：已清仓。逻辑若仍在，等回踩 13.9-14.1 站稳再考虑，不抄在下跌途中。<br>
+          ・亨通：已清仓落袋为主。若光通信主线延续、回调到 60-62 放量企稳，可回补半仓，破 58 止损。<br>
+          ・总仓位：空仓后拥有 100% 机动现金，不要急于一天建满，用「分批 + 回踩不追高」重建。<br>
+          ・明日盘前 8 点：写盘前预测（大盘方向+持仓+应对），9:15 前锁定，收盘自动评分。
         </div>
       </div>
 
@@ -1848,7 +1832,85 @@
           '快照文件(live-snapshot.json)未找到或读取失败——请先运行 sync_eastmoney.py 生成，或稍后刷新。当前为静态占位。';
       });
   }
+  // ---- 加载完整账本 ledger.json 并渲染「历史盈亏/胜率」 ----
+  function fmtMoney(n){ var s=(n<0?'-¥':'¥')+Math.abs(n).toLocaleString('zh-CN',{maximumFractionDigits:2}); return s; }
+  function loadLedger(){
+    fetch('data/ledger.json', {cache:'no-store'})
+      .then(function(r){ return r.json(); })
+      .then(function(L){
+        // 历史盈亏 KPI
+        var acc=L.account||{};
+        var hk=document.getElementById('history-kpis');
+        if(hk){
+          var ks=hk.querySelectorAll('.kpi-value');
+          var closed=L.closed_positions||{};
+          var closedPnl=0, wins=0, loses=0;
+          Object.keys(closed).forEach(function(k){ var v=closed[k].pnl||0; closedPnl+=v; v>=0?wins++:loses++; });
+          if(ks[0]){ ks[0].textContent=fmtMoney(closedPnl); ks[0].className='kpi-value '+(closedPnl>=0?'up':'dn'); ks[0].parentElement.querySelector('.kpi-sub').textContent=(L.summary?L.summary.closed_count:5)+' 只全部了结'; }
+          var today=(L.summary?L.summary.realized_today:0);
+          if(ks[1]){ ks[1].textContent=fmtMoney(today); ks[1].className='kpi-value '+(today>=0?'up':'dn'); }
+          if(ks[2]){ ks[2].textContent=wins+'盈 / '+loses+'亏'; ks[2].className='kpi-value'; }
+          if(ks[3]){ ks[3].textContent=(acc.real_return_pct!=null?(acc.real_return_pct>0?'+':'')+acc.real_return_pct+'%':'—'); ks[3].className='kpi-value '+(acc.real_return_pct>=0?'up':'dn'); }
+        }
+        // 已了结列表卡片
+        var cl=document.getElementById('history-closed-list');
+        if(cl){
+          var names=['兖矿能源','大金重工','申菱环境','星源材质','亨通光电'];
+          var html='';
+          names.forEach(function(nm){
+            var v=closed[nm]; if(!v) return;
+            var p=v.pnl||0, up=p>=0;
+            html+='<div class="panel"><div class="panel-title" style="display:flex;justify-content:space-between;align-items:center">'
+              +'<span>'+nm+' · 已了结</span><span class="pill '+(up?'g':'r')+'">'+(up?'盈利':'亏损')+' ¥'+Math.abs(p).toFixed(2)+'</span></div>';
+            if(v.shares){ html+='<div class="pos-metrics" style="grid-template-columns:repeat(2,1fr)">'
+              +'<div class="pm"><div class="pm-label">股数</div><div class="pm-value">'+v.shares+'</div></div>'
+              +(v.avg_sell?'<div class="pm"><div class="pm-label">卖出均价</div><div class="pm-value">'+v.avg_sell+'</div></div>':'')
+              +'<div class="pm"><div class="pm-label">成本价</div><div class="pm-value">'+(v.cost||v.buy_px||'—')+'</div></div>'
+              +(v.sell_px?'<div class="pm"><div class="pm-label">卖价明细</div><div class="pm-value" style="font-size:11px">'+v.sell_px.join(', ')+'</div></div>':'')
+              +'</div>'; }
+            if(v.note) html+='<div class="panel-sub" style="margin-top:8px;color:var(--muted)">'+v.note+'</div>';
+            html+='</div>';
+          });
+          cl.innerHTML=html || '<div class="panel"><div class="panel-title">暂无已了结记录</div></div>';
+        }
+        // 教训 callout
+        var hl=document.getElementById('history-lesson');
+        if(hl) hl.innerHTML='<strong>教训（8/25）：</strong>今日三票全清仓，亨通 +¥6,182 落袋、申菱 -¥592、星源 -¥1,215。最大问题仍是「反弹拿不住」——在大盘低开高走+龙头涨停的进攻日卖出在拉升早段，尤其星源割在低点。已了结 5 票 2 盈 3 亏，胜率 40%。止损方向对但点位错，止盈又太早。';
+        // 胜率板块 KPI 同步（交易级/已了结）
+        renderLedgerWinrate(L);
+        // ---- 全景评估动态渲染 ----
+        var closed=L.closed_positions||{};
+        var panopnl=0; Object.keys(closed).forEach(function(k){ panopnl+=(closed[k].pnl||0); });
+        var wins=Object.keys(closed).filter(function(k){return (closed[k].pnl||0)>=0;}).length;
+        var loses=Object.keys(closed).length-wins;
+        var winRate=L.summary&&L.summary.closed_count? Math.round(wins/L.summary.closed_count*100):0;
+        // 综合评分：从胜率、纪律、回撤等合成（固定口径，展示当前画像）
+        var panoVal=62;
+        if(winRate){ panoVal = Math.max(30, Math.min(95, 40 + winRate*0.8 + (panopnl>=0?8:0) - (Object.keys(closed).length>3?3:0))); }
+        var ring=document.getElementById('pano-ring');
+        var pscore=document.getElementById('pano-score');
+        if(pscore) pscore.textContent=Math.round(panoVal);
+        var doff=314*(1-panoVal/100);
+        if(ring) ring.setAttribute('stroke-dashoffset', doff.toFixed(1));
+        var pgrade=document.getElementById('pano-grade');
+        if(pgrade) pgrade.textContent = winRate>=50 && panopnl>=0 ? '胜率与收益双在线，纪律待回升' : (panopnl>=0?'收益为正但胜率需改善':'长板稳、短板明显');
+        var pver=document.getElementById('pano-verdict');
+        if(pver) pver.innerHTML='整体画像：<strong>「截至 8/25 全部清仓，5 票 2 盈 3 亏，胜率 '+winRate+'%，已实现盈亏 '+fmtMoney(panopnl)+'」</strong>。亨通 +¥6,182 是唯一大赢家（+41.96% 利润垫证明中线持有价值），大金 +¥1,658 次之；兖矿 -¥415、申菱 -¥592、星源 -¥1,215 为亏损。核心短板：<strong style="color:var(--red)">「反弹拿不住 + 止损点位过晚」</strong>——8/25 三票清仓均卖在拉升早段，星源割在低点，申菱卖后涨停。当前收益 <strong>'+(L.account.real_return_pct>0?'+':'')+L.account.real_return_pct+'%</strong>、已实现盈亏 '+fmtMoney(panopnl)+'。纪律缺席仍是最关键短板（盘前预测纪律分 7/15）。';
+      })
+      .catch(function(){});
+  }
+  function renderLedgerWinrate(L){
+    // 更新胜率板块顶部已了结相关 KPI
+    var closed=L.closed_positions||{}; var pnl=0,w=0,l=0;
+    Object.keys(closed).forEach(function(k){var v=closed[k].pnl||0;pnl+=v;v>=0?w++:l++;});
+    var totals=[0,0,0,0];
+    // 交易级胜率已了结 KPI（第2个）
+    var tkc=document.querySelectorAll('#module-winrate .kettle__'); // fallback
+    var kpis=document.querySelectorAll('#module-winrate .kpi-value');
+    if(kpis.length>=2){ kpis[1].textContent='40%'; kpis[1].parentElement.querySelector('.kpi-sub').textContent='8/25 全了结 · 大金+亨通盈 · 兖矿+申菱+星源亏'; }
+  }
   load();
+  loadLedger();
 })();
 </script>
 <script>
