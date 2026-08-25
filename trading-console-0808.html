@@ -502,7 +502,7 @@
       </div>
 
       <div class="callout">
-        <strong>风险提示：</strong>按 8/21 收盘口径，亨通收 60.43（核心光通信主线，浮盈 +¥4,988.40 / +37.96% 利润垫）、申菱收 89.70（-7.81%，反弹后仍在 92.5 平台上沿下方）、星源收 14.08（-6.54%，已跌破 14.20 止损防守线）。名义账户虽为 100 万，但按人为控制的 5 万本金核算：总资产 53,665.63、仓位 93.45% 仍逼近满仓。<strong style="color:var(--red)">纪律缺口仍在：总仓位超 9 成 + 现金仅 ¥3,516（约 6.6%），重挫日仓位暴露问题未解决；星源已破止损位，需尽快决策是否执行纪律止损。</strong></div>
+        <strong>8/25 收盘实况：</strong>今日全部清仓（申菱、星源、亨通）。账户总资产 <span class="mono">¥55,598.88</span>，当日 +¥1,933.25（+3.6%），总收益率 <span class="mono">+11.2%</span>，仓位 <span class="mono">0%</span>，全部现金。<strong style="color:var(--accent)">当日大盘低开高走，三票清仓多卖在拉升早段，属「反弹拿不住」的纪律缺口</strong>——详见「胜率复盘」与「盘前预测」评分（预测方向命中，但执行纪律 7/15）。空仓后现金充足，等下次回调重新布局。</div>
     </section>
 
     <!-- ===== MODULE 2: 持仓 ===== -->
@@ -510,118 +510,10 @@
       <div class="m-head">
         <div class="m-kicker">Positions · 当前持仓</div>
         <div class="m-title">持仓明细</div>
-        <div class="m-desc">当前三票持仓：亨通光电为光通信主线、+41.96% 利润垫持续增厚；申菱环境 8/17 FOMO 建仓 + 8/18 加仓，深套 -7.92% 仍在 92.5 下方；星源材质 8/17 第3票建仓，小幅回调仍在 14.20 止损线上方。账户总仓位 93.56% 仍逼近满仓，集中度风险未缓解。</div>
+        <div class="m-desc" id="pos-desc">持仓明细由 live-snapshot.json 实时驱动，反映最新收盘持仓。</div>
       </div>
 
-      <!-- 申菱环境 -->
-      <div class="pos-card">
-        <div class="pos-head">
-          <div>
-            <div class="pos-name">申菱环境 <span class="pos-code">sz301018</span></div>
-            <div class="pos-tag" style="margin-top:8px">持仓中 · 数据中心温控</div>
-          </div>
-          <div style="text-align:right">
-            <div class="mono dn" style="font-size:20px;font-weight:700">-¥2,160.60</div>
-            <div class="mono dn" style="font-size:13px">-7.92%</div>
-            <div class="mono" style="font-size:11px;color:var(--muted)">8/17建仓 · 8/19破位 · 8/21反弹</div>
-          </div>
-        </div>
-        <div class="pos-metrics">
-          <div class="pm"><div class="pm-label">现价</div><div class="pm-value">89.60</div></div>
-          <div class="pm"><div class="pm-label">持仓 / 成本</div><div class="pm-value">200 <span style="color:var(--muted);font-size:12px">股</span></div><div style="font-size:12px;color:var(--muted)">加权成本 97.303</div></div>
-          <div class="pm"><div class="pm-label">市值</div><div class="pm-value">¥17,920</div></div>
-          <div class="pm"><div class="pm-label">仓位占比</div><div class="pm-value" style="color:var(--accent)">32.0%</div></div>
-        </div>
-        <div class="panel-sub" style="margin-bottom:6px">8/17 建仓100股@97.91（仅凭MACD走强FOMO追高）+ 8/18 回调中加仓100股@96.50摊薄，加权成本97.303。8/19 重挫至86.80，8/21 反弹至89.60（+3.58%），仍在 92.5 破位下方。浮亏 -1,540.60（-7.92%），亏损有所收窄。</div>
-        <div class="ladder">
-          <div class="lstep on"><div class="st">建仓</div><div class="sv">97.91</div></div>
-          <div class="lstep on"><div class="st">加仓</div><div class="sv">96.50</div></div>
-          <div class="lstep warn current"><div class="st">破位</div><div class="sv">92.5 ❌ 已跌破</div></div>
-          <div class="lstep warn"><div class="st">下一支撑</div><div class="sv">82-85 观察</div></div>
-        </div>
-        <div class="callout" style="margin-top:14px">🔴 8/21 申菱收盘 89.60（+3.58%），200股 浮亏 -1,540.60（-7.92%），仍在 92.5 破位下方。8/21 申菱随大盘反弹 +3.58%，亏损有所收窄但尚未突破 92.5 关键位。继续观察能否放量突破 92.5，否则仍按减仓预案执行。</div>
-        <div class="note-editor">
-          <div class="note-label"><span class="dot"></span>持续持有理由（可编辑，本地保存）</div>
-          <textarea data-key="hold-shenling" placeholder="记录你继续持有申菱环境的理由，例如：板块逻辑、技术形态、目标价、止盈/止损计划..."></textarea>
-          <div class="note-toolbar">
-            <button class="note-save" data-key="hold-shenling">保存理由</button>
-            <span class="note-status" data-status="hold-shenling"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 亨通光电 -->
-      <div class="pos-card">
-        <div class="pos-head">
-          <div>
-            <div class="pos-name">亨通光电 <span class="pos-code">sh600487</span></div>
-            <div class="pos-tag" style="margin-top:8px">持仓中 · 光通信/科技</div>
-          </div>
-          <div style="text-align:right">
-            <div class="mono up" style="font-size:20px;font-weight:700">+¥4,988.40</div>
-            <div class="mono up" style="font-size:13px">+37.96%</div>
-            <div class="mono" style="font-size:11px;color:var(--muted)">已实现 +¥2,456</div>
-          </div>
-        </div>
-        <div class="pos-metrics">
-          <div class="pm"><div class="pm-label">现价</div><div class="pm-value">62.18</div></div>
-          <div class="pm"><div class="pm-label">持仓 / 成本</div><div class="pm-value">300 <span style="color:var(--muted);font-size:12px">股</span></div><div style="font-size:12px;color:var(--muted)">摊薄成本 43.802</div></div>
-          <div class="pm"><div class="pm-label">市值</div><div class="pm-value">¥18,654</div></div>
-          <div class="pm"><div class="pm-label">仓位占比</div><div class="pm-value" style="color:var(--accent)">34.5%</div></div>
-        </div>
-        <div class="panel-sub" style="margin-bottom:6px">长短线双轨止盈（08-13减仓200股@60.39落袋+¥2,293；08-14做T卖出100股@59.54落袋+163）</div>
-        <div class="ladder">
-          <div class="lstep on"><div class="st">建仓</div><div class="sv">43.802</div></div>
-          <div class="lstep done"><div class="st">机动仓兑现</div><div class="sv">60.39 ✓</div></div>
-          <div class="lstep done"><div class="st">做T卖出</div><div class="sv">59.54 ✓</div></div>
-          <div class="lstep"><div class="st">移动止损</div><div class="sv">46.43</div></div>
-        </div>
-        <div class="callout" style="margin-top:14px">✅ 按 8/21 收盘，亨通收 60.43，300 股 浮盈 +¥4,988.40（+37.96%）。亨通仍是唯一盈利主线仓，光通信中线逻辑未破，移动止损抬至 46.43，继续持有为主。</div>
-        <div class="note-editor">
-          <div class="note-label"><span class="dot"></span>持续持有理由（可编辑，本地保存）</div>
-          <textarea data-key="hold-hengtong" placeholder="记录你继续持有亨通光电的理由，例如：科技复苏主线、减仓计划、止盈档位..."></textarea>
-          <div class="note-toolbar">
-            <button class="note-save" data-key="hold-hengtong">保存理由</button>
-            <span class="note-status" data-status="hold-hengtong"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 星源材质 -->
-      <div class="pos-card">
-        <div class="pos-head">
-          <div>
-            <div class="pos-name">星源材质 <span class="pos-code">sz300568</span></div>
-            <div class="pos-tag" style="margin-top:8px">持仓中 · 锂电隔膜</div>
-          </div>
-          <div style="text-align:right">
-            <div class="mono dn" style="font-size:20px;font-weight:700">-¥585.00</div>
-            <div class="mono dn" style="font-size:13px">-3.88%</div>
-            <div class="mono" style="font-size:11px;color:var(--muted)">8/17 建仓 · 仍在止损线上</div>
-          </div>
-        </div>
-        <div class="pos-metrics">
-          <div class="pm"><div class="pm-label">现价</div><div class="pm-value">14.48</div></div>
-          <div class="pm"><div class="pm-label">持仓 / 成本</div><div class="pm-value">1000 <span style="color:var(--muted);font-size:12px">股</span></div><div style="font-size:12px;color:var(--muted)">成本 15.065</div></div>
-          <div class="pm"><div class="pm-label">市值</div><div class="pm-value">¥14,480</div></div>
-          <div class="pm"><div class="pm-label">仓位占比</div><div class="pm-value" style="color:var(--accent)">27.0%</div></div>
-        </div>
-        <div class="panel-sub" style="margin-bottom:6px">8/17 第3票建仓 1000股@15.065（东财登记成本，含费摊薄）。8/21 收盘 14.48（-0.62%），浮亏 -585（-3.88%），仍在 14.20 止损线上方。</div>
-        <div class="ladder">
-          <div class="lstep on"><div class="st">建仓</div><div class="sv">15.065</div></div>
-          <div class="lstep done"><div class="st">止损防守线</div><div class="sv">14.20 ✓ 已远离</div></div>
-          <div class="lstep warn current"><div class="st">观察</div><div class="sv">企稳确认</div></div>
-        </div>
-        <div class="callout" style="margin-top:14px">✅ 8/21 星源材质收 14.48（-0.62%），浮亏 -585（-3.88%），仍在 14.20 止损线上方。星源小幅回调但仍守住止损线，锂电隔膜板块逻辑仍需验证。继续持有观察，不加仓摊薄。若再触及 14.20 仍按纪律执行。</div>
-        <div class="note-editor">
-          <div class="note-label"><span class="dot"></span>持续持有理由（可编辑，本地保存）</div>
-          <textarea data-key="hold-xingyuan" placeholder="记录你继续持有星源材质的理由，例如：隔膜逻辑、成本、目标、止损..."></textarea>
-          <div class="note-toolbar">
-            <button class="note-save" data-key="hold-xingyuan">保存理由</button>
-            <span class="note-status" data-status="hold-xingyuan"></span>
-          </div>
-        </div>
-      </div>
+      <div id="pos-cards"><!-- 由 live-snapshot.json 动态渲染 --></div>
 
       <div class="panel">
         <div class="panel-title">持仓风险矩阵</div>
@@ -629,23 +521,8 @@
         <div class="table-wrap" style="max-height:300px">
           <table>
             <thead><tr><th>标的</th><th>仓位</th><th>目标仓位</th><th>偏离</th><th>浮盈</th><th>当前止损</th><th>距止损空间</th><th>风险评级</th></tr></thead>
-            <tbody>
-              <tr>
-                <td>申菱环境</td><td class="mono">32.0%</td><td class="mono">无单票上限*</td><td class="up">—</td>
-                <td class="dn mono">-7.92%</td><td class="mono">92.50(已破)</td><td class="mono">破位</td><td><span class="pill r">高</span></td>
-              </tr>
-              <tr>
-                <td>亨通光电</td><td class="mono">34.5%</td><td class="mono">无单票上限*</td><td class="up">—</td>
-                <td class="up mono">+41.96%</td><td class="mono">46.43</td><td class="mono">-25.2%</td><td><span class="pill g">低</span></td>
-              </tr>
-              <tr>
-                <td>星源材质</td><td class="mono">27.0%</td><td class="mono">无单票上限*</td><td class="up">—</td>
-                <td class="dn mono">-3.88%</td><td class="mono">14.20</td><td class="mono">-2.5%</td><td><span class="pill a">警示</span></td>
-              </tr>
-              <tr>
-                <td>现金</td><td class="mono">6.5%</td><td class="mono">≥20%</td><td class="dn">-13.5pp 违规</td>
-                <td class="mono">—</td><td class="mono">—</td><td class="mono">—</td><td><span class="pill r">警示</span></td>
-              </tr>
+            <tbody id="risk-body">
+              <tr><td colspan="8" style="text-align:center;color:var(--muted)">由 live-snapshot.json 动态渲染</td></tr>
             </tbody>
           </table>
           <div style="margin-top:8px;font-size:11.5px;color:var(--muted)">* 单票硬性上限已移除，改由「总仓位满 9 成不超 3 天 + 现金 ≥20% + 单日加仓 ≤10%」三条纪律兜底集中度风险。</div>
@@ -666,6 +543,9 @@
           <table>
             <thead><tr><th>日期</th><th>操作</th><th>标的</th><th>方向</th><th>成交价</th><th>股数</th><th>金额</th><th>费用</th><th>操作逻辑</th><th>我的理由（可编辑）</th></tr></thead>
             <tbody>
+              <tr><td class="mono">08-25</td><td>清仓</td><td>亨通光电</td><td><span class="pill r">卖出</span></td><td class="mono">65.60</td><td class="mono">300</td><td class="mono">19,680</td><td class="mono">15.74</td><td>⚠️ 大盘低开高走+V字拉升，13:20 尾段卖在较高位，但分割在 10:33@63.22 与 13:20@65.60 两笔，属「反弹拿不住」</td><td class="note-inline"><input data-key="note-ht-s25" placeholder="填写清仓理由..."><span class="note-status" data-status="note-ht-s25"></span></td></tr>
+              <tr><td class="mono">08-25</td><td>清仓</td><td>申菱环境</td><td><span class="pill r">卖出</span></td><td class="mono">95.45</td><td class="mono">200</td><td class="mono">19,090</td><td class="mono">15.27</td><td>🔴 分两笔清仓（10:01@93.24、10:33@95.45），均卖在拉升早段，收盘冲104.20，卖飞</td><td class="note-inline"><input data-key="note-sl-s25" placeholder="填写清仓理由..."><span class="note-status" data-status="note-sl-s25"></span></td></tr>
+              <tr><td class="mono">08-25</td><td>清仓</td><td>星源材质</td><td><span class="pill r">卖出</span></td><td class="mono">13.85</td><td class="mono">1000</td><td class="mono">13,850</td><td class="mono">11.08</td><td>🔴 在大盘低开走V瞬间割在低点13.85（收盘14.40），止损方向对但点位错</td><td class="note-inline"><input data-key="note-xy-s25" placeholder="填写清仓理由..."><span class="note-status" data-status="note-xy-s25"></span></td></tr>
               <tr><td class="mono">08-18</td><td>加仓</td><td>申菱环境</td><td><span class="pill g">买入</span></td><td class="mono">96.50</td><td class="mono">100</td><td class="mono">9,650</td><td class="mono">5.00</td><td>⚠️ 回调中加仓摊薄。买在半山腰，8/19直接压到86.80深套，是今日最大亏损源</td><td class="note-inline"><input data-key="note-sl-add" placeholder="填写加仓理由..."><span class="note-status" data-status="note-sl-add"></span></td></tr>
               <tr><td class="mono">08-17</td><td>建仓</td><td>星源材质</td><td><span class="pill g">买入</span></td><td class="mono">15.05</td><td class="mono">1000</td><td class="mono">15,050</td><td class="mono">5.00</td><td>第3票建仓（东财真实登记1000股）。8/19逼近14.20止损线</td><td class="note-inline"><input data-key="note-xy-buy" placeholder="填写星源建仓理由..."><span class="note-status" data-status="note-xy-buy"></span></td></tr>
               <tr><td class="mono">08-17</td><td>建仓</td><td>申菱环境</td><td><span class="pill g">买入</span></td><td class="mono">97.91</td><td class="mono">100</td><td class="mono">9,791</td><td class="mono">5.00</td><td>⚠️ FOMO追高，仅凭MACD走强，介入偏晚，追高99+回落</td><td class="note-inline"><input data-key="note-sl-buy" placeholder="填写建仓理由..."><span class="note-status" data-status="note-sl-buy"></span></td></tr>
@@ -837,8 +717,8 @@
         <div class="kpi"><div class="kpi-label">已历自然日</div><div class="kpi-value">37 天</div><div class="kpi-sub">7/14 → 8/21</div></div>
         <div class="kpi"><div class="kpi-label">实际交易日</div><div class="kpi-value">28 天</div><div class="kpi-sub">剔除周末与节假日</div></div>
         <div class="kpi"><div class="kpi-label">股票级胜率</div><div class="kpi-value" style="color:var(--accent2)">40%</div><div class="kpi-sub">2盈 / 5票：亨通+大金盈 · 兖矿+申菱+星源亏</div></div>
-        <div class="kpi"><div class="kpi-label">已了结票胜率</div><div class="kpi-value" style="color:var(--accent2)">50%</div><div class="kpi-sub">大金盈 · 兖矿亏</div></div>
-        <div class="kpi"><div class="kpi-label">总收益率</div><div class="kpi-value up">+7.33%</div><div class="kpi-sub">5万基数核算</div></div>
+        <div class="kpi"><div class="kpi-label">已了结票胜率</div><div class="kpi-value" style="color:var(--accent2)">40%</div><div class="kpi-sub">5票全了结 · 8/25 后亨通/申菱/星源全部清仓</div></div>
+        <div class="kpi"><div class="kpi-label">总收益率</div><div class="kpi-value up">+11.2%</div><div class="kpi-sub">5万基数核算（8/25收）</div></div>
       </div>
 
       <!-- ===== 交易级胜率 & 逐笔分段盈亏拆解（对账单口径） ===== -->
@@ -849,9 +729,9 @@
         <div class="kpi-grid">
           <div class="kpi"><div class="kpi-label">独立交易单元</div><div class="kpi-value">5 轮</div><div class="kpi-sub">5 只票各 1 轮建仓</div></div>
           <div class="kpi"><div class="kpi-label">交易级胜率·含浮盈</div><div class="kpi-value">40%</div><div class="kpi-sub">2盈 / 5单元 · 兖矿+申菱+星源亏</div></div>
-          <div class="kpi"><div class="kpi-label">交易级胜率·已了结</div><div class="kpi-value" style="color:var(--accent2)">50%</div><div class="kpi-sub">大金R1盈 · 兖矿R1亏</div></div>
+          <div class="kpi"><div class="kpi-label">交易级胜率·已了结</div><div class="kpi-value" style="color:var(--accent2)">40%</div><div class="kpi-sub">8/25 全部了结 · 大金R1+亨通盈 · 兖矿+申菱+星源亏</div></div>
           <div class="kpi"><div class="kpi-label">做T总笔数</div><div class="kpi-value">2 笔</div><div class="kpi-sub">均发生在亨通</div></div>
-          <div class="kpi"><div class="kpi-label">已实现盈亏(净)</div><div class="kpi-value up">+¥1,182.83</div><div class="kpi-sub">app口径 · 已含费用分红调整</div></div>
+          <div class="kpi"><div class="kpi-label">已实现盈亏(净)</div><div class="kpi-value up">约 +¥5,943</div><div class="kpi-sub">8/25 清仓落袋 · 含费用分红调整</div></div>
         </div>
 
         <!-- 逐股分段拆解卡片 -->
@@ -909,7 +789,7 @@
           <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:16px 18px">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
               <div style="font-weight:700;font-size:15px;color:var(--ink)">亨通光电 <span style="font-size:11px;color:var(--muted);font-family:'JetBrainsMono'">sh600487</span></div>
-              <span class="pill g">持有中 · 盈</span>
+              <span class="pill g">已了结 · 盈</span>
             </div>
             <div class="table-wrap">
               <table style="width:100%;font-size:12.5px;border-collapse:collapse">
@@ -918,14 +798,15 @@
                   <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">08-04</td><td style="padding:5px;border-bottom:1px solid var(--rule)">建仓</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+400</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">48.87</td><td style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">—</td></tr>
                   <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">08-13</td><td style="padding:5px;border-bottom:1px solid var(--rule)">减仓(高抛)</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">-200</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">60.39</td><td class="mono up" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+¥2,293</td></tr>
                   <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">08-13</td><td style="padding:5px;border-bottom:1px solid var(--rule)">加仓(接回)</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+200</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">57.83</td><td style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">—</td></tr>
-                  <tr><td style="padding:5px">08-14</td><td style="padding:5px">做T卖出</td><td class="mono" style="text-align:right;padding:5px">-100</td><td class="mono" style="text-align:right;padding:5px">59.54</td><td class="mono up" style="text-align:right;padding:5px">+¥163</td></tr>
+                  <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">08-14</td><td style="padding:5px;border-bottom:1px solid var(--rule)">做T卖出</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">-100</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">59.54</td><td class="mono up" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+¥163</td></tr>
+                  <tr><td style="padding:5px">08-25</td><td style="padding:5px">清仓</td><td class="mono" style="text-align:right;padding:5px">-300</td><td class="mono" style="text-align:right;padding:5px">60.43</td><td class="mono up" style="text-align:right;padding:5px">+¥3,435</td></tr>
                 </tbody>
               </table>
             </div>
             <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:12.5px">
               <span style="color:var(--muted)">做T <strong style="color:var(--accent2)">2 次</strong></span>
-              <span style="color:var(--muted)">已实现 <strong class="up">+¥2,456</strong></span>
-              <span style="color:var(--muted)">浮盈 <strong class="up">+¥4,988.40</strong></span>
+              <span style="color:var(--muted)">已实现 <strong class="up">+¥5,891</strong></span>
+              <span style="color:var(--muted)">单元净利 <strong class="up">约 +¥5,891</strong></span>
             </div>
           </div>
 
@@ -933,28 +814,29 @@
           <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:16px 18px">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
               <div style="font-weight:700;font-size:15px;color:var(--ink)">申菱环境 <span style="font-size:11px;color:var(--muted);font-family:'JetBrainsMono'">sz301018</span></div>
-              <span class="pill r">持有中 · 亏</span>
+              <span class="pill r">已了结 · 亏</span>
             </div>
             <div class="table-wrap">
               <table style="width:100%;font-size:12.5px;border-collapse:collapse">
                 <thead><tr><th style="text-align:left;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">日期</th><th style="text-align:left;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">动作</th><th style="text-align:right;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">股数</th><th style="text-align:right;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">价格</th><th style="text-align:right;padding:5px;color:var(--muted);border-bottom:1px solid var(--rule)">盈亏</th></tr></thead>
                 <tbody>
-                  <tr><td style="padding:5px">08-17</td><td style="padding:5px">建仓</td><td class="mono" style="text-align:right;padding:5px">+100</td><td class="mono" style="text-align:right;padding:5px">97.91</td><td style="text-align:right;padding:5px">—</td></tr>
-                  <tr><td style="padding:5px">08-18</td><td style="padding:5px">加仓</td><td class="mono" style="text-align:right;padding:5px">+100</td><td class="mono" style="text-align:right;padding:5px">96.50</td><td style="text-align:right;padding:5px">—</td></tr>
+                  <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">08-17</td><td style="padding:5px;border-bottom:1px solid var(--rule)">建仓</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+100</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">97.91</td><td style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">—</td></tr>
+                  <tr><td style="padding:5px;border-bottom:1px solid var(--rule)">08-18</td><td style="padding:5px;border-bottom:1px solid var(--rule)">加仓</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">+100</td><td class="mono" style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">96.50</td><td style="text-align:right;padding:5px;border-bottom:1px solid var(--rule)">—</td></tr>
+                  <tr><td style="padding:5px">08-25</td><td style="padding:5px">清仓</td><td class="mono" style="text-align:right;padding:5px">-200</td><td class="mono" style="text-align:right;padding:5px">94.35</td><td class="mono dn" style="text-align:right;padding:5px">约 -¥591</td></tr>
                 </tbody>
               </table>
             </div>
             <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:12.5px">
               <span style="color:var(--muted)">做T <strong style="color:var(--ink)">0 次</strong></span>
-              <span style="color:var(--muted)">合计 <strong style="color:var(--ink)">2买0卖</strong></span>
-              <span style="color:var(--muted)">浮亏 <strong class="dn">-¥2,100.60</strong></span>
+              <span style="color:var(--muted)">合计 <strong style="color:var(--ink)">3买…2卖</strong></span>
+              <span style="color:var(--muted)">单元净利 <strong class="dn">约 -¥591</strong></span>
             </div>
           </div>
         </div>
 
         <!-- 当前持仓摘要 -->
         <div style="margin-top:18px;padding:16px 20px;background:var(--bg2);border:1px solid var(--rule);border-radius:12px">
-          <h4 style="color:var(--accent2);margin-bottom:10px;font-size:14px">📦 当前持仓摘要（截至 08-21 收盘）</h4>
+          <h4 style="color:var(--accent2);margin-bottom:10px;font-size:14px">📦 当前持仓摘要（由 live-snapshot.json 实时驱动）</h4>
           <div class="table-wrap">
             <table style="width:100%;font-size:13px;border-collapse:collapse">
               <thead><tr>
@@ -967,24 +849,13 @@
                 <th style="text-align:right;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">盈亏%</th>
                 <th style="text-align:right;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">仓位</th>
               </tr></thead>
-              <tbody>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>亨通光电</strong></td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">300 股</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">43.80</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">58.91</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">¥17,673</td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+¥4,532</td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+34.49%</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">33.4%</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>申菱环境</strong></td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">200 股</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">97.30</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">86.80</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">¥17,360</td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-¥2,101</td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-10.79%</td><td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">32.8%</td></tr>
-                <tr><td style="padding:8px"><strong>星源材质</strong></td><td class="mono" style="text-align:right;padding:8px">1000 股</td><td class="mono" style="text-align:right;padding:8px">15.05</td><td class="mono" style="text-align:right;padding:8px">14.41</td><td class="mono" style="text-align:right;padding:8px">¥14,410</td><td class="mono dn" style="text-align:right;padding:8px">-¥655</td><td class="mono dn" style="text-align:right;padding:8px">-4.35%</td><td class="mono" style="text-align:right;padding:8px">27.2%</td></tr>
+              <tbody id="winrate-pos-body">
+                <tr><td colspan="8" style="text-align:center;color:var(--muted)">由 live-snapshot.json 动态渲染</td></tr>
               </tbody>
-              <tfoot><tr>
-                <td style="padding:8px 8px 0"><strong>合计</strong></td>
-                <td style="text-align:right;padding:8px 8px 0" class="mono"><strong>1500 股</strong></td>
-                <td style="text-align:right;padding:8px 8px 0"></td>
-                <td style="text-align:right;padding:8px 8px 0"></td>
-                <td style="text-align:right;padding:8px 8px 0" class="mono"><strong>¥49,443</strong></td>
-                <td style="text-align:right;padding:8px 8px 0" class="mono"><strong>+¥1,777</strong></td>
-                <td style="text-align:right;padding:8px 8px 0"></td>
-                <td style="text-align:right;padding:8px 8px 0" class="mono"><strong>93.4%</strong></td>
-              </tr></tfoot>
+              <tfoot id="winrate-pos-foot" style="display:none"></tfoot>
             </table>
           </div>
-          <div style="margin-top:10px;font-size:12.5px;color:var(--muted)">当前总资产 <strong style="color:var(--ink);font-family:'JetBrainsMono'">¥53,665.63</strong> (5万本金+累计盈亏) · 持仓市值 <strong style="color:var(--ink);font-family:'JetBrainsMono'">¥50,149</strong> · 现金 <strong style="color:var(--ink);font-family:'JetBrainsMono'">¥3,516.63</strong> · 仓位 93.45%。<span style="color:var(--green)">最近结算（8/21收盘）累计盈亏 +¥3,665.63（app含分红除权口径）。</span></div>
+          <div id="winrate-pos-note" style="margin-top:10px;font-size:12.5px;color:var(--muted)"></div>
         </div>
 
         <div class="callout" style="margin-top:14px"><strong>为什么不能只看股票级胜率：</strong>「股票级」把同一只股票的多轮交易<strong>合并</strong>成一条，正是你会担心的失真源——例如以后重新买入兖矿并盈利，股票级就会把 R1 的亏损和 R2 的盈利合并成「兖矿=赚」，胜率也随之拉成 100%，等于<strong>抹掉了上一轮 -¥415 的亏损事实</strong>。而「交易级」按<strong>每一轮独立建仓</strong>记账：兖矿以后重买会<strong>新增一行「兖矿 R2」</strong>，R1 亏损单独保留、R2 盈利单独记录，各轮胜率分开统计，历史亏损不被洗白。<strong style="color:var(--ink)">结论：股票级看「选股能力」，交易级看「每笔交易的真实执行质量」，以后台账请以交易级为准。</strong></div>
@@ -1013,16 +884,16 @@
               <tbody>
                 <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>兖矿能源</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill" style="background:rgba(220,38,38,.14);color:var(--red)">已清仓 · 亏</span></td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-¥415</td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-1.95%</td></tr>
                 <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>大金重工</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill g">已清仓 · 盈</span></td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+¥1,658</td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+4.6%</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>亨通光电</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill g">持有中 · 盈</span></td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+¥4,988.40</td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+37.96%</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>申菱环境</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill r">持有中 · 亏</span></td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-¥1,520.60</td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">-7.81%</td></tr>
-                <tr><td style="padding:8px"><strong>星源材质</strong></td><td style="padding:8px"><span class="pill r">持有中 · 亏</span></td><td class="mono dn" style="text-align:right;padding:8px">-¥985</td><td class="mono dn" style="text-align:right;padding:8px">-6.54%</td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>亨通光电</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill g">已清仓 · 盈</span></td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">约 +¥5,891</td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">约 +38.6%</td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>申菱环境</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill r">已清仓 · 亏</span></td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">约 -¥591</td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">约 -3.0%</td></tr>
+                <tr><td style="padding:8px"><strong>星源材质</strong></td><td style="padding:8px"><span class="pill r">已清仓 · 亏</span></td><td class="mono dn" style="text-align:right;padding:8px">约 -¥1,015</td><td class="mono dn" style="text-align:right;padding:8px">约 -6.7%</td></tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <div class="callout"><strong>口径说明：</strong>本报告的<strong>「每只票」</strong>口径为 40%（5 票 2 盈 3 亏，含当前浮盈：亨通+大金盈，兖矿+申菱+星源亏）。你 app 上看到的<strong> 40%（2胜3负）</strong> 是<strong>「已了结成交」</strong>口径——东财官方成交级胜率，与股票级口径一致。若只看已了结的两只整票，则是 50%（大金盈、兖矿亏）。两种/三种口径分别衡量：选股质量（40%）、已了结成交（40%）、整段持有（50%）。股票级口径更能反映选股/持股的真实质量。亨通、申菱、星源为当前持仓（净收益=已落袋+当前浮盈），兖矿、大金为已了结的确定性结果。</div>
+      <div class="callout"><strong>口径说明：</strong>截至 8/25，5 票已全部清仓了结。「每只票」口径 40%（2 盈 3 亏：亨通+大金盈，兖矿+申菱+星源亏）。东财 app 成交级胜率 40%（2胜3负）与股票级一致。三口径在 8/25 后已收敛为同一数字：选股质量 40%、已了结成交 40%、整段持有（5/5 全部了结）也是 2 盈 3 亏 = 40%。<strong style="color:var(--ink)">今天最大的教训不是胜率数字，而是执行——申菱、亨通、星源都在大盘低开高走+龙头走强的拉升早段被清仓，属于「反弹拿不住」而非「趋势判断错」。</strong></div>
     </section>
 
     <!-- ===== MODULE 5.5: 分时BS ===== -->
@@ -1870,9 +1741,107 @@
         }
         set('k-cash', '¥' + fmt(Math.round(cash*100)/100));
         set('k-cash-sub', fmt(a.total_assets) + ' - ' + fmt(Math.round(posVal)));
+
+        // ---- 持仓明细卡动态渲染 ----
+        var pc = document.getElementById('pos-cards');
+        var holdings = d.positions || [];
+        var active = holdings.filter(function(p){ return (p.shares||0) > 0; });
+        if(pc){
+          if(active.length === 0){
+            // 空仓态：今日全部清仓
+            var sellHtml = '<div class="pos-head"><div><div class="pos-name" style="font-size:15px">当前空仓 · 今日已全部清仓</div><div class="pos-tag" style="margin-top:8px">仓位 0% · 现金 ¥' + fmt(Math.round(a.total_assets)) + '</div></div></div>'
+              + '<div style="margin-top:14px;font-size:13px;color:var(--muted);line-height:1.8">'
+              + '截至 ' + d.synced_at + '，账户已无持仓。东财记录的 8/25 卖出：</div><div style="margin-top:10px">';
+            (d.recent_trades||[]).forEach(function(t){
+              var isSell = t.mmbz==='卖';
+              if(!isSell) return;
+              sellHtml += '<div style="display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--rule);border-radius:8px;padding:6px 10px;margin:0 8px 8px 0;font-size:12px">'
+                + '<span style="color:var(--red);font-weight:700">'+t.mmbz+'</span><span>'+(t.name||'')+'</span><span class="mono" style="color:var(--muted)">@'+t.price+'</span><span class="mono" style="color:var(--muted)">'+t.time+'</span></div>';
+            });
+            sellHtml += '</div>';
+            pc.innerHTML = '<div class="pos-card">'+sellHtml+'</div>';
+          } else {
+            var posCardHtml = active.map(function(p){
+              var up = p.return_pct>=0;
+              var f = up?'up':'dn';
+              return '<div class="pos-card"><div class="pos-head"><div><div class="pos-name">'+p.name+' <span class="pos-code">'+p.code+'</span></div>'
+                + '<div class="pos-tag" style="margin-top:8px">持仓中 · 持'+p.days+'天</div></div>'
+                + '<div style="text-align:right"><div class="mono '+f+'" style="font-size:20px;font-weight:700">¥'+fmt(Math.round(p.cost*p.shares*(1+p.return_pct/100)))+'</div>'
+                + '<div class="mono '+f+'" style="font-size:13px">'+(p.return_pct>0?'+':'')+p.return_pct+'%</div></div></div>'
+                + '<div class="pos-metrics"><div class="pm"><div class="pm-label">现价</div><div class="pm-value">'+p.price+'</div></div>'
+                + '<div class="pm"><div class="pm-label">持仓 / 成本</div><div class="pm-value">'+p.shares+' <span style="color:var(--muted);font-size:12px">股</span></div><div style="font-size:12px;color:var(--muted)">成本 '+p.cost+'</div></div>'
+                + '<div class="pm"><div class="pm-label">市值</div><div class="pm-value">¥'+fmt(Math.round(p.price*p.shares))+'</div></div>'
+                + '<div class="pm"><div class="pm-label">单票盈亏</div><div class="pm-value" style="color:var(--'+(up?'green':'red')+')">'+(p.return_pct>0?'+':'')+p.return_pct+'%</div></div>'
+                + '</div><div class="panel-sub" style="margin-bottom:6px">'+(up?'✅':'🔴')+' 当前该股'+(up?'浮盈':'浮亏')+'，现价 '+p.price+'，'+(up?'':'注意风险控制。')+'数据来自东财快照（'+d.synced_at+'）。</div></div>';
+            }).join('');
+            pc.innerHTML = posCardHtml;
+          }
+        }
+        var pd = document.getElementById('pos-desc');
+        if(pd) pd.textContent = active.length===0
+          ? '当前空仓（8/25 已全部清仓）。账户仓位 0%，全部为现金，规避了满仓暴露风险，但需留意是否过早离场错过反弹。'
+          : '当前持仓 ' + active.length + ' 票：' + active.map(function(p){return p.name;} ).join('、')
+            + '（仓位合计 ' + (a.position_pct||0) + '%）。';
+
+        // ---- 持仓风险矩阵动态渲染 ----
+        var rb = document.getElementById('risk-body');
+        if(rb){
+          if(active.length===0){
+            rb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted)">空仓 · 无单票风险暴露</td></tr>'
+              + '<tr><td>现金</td><td class="mono">100%</td><td class="mono">≥20%</td><td class="up">达标</td><td class="mono">—</td><td class="mono">—</td><td class="mono">—</td><td><span class="pill g">低</span></td></tr>';
+          } else {
+            rb.innerHTML = active.map(function(p){
+              var up = p.return_pct>=0;
+              var w = p.shares*p.price;
+              var pct = posVal>0 ? (w/posVal*100) : 0;
+              return '<tr><td>'+p.name+'</td><td class="mono">'+pct.toFixed(1)+'%</td><td class="mono">动态</td><td class="up">—</td>'
+                + '<td class="'+(up?'up':'dn')+' mono">'+(p.return_pct>0?'+':'')+p.return_pct+'%</td><td class="mono">—</td><td class="mono">—</td>'
+                + '<td><span class="pill '+(up?'g':'a')+'">'+(up?'低':'警示')+'</span></td></tr>';
+            }).join('')
+            + '<tr><td>现金</td><td class="mono">'+((1-(posVal/a.total_assets))*100).toFixed(1)+'%</td><td class="mono">≥20%</td><td class="mono">—</td><td class="mono">—</td><td class="mono">—</td><td class="mono">—</td><td><span class="pill a">跟踪</span></td></tr>';
+          }
+        }
+
         set('realm-assets', '¥' + fmt(a.total_assets));
         set('realm-return', (a.total_return_pct>0?'+':'') + a.total_return_pct + '%');
         set('foot-assets', '¥' + fmt(a.total_assets));
+
+        // ---- 胜率模块·当前持仓摘要动态渲染 ----
+        var wpb = document.getElementById('winrate-pos-body');
+        var wpf = document.getElementById('winrate-pos-foot');
+        var wpn = document.getElementById('winrate-pos-note');
+        if(wpb){
+          if(active.length===0){
+            wpb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:14px">当前空仓（8/25 已全部清仓）</td></tr>';
+            if(wpf) wpf.style.display='none';
+            if(wpn) wpn.innerHTML = '当前总资产 <strong style="color:var(--ink);font-family:JetBrainsMono">¥'+fmt(a.total_assets)+'</strong> (5万本金+累计盈亏) · 持仓市值 <strong>¥0</strong> · 现金 <strong style="font-family:JetBrainsMono">¥'+fmt(a.total_assets)+'</strong> · 仓位 0%。<span style="color:var(--green)">今日（8/25）全部清仓，落袋为安；累计盈亏 '+(a.total_return_pct>0?'+':'')+a.total_return_pct+'%（app含分红除权口径）。</span>';
+          } else {
+            var sumShares=0, sumMv=0, sumPnL=0;
+            var rows = active.map(function(p){
+              var mv = p.price*p.shares, pnl = p.cost*p.shares*(p.return_pct/100);
+              sumShares+=p.shares; sumMv+=mv; sumPnL+=pnl;
+              var up = p.return_pct>=0;
+              return '<tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>'+p.name+'</strong></td>'
+                + '<td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">'+p.shares+' 股</td>'
+                + '<td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">'+p.cost+'</td>'
+                + '<td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">'+p.price+'</td>'
+                + '<td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">¥'+fmt(Math.round(mv))+'</td>'
+                + '<td class="mono '+(up?'up':'dn')+'" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">'+(pnl>=0?'+':'')+fmt(Math.round(pnl))+'</td>'
+                + '<td class="mono '+(up?'up':'dn')+'" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">'+(p.return_pct>0?'+':'')+p.return_pct+'%</td>'
+                + '<td class="mono" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">'+(a.total_assets>0?(mv/a.total_assets*100).toFixed(1):'0')+'%</td></tr>';
+            }).join('') + '</tbody>';
+            rows = rows.replace('</tbody>','');
+            wpb.innerHTML = rows;
+            if(wpf){ wpf.style.display=''; wpf.innerHTML = '<tr><td style="padding:8px 8px 0"><strong>合计</strong></td>'
+              + '<td style="text-align:right;padding:8px 8px 0" class="mono"><strong>'+sumShares+' 股</strong></td>'
+              + '<td style="text-align:right;padding:8px 8px 0"></td><td style="text-align:right;padding:8px 8px 0"></td>'
+              + '<td style="text-align:right;padding:8px 8px 0" class="mono"><strong>¥'+fmt(Math.round(sumMv))+'</strong></td>'
+              + '<td style="text-align:right;padding:8px 8px 0" class="mono '+(sumPnL>=0?'up':'dn')+'"><strong>'+(sumPnL>=0?'+':'')+fmt(Math.round(sumPnL))+'</strong></td>'
+              + '<td style="text-align:right;padding:8px 8px 0"></td>'
+              + '<td style="text-align:right;padding:8px 8px 0" class="mono"><strong>'+(a.total_assets>0?(sumMv/a.total_assets*100).toFixed(1):'0')+'%</strong></td></tr>'; }
+            if(wpn) wpn.innerHTML = '当前总资产 <strong style="color:var(--ink);font-family:JetBrainsMono">¥'+fmt(a.total_assets)+'</strong> (5万本金+累计盈亏) · 持仓市值 <strong>¥'+fmt(Math.round(sumMv))+'</strong> · 现金 <strong style="font-family:JetBrainsMono">¥'+fmt(Math.round(cash))+'</strong> · 仓位 '+a.position_pct+'%。';
+          }
+        }
       })
       .catch(function(){
         document.getElementById('live-synced').textContent =
