@@ -221,6 +221,28 @@
   .rec p{font-size:13px;color:var(--muted)}
 
   .callout{border-left:3px solid var(--accent2);background:var(--amber-dim);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--ink);margin:14px 0}
+
+  /* ===== 盘前预测表单 ===== */
+  .fc-field{margin-top:14px}
+  .fc-field>label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}
+  .fc-req{color:var(--red)}
+  .fc-seg{display:flex;flex-wrap:wrap;gap:8px}
+  .fc-seg button{
+    padding:9px 16px;border-radius:9px;border:1px solid var(--rule);
+    background:var(--bg2);color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;
+  }
+  .fc-seg button:hover{color:var(--ink);border-color:var(--accent)}
+  .fc-seg button.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-color:transparent}
+  #module-forecast textarea{
+    width:100%;box-sizing:border-box;border:1px solid var(--rule);border-radius:10px;
+    background:var(--bg2);color:var(--ink);font-size:13.5px;padding:11px 13px;
+    font-family:inherit;line-height:1.65;resize:vertical;
+  }
+  #module-forecast textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(13,148,136,.12)}
+  .fc-badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;margin-right:6px}
+  .fc-badge.hit{background:rgba(22,163,74,.15);color:var(--green)}
+  .fc-badge.miss{background:rgba(220,38,38,.12);color:var(--red)}
+  .fc-badge.part{background:rgba(217,119,6,.15);color:var(--accent2)}
   .callout strong{color:var(--accent2)}
 
   /* Editable notes */
@@ -402,6 +424,10 @@
       <div class="nav-item" data-target="intraday">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/><circle cx="7" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="8" r="1.5" fill="currentColor"/><circle cx="17" cy="12" r="1.5" fill="currentColor"/></svg>
         分时BS
+      </div>
+      <div class="nav-item" data-target="forecast">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v3M5.6 5.6l2.1 2.1M2 12h3M22 12h-3M18.4 5.6l-2.1 2.1"/><circle cx="12" cy="14" r="5"/><path d="M8 21h8"/></svg>
+        盘前预测
       </div>
       <div class="nav-item" data-target="audit">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
@@ -1024,6 +1050,115 @@
       <div id="intraday-charts"></div>
     </section>
 
+    <!-- ===== MODULE 4.5: 盘前预测 ===== -->
+    <section class="module" id="module-forecast">
+      <div class="m-head">
+        <div class="m-kicker">Forecast · 盘前预测</div>
+        <div class="m-title">每天开盘前写下预测与预案，收盘后对账打分</div>
+        <div class="m-desc">预测在开盘前提交并锁定（不可改）；收盘拉数据时按实际表现自动评分。预测准确度与预案质量纳入全景评估——用制度消灭"盘中临时起意"。</div>
+      </div>
+
+      <!-- 今日状态条 -->
+      <div id="fc-status-bar" class="callout" style="margin-bottom:18px"></div>
+
+      <!-- 预测表单 -->
+      <div class="panel" id="fc-form-panel">
+        <div class="panel-title">📝 提交今日盘前预测 <span id="fc-form-date" style="font-weight:400;color:var(--muted);font-size:13px"></span></div>
+        <div class="panel-sub">9:15 前填写。写完即锁定，收盘后系统自动对账评分。没有预测的交易日按 0 分计入纪律。</div>
+
+        <div class="fc-field">
+          <label>① 大盘预判（上证指数今日方向）<span class="fc-req">*</span></label>
+          <div class="fc-seg" id="fc-mkt-dir">
+            <button type="button" data-v="涨">上涨</button>
+            <button type="button" data-v="平">横盘震荡</button>
+            <button type="button" data-v="跌">下跌</button>
+            <button type="button" data-v="低开高走">低开高走(V型)</button>
+            <button type="button" data-v="高开低走">高开低走(冲高回落)</button>
+          </div>
+        </div>
+
+        <div class="fc-field">
+          <label>② 大盘判断依据 / 幅度预期</label>
+          <textarea id="fc-mkt-reason" rows="2" placeholder="例：昨日缩量止跌+隔夜美股平稳，预计低开后回勾，上证收在3850上方…"></textarea>
+        </div>
+
+        <div class="fc-field">
+          <label>③ 持仓预判（每只一行：代码/名称 + 预判方向 + 关键价位）<span class="fc-req">*</span></label>
+          <textarea id="fc-hold-view" rows="3" placeholder="例：
+亨通光电：回踩57支撑不破则收红，破57减1/3
+申菱环境：反弹到92.5不过就减半
+星源材质：跌破14.20止损离场"></textarea>
+        </div>
+
+        <div class="fc-field">
+          <label>④ 应对预案（触发条件 → 动作，必须可执行）<span class="fc-req">*</span></label>
+          <textarea id="fc-plan" rows="3" placeholder="例：
+若大盘二次探底不破3851且龙头翻红→接回减掉的仓位
+若申菱反抽92.5放量不过→执行减半
+单日最多操作2笔，不做计划外交易"></textarea>
+        </div>
+
+        <div class="fc-field">
+          <label>⑤ 情绪自评（昨晚到现在）</label>
+          <div class="fc-seg" id="fc-mood">
+            <button type="button" data-v="冷静">冷静</button>
+            <button type="button" data-v="正常">正常</button>
+            <button type="button" data-v="焦躁">焦躁/想翻本</button>
+            <button type="button" data-v="亢奋">亢奋/怕踏空</button>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:14px">
+          <button id="fc-submit" class="primary" style="flex:1;padding:12px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:700;font-size:14px;cursor:pointer">🔒 锁定并提交预测</button>
+        </div>
+        <div id="fc-token-tip" class="token-status" style="margin-top:8px"></div>
+      </div>
+
+      <!-- 已锁定提示 -->
+      <div class="panel" id="fc-locked-panel" style="display:none;border-color:rgba(217,119,6,.45)">
+        <div class="panel-title">🔒 今日预测已锁定</div>
+        <div class="panel-sub">开盘前提交的内容不可修改——这就是"先写后验"的意义。收盘后自动对账。</div>
+        <div id="fc-today-review" style="margin-top:10px"></div>
+      </div>
+
+      <!-- 评分规则说明 -->
+      <div class="panel" style="margin-top:20px">
+        <div class="panel-title">📊 评分规则（收盘后自动计算）</div>
+        <div class="panel-sub">满分100 = 方向30 + 个股30 + 预案25 + 纪律15</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:12px;font-size:12.5px;line-height:1.7">
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent)">方向 30分</b><br>完全命中30 / 相邻方向12（如判跌实为震荡）/ 完全反向0。"低开高走/高开低走"命中额外+5奖励分（封顶35）</div>
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent)">个股 30分</b><br>每只持仓等权10分：方向对6分 + 价位判断对4分（关键位是否守住/触及）。无持仓日按大盘幅度预期给分</div>
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent)">预案 25分</b><br>有明确触发价+动作=20分；写了但当日未用到=17分；模糊无触发条件=8分；没写=0</div>
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent2)">纪律 15分</b><br>当日实际操作是否都在预案内：全部在内15分；出现1笔计划外交易扣8分；情绪标"焦躁/亢奋"仍交易再扣7</div>
+        </div>
+      </div>
+
+      <!-- 历史记录 -->
+      <div class="panel" style="margin-top:20px">
+        <div class="panel-title">🗂️ 预测 vs 实际 · 历史档案</div>
+        <div class="panel-sub">每条记录：盘前预测（锁定）→ 收盘对账（自动填充）→ 得分。持续积累形成"预测能力曲线"。</div>
+        <div class="kpi-grid" style="margin-top:12px">
+          <div class="kpi"><div class="kpi-label">已记录天数</div><div class="kpi-value" id="fc-kpi-days">0</div><div class="kpi-sub">个交易日</div></div>
+          <div class="kpi"><div class="kpi-label">平均得分</div><div class="kpi-value" id="fc-kpi-avg">—</div><div class="kpi-sub">满分100</div></div>
+          <div class="kpi"><div class="kpi-label">大盘方向命中率</div><div class="kpi-value" id="fc-kpi-hit">—</div><div class="kpi-sub">含相邻方向</div></div>
+          <div class="kpi"><div class="kpi-label">连续打卡</div><div class="kpi-value" id="fc-kpi-streak">0</div><div class="kpi-sub">最近连续记录天</div></div>
+        </div>
+        <div class="table-wrap" style="max-height:420px;margin-top:12px">
+          <table style="width:100%;font-size:12.5px;border-collapse:collapse" id="fc-history-table">
+            <thead><tr>
+              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule);white-space:nowrap">日期</th>
+              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">大盘预判→实际</th>
+              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">持仓预判</th>
+              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">预案要点</th>
+              <th style="text-align:center;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">得分</th>
+              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">对账点评</th>
+            </tr></thead>
+            <tbody id="fc-history-body"><tr><td colspan="6" style="padding:20px;text-align:center;color:var(--muted)">暂无记录——明早 9:15 前写下第一条盘前预测吧</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== MODULE 5: 操作评估 ===== -->
     <section class="module" id="module-audit">
       <div class="m-head">
@@ -1141,6 +1276,20 @@
           <div class="grade">长板稳、短板明显</div>
           <p>整体画像：<strong>「曾经 +14.42% 又回吐到 +5.92%，8/21 反弹至 +9.14%——纪律缺席：开仓/减仓/清仓无计划、无盘后预案、看完心情」</strong>。8/17 会止盈（大金走弱清仓 +437、亨通 +2,293 兑现）、方向也踩中主线（亨通 +41.96%，但其中不乏 7 月科技深调后反抽的行情运气）；但清仓大金后仅隔 17 分钟便 FOMO 追高建仓申菱，8/18 又在回调半山腰加仓申菱 100 股，8/19 行情重挫日两只新仓深套、账户单日回撤 -8.50%。8/21 亨通续涨 +0.26% 带动账户回升至 +9.14%，但核心短板未变：<strong>「系统性纪律缺失 + 仓位失控：没有严格买卖计划、没有盘后预案，总仓位 93.56% 逼近满仓」</strong>。选股主要靠 MACD + 板块热度，证据单薄、含运气，尚待多轮验证。当前收益 +9.14%、已实现盈亏 +¥1,182.83（app净口径）。<strong style="color:var(--red)">提醒：8/19 一天回撤 -8.50% 就已把此前 14.42% 的浮盈回吐大半，8/21 的续涨只是暂缓了风险——胜率与收益在线仅代表顺风里有能力，纪律缺席意味着这套打法尚未闭环。</strong></p>
         </div>
+      </div>
+
+      <!-- ===== 盘前预测纪律（动态读取 data/forecast.json） ===== -->
+      <div class="panel" style="margin-top:20px;border-color:rgba(217,119,6,.4)">
+        <div class="m-kicker" style="margin-bottom:6px">🎯 盘前预测纪律 · Forecast Discipline</div>
+        <div class="panel-title">预测-对账制度执行情况</div>
+        <div class="panel-sub">数据来自「盘前预测」模块的每日记录，收盘对账后自动更新。这是全景评估中唯一衡量"事前思考质量"的维度。</div>
+        <div class="kpi-grid" style="margin-top:12px">
+          <div class="kpi"><div class="kpi-label">预测打卡</div><div class="kpi-value" id="pano-fc-days">—</div><div class="kpi-sub">累计交易日</div></div>
+          <div class="kpi"><div class="kpi-label">预测均分</div><div class="kpi-value" id="pano-fc-avg">—</div><div class="kpi-sub">满分100</div></div>
+          <div class="kpi"><div class="kpi-label">大盘命中率</div><div class="kpi-value" id="pano-fc-hit">—</div><div class="kpi-sub">含相邻方向</div></div>
+          <div class="kpi"><div class="kpi-label">纪律分均值</div><div class="kpi-value" id="pano-fc-disc">—</div><div class="kpi-sub">满分15</div></div>
+        </div>
+        <div id="pano-fc-verdict" style="margin-top:12px;font-size:13px;line-height:1.8"></div>
       </div>
 
       <!-- ===== 回调应对复盘（8/21） ===== -->
@@ -1774,6 +1923,225 @@
   document.querySelectorAll('.nav-item').forEach(function(item){
     item.addEventListener('click', function(){ setOpen(false); });
   });
+})();
+</script>
+<script>
+/* ===== 盘前预测模块：GitHub 同步 + 锁定 + 历史渲染 ===== */
+(function(){
+  var REPO = 'Tim0thy1/trading-review-console';
+  var FILE = 'data/forecast.json';
+  var TOKEN_KEY = 'wb_token_v1';   /* 与交易工作台共用同一 token 存储 */
+
+  function getToken(){ try{ return localStorage.getItem(TOKEN_KEY) || ''; }catch(e){ return ''; } }
+  function todayStr(){
+    var d = new Date();
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+  function nowTime(){
+    var d = new Date();
+    return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+  }
+
+  var forecasts = [];   /* [{date, mkt_dir, mkt_reason, hold_view, plan, mood, submitted_at, review:{...}}] */
+
+  /* ---------- 数据加载 ---------- */
+  async function loadForecasts(){
+    var t = getToken();
+    if(!t) return [];
+    try{
+      var res = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILE, {
+        headers:{ 'Authorization':'token '+t, 'Accept':'application/vnd.github+json' },
+        cache:'no-store'
+      });
+      if(res.status === 404){ await saveForecasts([]); return []; }
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      var j = await res.json();
+      return JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,'')))));
+    }catch(e){
+      console.warn('forecast 加载失败:', e.message);
+      return [];
+    }
+  }
+
+  async function saveForecasts(list){
+    var t = getToken();
+    if(!t) return false;
+    try{
+      /* 先拿 sha（更新已有文件必须带） */
+      var sha = null;
+      var r0 = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILE, {
+        headers:{ 'Authorization':'token '+t, 'Accept':'application/vnd.github+json' }});
+      if(r0.ok){ sha = (await r0.json()).sha; }
+      var body = { message:'forecast: 更新盘前预测记录 ('+todayStr()+')', content: btoa(unescape(encodeURIComponent(JSON.stringify(list, null, 2)))), branch:'main' };
+      if(sha) body.sha = sha;
+      var res = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILE, {
+        method:'PUT',
+        headers:{ 'Authorization':'token '+t, 'Accept':'application/vnd.github+json', 'Content-Type':'application/json' },
+        body: JSON.stringify(body)
+      });
+      return res.ok;
+    }catch(e){
+      console.warn('forecast 保存失败:', e.message);
+      return false;
+    }
+  }
+
+  /* ---------- 表单交互 ---------- */
+  document.querySelectorAll('.fc-seg').forEach(function(seg){
+    seg.addEventListener('click', function(e){
+      var btn = e.target.closest('button');
+      if(!btn || seg.classList.contains('locked')) return;
+      seg.querySelectorAll('button').forEach(function(b){ b.classList.remove('on'); });
+      btn.classList.add('on');
+    });
+  });
+  function segValue(id){
+    var on = document.querySelector('#'+id+' button.on');
+    return on ? on.getAttribute('data-v') : '';
+  }
+
+  /* ---------- 渲染 ---------- */
+  function renderAll(){
+    var today = todayStr();
+    var rec = forecasts.find(function(f){ return f.date === today; });
+    var statusBar = document.getElementById('fc-status-bar');
+    var formPanel = document.getElementById('fc-form-panel');
+    var lockedPanel = document.getElementById('fc-locked-panel');
+    document.getElementById('fc-form-date').textContent = '('+today+' · 现在 '+nowTime()+')';
+
+    /* 今日状态条 */
+    var wd = new Date().getDay();
+    if(wd === 0 || wd === 6){
+      statusBar.innerHTML = '<strong>☀️ 今天是周末</strong>——休市日无需提交预测，好好休息。复盘和预案可以留给周一开盘前。';
+    } else if(rec && !rec.review){
+      statusBar.innerHTML = '<strong>✅ 已提交今日预测（'+rec.submitted_at+' 锁定）</strong>：大盘「'+rec.mkt_dir+'」· 情绪「'+(rec.mood||'未填')+'」。收盘后拉数据时自动对账评分。';
+      formPanel.style.display = 'none';
+      lockedPanel.style.display = 'block';
+    } else if(rec && rec.review){
+      statusBar.innerHTML = '<strong>📊 今日预测已对账：</strong>得分 <b>'+rec.review.score+'</b>/100 · 大盘「'+rec.mkt_dir+'」vs 实际「'+rec.review.actual_dir+'」。详见下方历史档案。';
+      formPanel.style.display = 'none';
+      lockedPanel.style.display = 'block';
+    } else {
+      var h = new Date().getHours();
+      var tip = h >= 9 && h < 15 ? '<strong style="color:var(--red)">⚠️ 已开盘且尚未提交预测——今日将按缺卡计 0 分。</strong>' : '<strong>📝 今日尚未提交预测</strong>';
+      statusBar.innerHTML = tip + '——预测的意义不在准不准，而在<b>逼自己盘前想清楚、盘中按计划执行</b>。';
+      formPanel.style.display = 'block';
+      lockedPanel.style.display = 'none';
+    }
+
+    /* KPI */
+    var scored = forecasts.filter(function(f){ return f.review; });
+    document.getElementById('fc-kpi-days').textContent = forecasts.length;
+    document.getElementById('fc-kpi-avg').textContent = scored.length
+      ? Math.round(scored.reduce(function(s,f){ return s+f.review.score; },0)/scored.length)
+      : '—';
+    var hits = scored.filter(function(f){ return f.review.dir_hit === true || f.review.dir_hit === 'part'; }).length;
+    document.getElementById('fc-kpi-hit').textContent = scored.length ? Math.round(hits/scored.length*100)+'%' : '—';
+
+    var streak = 0;
+    for(var i=forecasts.length-1;i>=0;i--){
+      var dPrev = i===0 ? null : forecasts[i-1].date;
+      streak++;
+      if(i>0){
+        var a=new Date(forecasts[i].date), b=new Date(forecasts[i-1].date);
+        var gapDays=(a-b)/86400000;
+        var gapWorkdays=0;
+        var cur=new Date(b);
+        while(cur<a){ cur.setDate(cur.getDate()+1); var w=cur.getDay(); if(w!==0&&w!==6) gapWorkdays++; }
+        if(gapWorkdays>1){ break; }
+      }
+    }
+    document.getElementById('fc-kpi-streak').textContent = streak;
+
+    /* 全景评估 · 盘前预测纪律面板 */
+    var pDays = document.getElementById('pano-fc-days');
+    if(pDays){
+      pDays.textContent = forecasts.length;
+      document.getElementById('pano-fc-avg').textContent = scored.length ? Math.round(scored.reduce(function(s,f){ return s+f.review.score; },0)/scored.length) : '—';
+      document.getElementById('pano-fc-hit').textContent = scored.length ? Math.round(hits/scored.length*100)+'%' : '—';
+      var withDisc = scored.filter(function(f){ return typeof f.review.discipline === 'number'; });
+      document.getElementById('pano-fc-disc').textContent = withDisc.length ? (withDisc.reduce(function(s,f){return s+f.review.discipline;},0)/withDisc.length).toFixed(1) : '—';
+      var v = document.getElementById('pano-fc-verdict');
+      if(!forecasts.length){
+        v.innerHTML = '<span style="color:var(--red)">尚未建立预测记录。</span>盘前预测是全景评估的"事前思考"维度——从下个交易日开始，每天开盘前花3分钟填写预测与预案，收盘自动对账。';
+      } else {
+        var avg = Math.round(scored.reduce(function(s,f){ return s+f.review.score; },0)/scored.length);
+        var lvl = avg>=75?['强','var(--green)','预测质量高、预案可执行，继续保持']:avg>=55?['中','var(--accent2)','方向感尚可，重点提升关键价位的预判精度']:avg>0?['弱','var(--red)','预测与实际偏差大——先不求准，先把"有预案"这件事做到']:['待观察','var(--muted)','已开始记录，收盘对账后生成评估'];
+        v.innerHTML = '当前评估：<b style="color:'+lvl[1]+'">'+lvl[0]+'</b>（均分 '+avg+'/100，样本 '+scored.length+' 天）。'+lvl[2]+
+          (scored.some(function(f){return typeof f.review.discipline==='number'&&f.review.discipline<15;})?'<br><span style="color:var(--red)">⚠️ 存在计划外交易记录——盘中操作脱离了盘前预案，这是当前最大失分点。</span>':'');
+      }
+    }
+
+    /* 历史表 */
+    var tbody = document.getElementById('fc-history-body');
+    if(!forecasts.length){
+      tbody.innerHTML = '<tr><td colspan="6" style="padding:20px;text-align:center;color:var(--muted)">暂无记录——明早 9:15 前写下第一条盘前预测吧</td></tr>';
+      return;
+    }
+    tbody.innerHTML = forecasts.slice().reverse().map(function(f){
+      var dirCell = f.review
+        ? esc(f.mkt_dir)+' → <b>'+esc(f.review.actual_dir)+'</b> '+(f.review.dir_hit===true?'<span class="fc-badge hit">命中</span>':f.review.dir_hit==='part'?'<span class="fc-badge part">相邻</span>':'<span class="fc-badge miss">反向</span>')
+        : esc(f.mkt_dir)+' → <span style="color:var(--muted)">待收盘</span>';
+      var scoreCell = f.review
+        ? '<b class="mono" style="font-size:15px;color:'+(f.review.score>=70?'var(--green)':f.review.score>=40?'var(--accent2)':'var(--red)')+'">'+f.review.score+'</b>'
+        : '<span style="color:var(--muted)">—</span>';
+      return '<tr>'+
+        '<td style="padding:8px;border-bottom:1px solid var(--rule);white-space:nowrap" class="mono">'+f.date+(f.weekend?' ☀️':'')+'</td>'+
+        '<td style="padding:8px;border-bottom:1px solid var(--rule)">'+dirCell+'</td>'+
+        '<td style="padding:8px;border-bottom:1px solid var(--rule);max-width:220px">'+esc(firstLine(f.hold_view))+(f.hold_view&&f.hold_view.indexOf('\\n')>=0?' …':'')+'</td>'+
+        '<td style="padding:8px;border-bottom:1px solid var(--rule);max-width:220px;color:var(--muted)">'+esc(firstLine(f.plan))+(f.plan&&f.plan.indexOf('\\n')>=0?' …':'')+'</td>'+
+        '<td style="text-align:center;padding:8px;border-bottom:1px solid var(--rule)">'+scoreCell+'</td>'+
+        '<td style="padding:8px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--muted);max-width:260px">'+(f.review?esc(f.review.comment):'<span style="color:var(--muted)">待收盘后生成</span>')+'</td>'+
+      '</tr>';
+    }).join('');
+  }
+  function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function firstLine(s){ s=(s||'').trim(); var i=s.indexOf('\\n'); return i>0?s.slice(0,i):s; }
+
+  /* ---------- 提交 ---------- */
+  var submitting = false;
+  document.getElementById('fc-submit').addEventListener('click', async function(){
+    if(submitting) return;
+    var st = document.getElementById('fc-token-tip');
+    var token = getToken();
+    if(!token){
+      st.textContent = '⚠️ 尚未配置 GitHub Token：请先在交易工作台侧边栏设置并保存 token（两处共用），保存后回到这里提交。';
+      st.className = 'token-status err';
+      return;
+    }
+    if(!segValue('fc-mkt-dir')){ st.textContent='请先选择①大盘预判'; st.className='token-status err'; return; }
+    if(!document.getElementById('fc-hold-view').value.trim()){ st.textContent='请填写③持仓预判（哪怕写"持仓不动"）'; st.className='token-status err'; return; }
+    if(!document.getElementById('fc-plan').value.trim()){ st.textContent='请填写④应对预案——这是本功能的核心'; st.className='token-status err'; return; }
+
+    var wd = new Date().getDay();
+    if(wd===0 || wd===6){ st.textContent='周末休市，无需提交'; st.className='token-status err'; return; }
+
+    submitting = true;
+    this.textContent = '⏳ 提交中…';
+    var rec = {
+      date: todayStr(),
+      weekday: ['日','一','二','三','四','五','六'][wd],
+      mkt_dir: segValue('fc-mkt-dir'),
+      mkt_reason: document.getElementById('fc-mkt-reason').value.trim(),
+      hold_view: document.getElementById('fc-hold-view').value.trim(),
+      plan: document.getElementById('fc-plan').value.trim(),
+      mood: segValue('fc-mood') || null,
+      submitted_at: nowTime()
+    };
+    forecasts.push(rec);
+    var ok = await saveForecasts(forecasts);
+    submitting = false;
+    this.textContent = '🔒 锁定并提交预测';
+    if(ok){
+      st.textContent=''; renderAll();
+    }else{
+      forecasts.pop();
+      st.textContent = '❌ 保存失败（检查网络/token 权限），请重试';
+      st.className = 'token-status err';
+    }
+  });
+
+  loadForecasts().then(function(list){ forecasts = list; renderAll(); });
 })();
 </script>
 </body>
