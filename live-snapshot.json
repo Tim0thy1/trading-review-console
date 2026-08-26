@@ -1,21 +1,21 @@
 {
-  "synced_at": "2026-08-25 11:08:14",
+  "synced_at": "2026-08-26 10:07:38",
   "combin_id": "261944300000051189",
   "combin_name": "翻81681",
   "manager": "聪明的企业家6",
   "account": {
     "initial_principal": 50000,
     "principal_label": "人为控制实际本金5万",
-    "total_assets": 55598.880000000005,
+    "total_assets": 55601.630000000005,
     "total_return_pct": 11.2,
-    "position_pct": 0.0,
-    "cash": 55598.88,
+    "position_pct": 16.48,
+    "cash": 46439.63,
     "start_date": "2026-07-14",
-    "deal_rate": 40.0,
-    "deal_win": 2,
+    "deal_rate": 50.0,
+    "deal_win": 3,
     "deal_fail": 3,
-    "basis": "盈亏绝对平移：真实总资产=5万+app累计盈亏5,598.88=55,598.88，收益率11.2%。累计盈亏含分红/除权/手续费等一切，持仓市值0.00/持仓盈亏+5,598.88均来自东财app口径",
-    "daily_pnl": 0.0,
+    "basis": "盈亏绝对平移：真实总资产=5万+app累计盈亏5,601.63=55,601.63，收益率11.2%。累计盈亏含分红/除权/手续费等一切，持仓市值9,162.00/持仓盈亏+5,601.63均来自东财app口径",
+    "daily_pnl": 2.75,
     "prev_total_assets": 55598.880000000005
   },
   "prev_snapshot_note": "如需当日盈亏需与前一日快照对照：当日真实盈亏 = 今日真实总资产 - 昨日真实总资产",
@@ -23,35 +23,21 @@
     {
       "name": "星源材质",
       "code": "300568",
-      "shares": 0,
-      "cost": 0.0,
-      "price": 14.4,
-      "pct": -1.78,
-      "return_pct": 0.0,
-      "days": 9
-    },
-    {
-      "name": "申菱环境",
-      "code": "301018",
-      "shares": 0,
-      "cost": 0.0,
-      "price": 104.2,
-      "pct": 5.01,
-      "return_pct": 0.0,
-      "days": 9
-    },
-    {
-      "name": "亨通光电",
-      "code": "600487",
-      "shares": 0,
-      "cost": 0.0,
-      "price": 64.6,
-      "pct": 7.07,
-      "return_pct": 0.0,
-      "days": 22
+      "shares": 600,
+      "cost": 15.265,
+      "price": 15.27,
+      "pct": 0.03,
+      "return_pct": 0.03,
+      "days": 1
     }
   ],
   "recent_trades": [
+    {
+      "time": "2026-08-26 13:58",
+      "name": "星源材质",
+      "mmbz": "买",
+      "price": "15.25"
+    },
     {
       "time": "2026-08-25 13:20",
       "name": "亨通光电",
@@ -81,19 +67,13 @@
       "name": "星源材质",
       "mmbz": "卖",
       "price": "13.85"
-    },
-    {
-      "time": "2026-08-18 10:21",
-      "name": "申菱环境",
-      "mmbz": "买",
-      "price": "96.50"
     }
   ],
-  "trade_count": 21,
+  "trade_count": 22,
   "equity_point": {
-    "label": "08-25",
-    "date": "2026-08-25",
-    "value": 55598.880000000005,
+    "label": "08-26",
+    "date": "2026-08-26",
+    "value": 55601.630000000005,
     "is_latest": true
   }
 }
