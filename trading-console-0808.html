@@ -142,7 +142,7 @@
   .pm{background:var(--bg3);border-radius:9px;padding:11px 13px}
   .pm-label{font-size:11px;color:var(--muted);margin-bottom:3px}
   .pm-value{font-family:'JetBrainsMono';font-weight:700;font-size:16px}
-  .up{color:var(--green)}.dn{color:var(--red)}
+  .up{color:var(--red)}.dn{color:var(--green)}
 
   /* Ladder */
   .ladder{display:flex;gap:6px;margin-top:6px}
@@ -334,8 +334,8 @@
   .cal-cell{aspect-ratio:1;border-radius:6px;padding:4px;display:flex;flex-direction:column;justify-content:center;align-items:center;border:1px solid transparent}
   .cal-cell.non{background:var(--bg2);opacity:.35}
   .cal-cell.blank{background:transparent;border:none}
-  .cal-cell.up{background:rgba(13,148,136,.14);border-color:rgba(13,148,136,.3)}
-  .cal-cell.dn{background:rgba(255,92,92,.12);border-color:rgba(255,92,92,.25)}
+  .cal-cell.up{background:rgba(220,38,38,.14);border-color:rgba(220,38,38,.3)}
+  .cal-cell.dn{background:rgba(22,163,74,.14);border-color:rgba(22,163,74,.3)}
   .cal-cell .dc-num{font-size:13px;font-weight:600;color:var(--ink)}
   .cal-cell.non .dc-num{color:var(--muted)}
   .cal-cell .dc-pct{font-size:10px;font-weight:600;font-family:var(--font-mono,'JetBrainsMono',monospace);margin-top:1px}
@@ -480,8 +480,8 @@
         <figcaption>收益日历 · 点击月份查看每日收益</figcaption>
         <div id="chart-monthly" class="cal-wrap"></div>
         <div class="cal-legend">
-          <span><span class="lg-box" style="background:rgba(13,148,136,.14);border:1px solid rgba(13,148,136,.3)"></span>交易日盈利</span>
-          <span><span class="lg-box" style="background:rgba(255,92,92,.12);border:1px solid rgba(255,92,92,.25)"></span>交易日亏损</span>
+          <span><span class="lg-box" style="background:rgba(220,38,38,.14);border:1px solid rgba(220,38,38,.3)"></span>交易日盈利</span>
+          <span><span class="lg-box" style="background:rgba(22,163,74,.14);border:1px solid rgba(22,163,74,.3)"></span>交易日亏损</span>
           <span><span class="lg-box" style="background:var(--bg2);opacity:.35"></span>非交易日</span>
         </div>
       </figure>
@@ -1698,7 +1698,7 @@
             + '<div style="min-width:84px"><div style="font-weight:700">'+p.name+'</div><div style="font-size:11px;color:var(--muted)">'+p.code+' · 持'+p.days+'天</div></div>'
             + '<div style="flex:1;text-align:center;color:var(--muted);font-size:12px">'+p.shares+'股 · 成本'+p.cost+'</div>'
             + '<div style="text-align:right;min-width:120px"><div class="mono" style="font-weight:700">¥'+p.price+' <span style="font-size:12px">('+(p.pct>0?'+':'')+p.pct+'%)</span></div>'
-            + '<div style="font-size:12px;'+(up?'color:var(--green)':'color:var(--red)')+'">持仓收益 '+(p.return_pct>0?'+':'')+p.return_pct+'%</div></div></div>';
+            + '<div style="font-size:12px;'+(up?'color:var(--red)':'color:var(--green)')+'">持仓收益 '+(p.return_pct>0?'+':'')+p.return_pct+'%</div></div></div>';
         });
         document.getElementById('live-positions').innerHTML = ph;
 
@@ -1729,7 +1729,7 @@
           else {
             dEl.textContent = (dp>0?'+':'') + '¥' + fmt(Math.round(dp*100)/100);
             dEl.className = 'kpi-value ' + (dp>0?'up':(dp<0?'dn':''));
-            dEl.style.color = ''; dEl.style.color = dp>0?'var(--green)':(dp<0?'var(--red)':'');
+            dEl.style.color = ''; dEl.style.color = dp>0?'var(--red)':(dp<0?'var(--green)':'');
             document.getElementById('k-daily-sub').textContent = '相对上次同步(总资产 '+fmt(Math.round((a.prev_total_assets||0)*100)/100)+')';
           }
         }
