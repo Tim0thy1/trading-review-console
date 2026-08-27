@@ -5,21 +5,21 @@
     "data_date": "2026-08-27"
   },
   "account": {
-    "nominal_assets": 1006080.13,
-    "nominal_return_pct": 0.61,
-    "real_assets": 56080.130000000005,
-    "real_return_pct": 12.16,
-    "position_pct": 90.45,
+    "nominal_assets": 1006720.13,
+    "nominal_return_pct": 0.67,
+    "real_assets": 56720.130000000005,
+    "real_return_pct": 13.44,
+    "position_pct": 90.56,
     "cash": 5354.13,
     "start_date": "2026-07-14",
-    "daily_pnl_today": 165.82,
+    "daily_pnl_today": 640.0,
     "survey": {
-      "日收益率": 0.05,
-      "5日收益率": 0.21,
-      "20日收益率": 0.47,
-      "60日收益率": 0.61,
-      "250日收益率": 0.61,
-      "总收益率": 0.61,
+      "日收益率": 0.11,
+      "5日收益率": 0.27,
+      "20日收益率": 0.53,
+      "60日收益率": 0.67,
+      "250日收益率": 0.67,
+      "总收益率": 0.67,
       "回撤率": 0.49
     }
   },
