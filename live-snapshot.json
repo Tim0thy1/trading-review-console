@@ -1,22 +1,22 @@
 {
-  "synced_at": "2026-08-27 02:20:00",
+  "synced_at": "2026-08-27 05:18:02",
   "combin_id": "261944300000051189",
   "combin_name": "翻81681",
   "manager": "聪明的企业家6",
   "account": {
     "initial_principal": 50000,
     "principal_label": "人为控制实际本金5万",
-    "total_assets": 55914.310000000056,
-    "total_return_pct": 11.83,
-    "position_pct": 65.3,
-    "cash": 19404.31,
+    "total_assets": 56080.130000000005,
+    "total_return_pct": 12.16,
+    "position_pct": 90.45,
+    "cash": 5354.13,
     "start_date": "2026-07-14",
     "deal_rate": 57.14,
     "deal_win": 4,
     "deal_fail": 3,
-    "basis": "盈亏绝对平移：真实总资产=5万+app累计盈亏5,914.31=55,914.31，收益率11.83%。累计盈亏含分红/除权/手续费等一切，持仓市值36,510.00/持仓盈亏+5,914.31均来自东财app口径",
-    "daily_pnl": 4.0,
-    "prev_total_assets": 55910.310000000056
+    "basis": "盈亏绝对平移：真实总资产=5万+app累计盈亏6,080.13=56,080.13，收益率12.16%。累计盈亏含分红/除权/手续费等一切，持仓市值50,726.00/持仓盈亏+6,080.13均来自东财app口径",
+    "daily_pnl": 165.82,
+    "prev_total_assets": 55914.310000000056
   },
   "prev_snapshot_note": "如需当日盈亏需与前一日快照对照：当日真实盈亏 = 今日真实总资产 - 昨日真实总资产",
   "positions": [
@@ -25,9 +25,9 @@
       "code": "300568",
       "shares": 1000,
       "cost": 15.165,
-      "price": 15.43,
-      "pct": 1.73,
-      "return_pct": 1.75,
+      "price": 15.47,
+      "pct": 1.99,
+      "return_pct": 2.01,
       "days": 2
     },
     {
@@ -35,13 +35,29 @@
       "code": "301018",
       "shares": 200,
       "cost": 105.146,
-      "price": 105.4,
-      "pct": 0.24,
-      "return_pct": 0.24,
+      "price": 106.36,
+      "pct": 1.15,
+      "return_pct": 1.15,
+      "days": 1
+    },
+    {
+      "name": "亨通光电",
+      "code": "600487",
+      "shares": 200,
+      "cost": 70.251,
+      "price": 69.92,
+      "pct": -0.47,
+      "return_pct": -0.47,
       "days": 1
     }
   ],
   "recent_trades": [
+    {
+      "time": "2026-08-27 13:10",
+      "name": "亨通光电",
+      "mmbz": "买",
+      "price": "70.18"
+    },
     {
       "time": "2026-08-27 10:03",
       "name": "申菱环境",
@@ -71,19 +87,13 @@
       "name": "亨通光电",
       "mmbz": "卖",
       "price": "63.22"
-    },
-    {
-      "time": "2026-08-25 10:33",
-      "name": "申菱环境",
-      "mmbz": "卖",
-      "price": "95.45"
     }
   ],
-  "trade_count": 24,
+  "trade_count": 25,
   "equity_point": {
     "label": "08-27",
     "date": "2026-08-27",
-    "value": 55914.310000000056,
+    "value": 56080.130000000005,
     "is_latest": true
   }
 }
