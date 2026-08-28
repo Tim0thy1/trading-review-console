@@ -1,22 +1,22 @@
 {
-  "synced_at": "2026-08-27 07:18:18",
+  "synced_at": "2026-08-28 08:04:08",
   "combin_id": "261944300000051189",
   "combin_name": "翻81681",
   "manager": "聪明的企业家6",
   "account": {
     "initial_principal": 50000,
     "principal_label": "人为控制实际本金5万",
-    "total_assets": 56720.130000000005,
-    "total_return_pct": 13.44,
-    "position_pct": 90.56,
+    "total_assets": 54928.130000000005,
+    "total_return_pct": 9.86,
+    "position_pct": 90.25,
     "cash": 5354.13,
     "start_date": "2026-07-14",
-    "deal_rate": 62.5,
-    "deal_win": 5,
-    "deal_fail": 3,
-    "basis": "盈亏绝对平移：真实总资产=5万+app累计盈亏6,720.13=56,720.13，收益率13.44%。累计盈亏含分红/除权/手续费等一切，持仓市值51,366.00/持仓盈亏+6,720.13均来自东财app口径",
-    "daily_pnl": 640.0,
-    "prev_total_assets": 56080.130000000005
+    "deal_rate": 37.5,
+    "deal_win": 3,
+    "deal_fail": 5,
+    "basis": "盈亏绝对平移：真实总资产=5万+app累计盈亏4,928.13=54,928.13，收益率9.86%。累计盈亏含分红/除权/手续费等一切，持仓市值49,574.00/持仓盈亏+4,928.13均来自东财app口径",
+    "daily_pnl": -1792.0,
+    "prev_total_assets": 56720.130000000005
   },
   "prev_snapshot_note": "如需当日盈亏需与前一日快照对照：当日真实盈亏 = 今日真实总资产 - 昨日真实总资产",
   "positions": [
@@ -25,30 +25,30 @@
       "code": "300568",
       "shares": 1000,
       "cost": 15.165,
-      "price": 15.53,
-      "pct": 2.39,
-      "return_pct": 2.4,
-      "days": 2
+      "price": 15.2,
+      "pct": -2.12,
+      "return_pct": 0.23,
+      "days": 3
     },
     {
       "name": "申菱环境",
       "code": "301018",
       "shares": 200,
       "cost": 105.146,
-      "price": 107.88,
-      "pct": 2.6,
-      "return_pct": 2.6,
-      "days": 1
+      "price": 103.17,
+      "pct": -4.37,
+      "return_pct": -1.88,
+      "days": 2
     },
     {
       "name": "亨通光电",
       "code": "600487",
       "shares": 200,
       "cost": 70.251,
-      "price": 71.3,
-      "pct": 1.49,
-      "return_pct": 1.49,
-      "days": 1
+      "price": 68.7,
+      "pct": -3.65,
+      "return_pct": -2.21,
+      "days": 2
     }
   ],
   "recent_trades": [
@@ -91,9 +91,9 @@
   ],
   "trade_count": 25,
   "equity_point": {
-    "label": "08-27",
-    "date": "2026-08-27",
-    "value": 56720.130000000005,
+    "label": "08-28",
+    "date": "2026-08-28",
+    "value": 54928.130000000005,
     "is_latest": true
   }
 }

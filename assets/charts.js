@@ -14,8 +14,12 @@
 
   var axisStyle = { lineStyle: { color: rule }, axisLabel: { color: muted }, splitLine: { lineStyle: { color: rule, type: 'dashed' } } };
 
+  // 空值保护：元素不存在时返回 no-op，避免单个图表缺失拖垮整页脚本
+  var __noop = { setOption: function(){}, resize: function(){} };
   function init(el, h) {
-    return echarts.init(document.getElementById(el), null, { renderer: 'svg' });
+    var dom = document.getElementById(el);
+    if (!dom) { if (window.console) console.warn('[charts] 元素缺失，图表跳过:', el); return __noop; }
+    return echarts.init(dom, null, { renderer: 'svg' });
   }
 
   // ============ NAV SWITCHING ============
@@ -58,70 +62,7 @@
   });
   window.addEventListener('resize', function() { c1.resize(); });
 
-  // ============ CHART 2: 盈亏构成 (diverging bar) ============
-  var c2 = init('chart-pnl', 300);
-  var pnlData = [
-    { name: '亨通光电浮盈', v: 5513, c: green },
-    { name: '申菱环境浮亏', v: -1541, c: red },
-    { name: '星源材质浮亏', v: -585, c: red },
-    { name: '已实现落袋', v: 1183, c: green }
-  ];
-  c2.setOption({
-    animation: false,
-    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, appendToBody: true, formatter: function(p){ return p[0].name + '<br>¥' + Number(p[0].value).toLocaleString(); } },
-    grid: { left: 10, right: 40, top: 10, bottom: 10, containLabel: true },
-    xAxis: { type: 'value', axisLabel: { color: muted, formatter: function(v){ return '¥'+(v/1000)+'k'; } }, splitLine: { lineStyle: { color: rule, type: 'dashed' } } },
-    yAxis: { type: 'category', data: pnlData.map(function(d){ return d.name; }), axisLine: { lineStyle: { color: rule } }, axisTick: { show: false }, axisLabel: { color: ink } },
-    series: [{
-      type: 'bar', data: pnlData.map(function(d){ return { value: d.v, itemStyle: { color: d.c, borderRadius: d.v >= 0 ? [0,4,4,0] : [4,0,0,4] } }; }),
-      barWidth: 18,
-      label: { show: true, position: 'right', color: ink, fontFamily: 'JetBrainsMono', fontSize: 11, formatter: function(p){ return (p.value>=0?'+':'') + '¥' + p.value.toLocaleString(); } }
-    }]
-  });
-  window.addEventListener('resize', function() { c2.resize(); });
-
-  // ============ CHART 3: 仓位配置 donut ============
-  var c3 = init('chart-alloc', 300);
-  c3.setOption({
-    animation: false,
-    tooltip: { trigger: 'item', formatter: function(p){ return p.name + ': ' + p.value + '%'; }, appendToBody: true },
-    series: [{
-      type: 'pie', radius: ['42%', '70%'], center: ['50%', '50%'], avoidLabelOverlap: true,
-      itemStyle: { borderRadius: 6, borderColor: bg2, borderWidth: 2 },
-      label: { show: true, formatter: '{b}\n{d}%', color: ink, fontSize: 11 },
-      labelLine: { lineStyle: { color: rule } },
-      data: [
-        { value: 32.0, name: '申菱环境', itemStyle: { color: accent } },
-        { value: 34.5, name: '亨通光电', itemStyle: { color: accent2 } },
-        { value: 27.0, name: '星源材质', itemStyle: { color: warn } },
-        { value: 6.5, name: '现金', itemStyle: { color: muted } }
-      ]
-    }]
-  });
-  window.addEventListener('resize', function() { c3.resize(); });
-
-  // ============ CHART 4: 兖矿盈亏构成 ============
-  var c4 = init('chart-yk-break', 280);
-  var yk = [
-    { name: '价差亏损', v: -715, c: red },
-    { name: '现金分红', v: 352, c: green },
-    { name: '交易费用', v: -52, c: muted }
-  ];
-  c4.setOption({
-    animation: false,
-    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, appendToBody: true, formatter: function(p){ return p[0].name + '<br>¥' + Number(p[0].value).toLocaleString(); } },
-    grid: { left: 10, right: 40, top: 10, bottom: 10, containLabel: true },
-    xAxis: { type: 'value', axisLabel: { color: muted, formatter: function(v){ return '¥'+(v/1000)+'k'; } }, splitLine: { lineStyle: { color: rule, type: 'dashed' } } },
-    yAxis: { type: 'category', data: yk.map(function(d){ return d.name; }), axisLine: { lineStyle: { color: rule } }, axisTick: { show: false }, axisLabel: { color: ink } },
-    series: [{
-      type: 'bar', data: yk.map(function(d){ return { value: d.v, itemStyle: { color: d.c, borderRadius: d.v >= 0 ? [0,4,4,0] : [4,0,0,4] } }; }),
-      barWidth: 20,
-      label: { show: true, position: 'right', color: ink, fontFamily: 'JetBrainsMono', fontSize: 12, formatter: function(p){ return (p.value>=0?'+':'') + '¥' + p.value; } }
-    }]
-  });
-  window.addEventListener('resize', function() { c4.resize(); });
-
-  // ============ CHART 5: 已实现 vs 浮动 (按标的) ============
+  // ============ CHART 4(原5): 已实现 vs 浮动 (按标的) ============
   var c5 = init('chart-pnlstock', 320);
   c5.setOption({
     animation: false,
@@ -230,30 +171,32 @@
   // ============ CHART 9: 收益日历（年视图 → 月视图下钻） ============
   var calEl = document.getElementById('chart-monthly');
   if (calEl) {
-    // 由净值序列推算每日收益率，7/14首日以5万本金为基准
+    // 由净值序列推算每日收益率，7/14首日以5万本金为基准。包成函数，便于快照刷新净值点后重算重绘。
     var dailyData = {};   // { '2026-07-15': {pct: +2.21, val: 51001.5} }
     var monthlyData = {}; // { '2026-07': +2.20 }
     var monthStart = {};  // { '2026-07': 50000, '2026-08': 51101.7 }
-    var prevV = 50000;
-    var curMonth = '';
-    for (var i = 0; i < eqDates.length; i++) {
-      var v = eqVals[i];
-      var pct = (v - prevV) / prevV * 100;
-      var mm = eqDates[i].slice(0, 2), dd = eqDates[i].slice(3, 5);
-      var dk = '2026-' + mm + '-' + dd;
-      var ym = '2026-' + mm;
-      dailyData[dk] = { pct: +pct.toFixed(2), val: v };
-      if (ym !== curMonth) { monthStart[ym] = prevV; curMonth = ym; }
-      prevV = v;
-    }
-    // 计算每月累计收益
     var lastVal = {};
-    for (var i2 = eqDates.length - 1; i2 >= 0; i2--) {
-      var ym2 = '2026-' + eqDates[i2].slice(0, 2);
-      if (!lastVal[ym2]) lastVal[ym2] = eqVals[i2];
-    }
-    for (var ym3 in monthStart) {
-      if (lastVal[ym3]) monthlyData[ym3] = +((lastVal[ym3] - monthStart[ym3]) / monthStart[ym3] * 100).toFixed(2);
+    function computeCal() {
+      dailyData = {}; monthlyData = {}; monthStart = {}; lastVal = {};
+      var prevV = 50000, curMonth = '';
+      for (var i = 0; i < eqDates.length; i++) {
+        var v = eqVals[i];
+        var pct = (v - prevV) / prevV * 100;
+        var mm = eqDates[i].slice(0, 2), dd = eqDates[i].slice(3, 5);
+        var dk = '2026-' + mm + '-' + dd;
+        var ym = '2026-' + mm;
+        dailyData[dk] = { pct: +pct.toFixed(2), val: v };
+        if (ym !== curMonth) { monthStart[ym] = prevV; curMonth = ym; }
+        prevV = v;
+      }
+      // 计算每月累计收益
+      for (var i2 = eqDates.length - 1; i2 >= 0; i2--) {
+        var ym2 = '2026-' + eqDates[i2].slice(0, 2);
+        if (!lastVal[ym2]) lastVal[ym2] = eqVals[i2];
+      }
+      for (var ym3 in monthStart) {
+        if (lastVal[ym3]) monthlyData[ym3] = +((lastVal[ym3] - monthStart[ym3]) / monthStart[ym3] * 100).toFixed(2);
+      }
     }
 
     var monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
@@ -279,7 +222,8 @@
         h += '</div>';
       }
       h += '</div>';
-      h += '<div class="cal-summary">本金 ¥50,000 → 当前 ¥' + eqVals[eqVals.length-1].toLocaleString(undefined,{maximumFractionDigits:0}) + ' · 累计 <strong style="color:var(--green)">+7.33%</strong></div>';
+      var cumPct = (eqVals[eqVals.length - 1] - 50000) / 50000 * 100;
+      h += '<div class="cal-summary">本金 ¥50,000 → 当前 ¥' + eqVals[eqVals.length-1].toLocaleString(undefined,{maximumFractionDigits:0}) + ' · 累计 <strong style="color:' + (cumPct>=0?'var(--green)':'var(--red)') + '">' + (cumPct>=0?'+':'') + cumPct.toFixed(2) + '%</strong></div>';
       calEl.innerHTML = h;
       calEl.querySelectorAll('.cal-mc[data-ym]').forEach(function(c) {
         c.addEventListener('click', function() { renderMonth(this.getAttribute('data-ym')); });
@@ -323,7 +267,10 @@
       calEl.querySelector('.cal-back').addEventListener('click', renderYear);
     }
 
+    computeCal();
     renderYear();
+    // 快照刷新净值点后重算并重绘日历（由 __applySnapshot 调用）
+    window.__refreshCalendar = function() { computeCal(); renderYear(); };
   }
 
   // ============ CHART 10: 决策质量评分（执行 vs 结果 分离） ============
@@ -483,6 +430,8 @@
         xAxis: { data: eqDates },
         series: [{ data: eqVals, markPoint: { data: [lastPair], label: { formatter: '¥' + fmt(Math.round(eqVals[eqVals.length - 1])) } } }]
       });
+      // 净值点变化后同步重算/重绘收益日历（累计收益率、8月月收益随最新净值更新）
+      if (typeof window.__refreshCalendar === 'function') window.__refreshCalendar();
     }
 
     // 2) 逐持仓浮盈亏 = (price-cost) * shares，驱动盈亏构成/逐标的/股票级净收益
@@ -493,29 +442,9 @@
       return { name: p.name, pnl: pnl, pct: pct, mv: mv, cost: Math.round(p.cost * p.shares) };
     });
 
-    // 3) 盈亏构成图（c2）：浮盈 + ，浮亏 -；已实现用累计总盈亏减浮盈亏近似
+    // 3) 浮盈亏合计（盈亏构成图已按需求移除，此处仅保留 realized 供逐标的/净收益图使用）
     var floatPnl = perPos.reduce(function(s, x) { return s + x.pnl; }, 0);
     var realized = Math.round(a.total_assets - 50000 - floatPnl);
-    var pnlRows = [];
-    perPos.forEach(function(x) { pnlRows.push({ name: x.name + ' ' + (x.pnl >= 0 ? '浮盈' : '浮亏'), v: x.pnl, c: x.pnl >= 0 ? green : red }); });
-    pnlRows.push({ name: '已实现落袋', v: realized, c: realized >= 0 ? green : red });
-    c2.setOption({
-      yAxis: { data: pnlRows.map(function(r) { return r.name; }) },
-      series: [{
-        data: pnlRows.map(function(r) { return { value: r.v, itemStyle: { color: r.c, borderRadius: r.v >= 0 ? [0,4,4,0] : [4,0,0,4] } }; })
-      }]
-    });
-
-    // 4) 仓位配置 donut（c3）：持仓市值占比 + 现金
-    var posVal = perPos.reduce(function(s, x) { return s + x.mv; }, 0);
-    var cash = Math.max(0, a.total_assets - posVal);
-    var allocData = perPos.map(function(x, i) {
-      return { value: +(x.mv / a.total_assets * 100).toFixed(1),
-               name: x.name,
-               itemStyle: { color: i === 0 ? accent : (i === 1 ? accent2 : warn) } };
-    });
-    allocData.push({ value: +(cash / a.total_assets * 100).toFixed(1), name: '现金', itemStyle: { color: muted } });
-    c3.setOption({ series: [{ data: allocData }] });
 
     // 5) 逐标的盈亏图（c5）：保持已实现标的用近似，浮动标的按快照
     var c5Data = [];
