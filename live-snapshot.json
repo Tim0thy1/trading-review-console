@@ -1,57 +1,63 @@
 {
-  "synced_at": "2026-08-31 10:10:14",
+  "synced_at": "2026-09-02 10:40:22",
   "combin_id": "261944300000051189",
   "combin_name": "翻81681",
   "manager": "聪明的企业家6",
   "account": {
     "initial_principal": 50000,
     "principal_label": "人为控制实际本金5万",
-    "total_assets": 55680.060000000056,
-    "total_return_pct": 11.36,
-    "position_pct": 82.86,
-    "cash": 9546.06,
+    "total_assets": 53977.439999999944,
+    "total_return_pct": 7.95,
+    "position_pct": 56.97,
+    "cash": 23225.44,
     "start_date": "2026-07-14",
     "deal_rate": 37.5,
     "deal_win": 3,
     "deal_fail": 5,
-    "basis": "盈亏绝对平移：真实总资产=5万+app累计盈亏5,680.06=55,680.06，收益率11.36%。累计盈亏含分红/除权/手续费等一切，持仓市值46,134.00/持仓盈亏+5,680.06均来自东财app口径",
-    "daily_pnl": 751.93,
-    "prev_total_assets": 54928.130000000005
+    "basis": "盈亏绝对平移：真实总资产=5万+app累计盈亏3,977.44=53,977.44，收益率7.95%。累计盈亏含分红/除权/手续费等一切，持仓市值30,752.00/持仓盈亏+3,977.44均来自东财app口径",
+    "daily_pnl": -1702.62,
+    "prev_total_assets": 55680.060000000056
   },
   "prev_snapshot_note": "如需当日盈亏需与前一日快照对照：当日真实盈亏 = 今日真实总资产 - 昨日真实总资产",
   "positions": [
     {
       "name": "星源材质",
       "code": "300568",
-      "shares": 1000,
-      "cost": 15.165,
-      "price": 15.04,
-      "pct": -1.05,
-      "return_pct": -0.83,
-      "days": 6
+      "shares": 0,
+      "cost": 0.0,
+      "price": 13.9,
+      "pct": -4.33,
+      "return_pct": 0.0,
+      "days": 8
     },
     {
       "name": "申菱环境",
       "code": "301018",
       "shares": 100,
       "cost": 102.046,
-      "price": 108.8,
-      "pct": 5.18,
-      "return_pct": 6.62,
-      "days": 5
+      "price": 106.82,
+      "pct": 1.28,
+      "return_pct": 4.68,
+      "days": 7
     },
     {
       "name": "亨通光电",
       "code": "600487",
       "shares": 300,
       "cost": 68.943,
-      "price": 67.38,
-      "pct": -0.78,
-      "return_pct": -2.27,
-      "days": 5
+      "price": 66.9,
+      "pct": -0.65,
+      "return_pct": -2.96,
+      "days": 7
     }
   ],
   "recent_trades": [
+    {
+      "time": "2026-09-02 10:08",
+      "name": "星源材质",
+      "mmbz": "卖",
+      "price": "13.70"
+    },
     {
       "time": "2026-08-31 11:21",
       "name": "亨通光电",
@@ -81,19 +87,13 @@
       "name": "星源材质",
       "mmbz": "买",
       "price": "15.00"
-    },
-    {
-      "time": "2026-08-26 13:58",
-      "name": "星源材质",
-      "mmbz": "买",
-      "price": "15.25"
     }
   ],
-  "trade_count": 27,
+  "trade_count": 28,
   "equity_point": {
-    "label": "08-31",
-    "date": "2026-08-31",
-    "value": 55680.060000000056,
+    "label": "09-02",
+    "date": "2026-09-02",
+    "value": 53977.439999999944,
     "is_latest": true
   }
 }

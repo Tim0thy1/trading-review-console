@@ -1,25 +1,25 @@
 {
   "_meta": {
-    "desc": "模拟盘完整账本：由东财全量调仓+账户权威数据重建。分票已了结盈亏中，兖矿/大金为用户侧已验证数字，8/25清仓三票为按卖出均价比对历史成本测算。账户总资产/收益率/仓位/现金以东财快照为权威。",
-    "generated_at": "2026-08-31",
-    "data_date": "2026-08-31"
+    "desc": "模拟盘完整账本：由东财全量调仓+账户权威数据重建。分票已了结盈亏中，兖矿/大金为用户侧已验证数字，8/25清仓三票与9/2星源清仓为按卖出均价比对持仓成本测算。账户总资产/收益率/仓位/现金以东财快照为权威。",
+    "generated_at": "2026-09-02",
+    "data_date": "2026-09-02"
   },
   "account": {
-    "nominal_assets": 1005680.06,
-    "nominal_return_pct": 0.57,
-    "real_assets": 55680.060000000056,
-    "real_return_pct": 11.36,
-    "position_pct": 82.86,
-    "cash": 9546.06,
+    "nominal_assets": 1003977.44,
+    "nominal_return_pct": 0.4,
+    "real_assets": 53977.439999999944,
+    "real_return_pct": 7.95,
+    "position_pct": 56.97,
+    "cash": 23225.44,
     "start_date": "2026-07-14",
-    "daily_pnl_today": 751.93,
+    "daily_pnl_today": -1702.62,
     "survey": {
-      "日收益率": 0.07,
-      "5日收益率": 0.2,
-      "20日收益率": 0.5,
-      "60日收益率": 0.57,
-      "250日收益率": 0.57,
-      "总收益率": 0.57,
+      "日收益率": -0.06,
+      "5日收益率": -0.16,
+      "20日收益率": 0.02,
+      "60日收益率": 0.4,
+      "250日收益率": 0.4,
+      "总收益率": 0.4,
       "回撤率": 0.49
     }
   },
@@ -37,7 +37,7 @@
       "note": "已确认(多笔进出累计,app口径)",
       "status": "closed"
     },
-    "申菱环境": {
+    "申菱环境R1": {
       "shares": 200,
       "cost": 97.303,
       "sell_px": [
@@ -46,9 +46,10 @@
       ],
       "avg_sell": 94.34,
       "pnl": -591.6,
-      "status": "closed_today"
+      "note": "8/25清仓,卖在拉升早段",
+      "status": "closed"
     },
-    "星源材质": {
+    "星源材质R1": {
       "shares": 1000,
       "cost": 15.065,
       "sell_px": [
@@ -56,9 +57,10 @@
       ],
       "avg_sell": 13.85,
       "pnl": -1215.0,
-      "status": "closed_today"
+      "note": "8/25清仓,割在低点",
+      "status": "closed"
     },
-    "亨通光电": {
+    "亨通光电R1": {
       "shares": 300,
       "cost": 43.802,
       "sell_px": [
@@ -67,11 +69,30 @@
       ],
       "avg_sell": 64.41,
       "pnl": 6182.4,
+      "note": "8/25清仓,唯一大赢家",
+      "status": "closed"
+    },
+    "星源材质": {
+      "shares": 1000,
+      "cost": 15.165,
+      "sell_px": [
+        13.7
+      ],
+      "avg_sell": 13.7,
+      "pnl": -1465.0,
       "status": "closed_today"
     }
   },
-  "realized_pnl_total": 5618.32,
+  "realized_pnl_total": 4153.32,
   "trades": [
+    {
+      "time": "2026-09-02 10:08",
+      "name": "星源材质",
+      "dir": "卖",
+      "px": 13.7,
+      "pos_bef": "1.36",
+      "pos_aft": "0.00"
+    },
     {
       "time": "2026-08-31 11:21",
       "name": "亨通光电",
@@ -289,11 +310,11 @@
       "pos_aft": "2.13"
     }
   ],
-  "trade_count": 27,
+  "trade_count": 28,
   "summary": {
-    "realized_today": 4375.8,
-    "closed_count": 5,
+    "realized_today": -1465.0,
+    "closed_count": 6,
     "win_count": 2,
-    "lose_count": 3
+    "lose_count": 4
   }
 }
