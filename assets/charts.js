@@ -22,6 +22,26 @@
     return echarts.init(dom, null, { renderer: 'svg' });
   }
 
+  // ============ 懒渲染：交易者全面评测的四张图（雷达/逐笔/决策/画像） ============
+  // 容器位于 eval.json 的展开块内（由 data-loader.js 动态渲染），页面加载时 charts.js
+  // 先于 data-loader.js 执行，容器尚不存在；故注册为懒初始化，由 data-loader.js 在展开后
+  // 调用 window.__renderEvalCharts() 触发。已初始化过的图表只 resize，不重复 init。
+  var __evalCharts = {};
+  var __evalDefs = [];
+  function __regEvalChart(el, h, setup) { __evalDefs.push([el, h, setup]); }
+  window.__renderEvalCharts = function() {
+    __evalDefs.forEach(function(def) {
+      var el = def[0];
+      var dom = document.getElementById(el);
+      if (!dom) return;
+      if (__evalCharts[el]) { __evalCharts[el].resize(); return; }
+      var chart = echarts.init(dom, null, { renderer: 'svg' });
+      def[2](chart);
+      __evalCharts[el] = chart;
+      window.addEventListener('resize', function() { chart.resize(); });
+    });
+  };
+
   // ============ NAV SWITCHING ============
   var navItems = document.querySelectorAll('.nav-item');
   var modules = document.querySelectorAll('.module');
@@ -90,89 +110,89 @@
   });
   window.addEventListener('resize', function() { c5.resize(); });
 
-  // ============ CHART 6: 六维纪律雷达 ============
-  var c6 = init('chart-radar', 400);
-  c6.setOption({
-    animation: false,
-    tooltip: { trigger: 'item', appendToBody: true },
-    legend: { bottom: 0, textStyle: { color: muted }, itemWidth: 14, itemHeight: 8 },
-    radar: {
-      indicator: [
-        { name: '仓位纪律', max: 10 }, { name: '止损纪律', max: 10 },
-        { name: '止盈落袋', max: 10 }, { name: '加仓纪律', max: 10 },
-        { name: '情绪控制', max: 10 }, { name: '计划执行', max: 10 }
-      ],
-      radius: '62%', center: ['50%', '48%'],
-      splitArea: { areaStyle: { color: [bg2, bg3] } },
-      axisName: { color: ink, fontSize: 12 },
-      splitLine: { lineStyle: { color: rule } },
-      axisLine: { lineStyle: { color: rule } }
-    },
-    series: [{
-      type: 'radar',
-      data: [
-        {
-          value: [6, 3, 6, 2, 3, 2], name: '当前纪律',
-          areaStyle: { color: accent2 + '44' }, lineStyle: { color: accent2, width: 2 }, itemStyle: { color: accent2 }
-        },
-        {
-          value: [8, 8, 8, 8, 8, 8], name: '合格线',
-          areaStyle: { color: accent + '22' }, lineStyle: { color: accent, width: 2, type: 'dashed' }, itemStyle: { color: accent }
-        }
-      ]
-    }]
-  });
-  window.addEventListener('resize', function() { c6.resize(); });
-
-  // ============ CHART 7: 逐笔操作评分 ============
-  var c7 = init('chart-tradescore', 320);
-  c7.setOption({
-    animation: false,
-    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, appendToBody: true, formatter: function(p){ return p[0].name + ': ' + p[0].value + '/10'; } },
-    grid: { left: 10, right: 50, top: 20, bottom: 10, containLabel: true },
-    xAxis: { type: 'category', data: ['兖矿能源', '大金重工', '亨通光电', '申菱环境'], axisLine: { lineStyle: { color: rule } }, axisTick: { show: false }, axisLabel: { color: ink, fontSize: 12 } },
-    yAxis: { type: 'value', max: 10, axisLabel: { color: muted }, splitLine: { lineStyle: { color: rule, type: 'dashed' } } },
-    series: [{
-      type: 'bar', barWidth: 40,
-      data: [
-        { value: 3, itemStyle: { color: red, borderRadius: [4,4,0,0] } },
-        { value: 6, itemStyle: { color: accent, borderRadius: [4,4,0,0] } },
-        { value: 6, itemStyle: { color: accent2, borderRadius: [4,4,0,0] } },
-        { value: 3, itemStyle: { color: red, borderRadius: [4,4,0,0] } }
-      ],
-      label: { show: true, position: 'top', color: ink, fontFamily: 'JetBrainsMono', fontSize: 13, formatter: function(p){ return p.value + '/10'; } },
-      markLine: { silent: true, symbol: 'none', data: [{ yAxis: 8, label: { formatter: '合格线 8', color: green, position: 'insideEndTop' }, lineStyle: { color: green, type: 'dashed' } }] }
-    }]
-  });
-  window.addEventListener('resize', function() { c7.resize(); });
-
-  // ============ CHART 8: 交易者画像雷达 ============
-  var c8 = init('chart-avatar', 360);
-  c8.setOption({
-    animation: false,
-    tooltip: { trigger: 'item', appendToBody: true },
-    radar: {
-      indicator: [
-        { name: '板块选股', max: 10 }, { name: '入场时机', max: 10 },
-        { name: '做T/短线判断', max: 10 }, { name: '止盈落袋', max: 10 },
-        { name: '仓位管理', max: 10 }, { name: '止损执行', max: 10 },
-        { name: '情绪控制', max: 10 }
-      ],
-      radius: '62%', center: ['50%', '50%'],
-      splitArea: { areaStyle: { color: [bg2, bg3] } },
-      axisName: { color: ink, fontSize: 12 },
-      splitLine: { lineStyle: { color: rule } },
-      axisLine: { lineStyle: { color: rule } }
-    },
-    series: [{
-      type: 'radar',
-      data: [{
-        value: [9, 8, 6, 7, 7, 5, 4], name: '能力画像',
-        areaStyle: { color: accent + '44' }, lineStyle: { color: accent, width: 2 }, itemStyle: { color: accent }
+  // ============ CHART 6: 六维纪律雷达（懒渲染） ============
+  __regEvalChart('chart-radar', 400, function(chart) {
+    chart.setOption({
+      animation: false,
+      tooltip: { trigger: 'item', appendToBody: true },
+      legend: { bottom: 0, textStyle: { color: muted }, itemWidth: 14, itemHeight: 8 },
+      radar: {
+        indicator: [
+          { name: '仓位纪律', max: 10 }, { name: '止损纪律', max: 10 },
+          { name: '止盈落袋', max: 10 }, { name: '加仓纪律', max: 10 },
+          { name: '情绪控制', max: 10 }, { name: '计划执行', max: 10 }
+        ],
+        radius: '62%', center: ['50%', '48%'],
+        splitArea: { areaStyle: { color: [bg2, bg3] } },
+        axisName: { color: ink, fontSize: 12 },
+        splitLine: { lineStyle: { color: rule } },
+        axisLine: { lineStyle: { color: rule } }
+      },
+      series: [{
+        type: 'radar',
+        data: [
+          {
+            value: [6, 3, 6, 2, 3, 2], name: '当前纪律',
+            areaStyle: { color: accent2 + '44' }, lineStyle: { color: accent2, width: 2 }, itemStyle: { color: accent2 }
+          },
+          {
+            value: [8, 8, 8, 8, 8, 8], name: '合格线',
+            areaStyle: { color: accent + '22' }, lineStyle: { color: accent, width: 2, type: 'dashed' }, itemStyle: { color: accent }
+          }
+        ]
       }]
-    }]
+    });
   });
-  window.addEventListener('resize', function() { c8.resize(); });
+
+  // ============ CHART 7: 逐笔操作评分（懒渲染） ============
+  __regEvalChart('chart-tradescore', 320, function(chart) {
+    chart.setOption({
+      animation: false,
+      tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, appendToBody: true, formatter: function(p){ return p[0].name + ': ' + p[0].value + '/10'; } },
+      grid: { left: 10, right: 50, top: 20, bottom: 10, containLabel: true },
+      xAxis: { type: 'category', data: ['兖矿能源', '大金重工', '亨通光电', '申菱环境'], axisLine: { lineStyle: { color: rule } }, axisTick: { show: false }, axisLabel: { color: ink, fontSize: 12 } },
+      yAxis: { type: 'value', max: 10, axisLabel: { color: muted }, splitLine: { lineStyle: { color: rule, type: 'dashed' } } },
+      series: [{
+        type: 'bar', barWidth: 40,
+        data: [
+          { value: 3, itemStyle: { color: red, borderRadius: [4,4,0,0] } },
+          { value: 6, itemStyle: { color: accent, borderRadius: [4,4,0,0] } },
+          { value: 6, itemStyle: { color: accent2, borderRadius: [4,4,0,0] } },
+          { value: 3, itemStyle: { color: red, borderRadius: [4,4,0,0] } }
+        ],
+        label: { show: true, position: 'top', color: ink, fontFamily: 'JetBrainsMono', fontSize: 13, formatter: function(p){ return p.value + '/10'; } },
+        markLine: { silent: true, symbol: 'none', data: [{ yAxis: 8, label: { formatter: '合格线 8', color: green, position: 'insideEndTop' }, lineStyle: { color: green, type: 'dashed' } }] }
+      }]
+    });
+  });
+
+  // ============ CHART 8: 交易者画像雷达（懒渲染） ============
+  __regEvalChart('chart-avatar', 360, function(chart) {
+    chart.setOption({
+      animation: false,
+      tooltip: { trigger: 'item', appendToBody: true },
+      radar: {
+        indicator: [
+          { name: '板块选股', max: 10 }, { name: '入场时机', max: 10 },
+          { name: '做T/短线判断', max: 10 }, { name: '止盈落袋', max: 10 },
+          { name: '仓位管理', max: 10 }, { name: '止损执行', max: 10 },
+          { name: '情绪控制', max: 10 }
+        ],
+        radius: '62%', center: ['50%', '50%'],
+        splitArea: { areaStyle: { color: [bg2, bg3] } },
+        axisName: { color: ink, fontSize: 12 },
+        splitLine: { lineStyle: { color: rule } },
+        axisLine: { lineStyle: { color: rule } }
+      },
+      series: [{
+        type: 'radar',
+        data: [{
+          value: [9, 8, 6, 7, 7, 5, 4], name: '能力画像',
+          areaStyle: { color: accent + '44' }, lineStyle: { color: accent, width: 2 }, itemStyle: { color: accent }
+        }]
+      }]
+    });
+  });
 
   // ============ CHART 9: 收益日历（年视图 → 月视图下钻） ============
   var calEl = document.getElementById('chart-monthly');
@@ -210,6 +230,11 @@
 
     // ---- 年视图 ----
     function renderYear() {
+      // 空数据保护：净值序列尚未加载完成时（loadEquity 异步），先显示占位，避免 eqVals[-1] 抛错中断脚本
+      if (!eqVals.length) {
+        calEl.innerHTML = '<div class="cal-summary" style="padding:36px;text-align:center;color:var(--muted)">收益日历加载中…</div>';
+        return;
+      }
       var h = '<div class="cal-year">';
       for (var m = 1; m <= 12; m++) {
         var ym = '2026-' + (m < 10 ? '0' + m : m);
@@ -295,35 +320,35 @@
   }
   loadEquity();
 
-  // ============ CHART 10: 决策质量评分（执行 vs 结果 分离） ============
-  var c10 = init('chart-decision', 360);
-  c10.setOption({
-    animation: true,
-    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, appendToBody: true, formatter: function(p){
-      var name = p[0].name;
-      var exec = p[0].value, res = p[1].value;
-      return name + '<br>执行正确度: ' + exec + '/10<br>结果如意度: ' + res + '/10';
-    }},
-    legend: { bottom: 0, textStyle: { color: muted }, itemWidth: 14, itemHeight: 8 },
-    grid: { left: 50, right: 30, top: 30, bottom: 40 },
-    xAxis: { type: 'category', data: ['8/13 高抛\n(止盈+2293)', '8/13 低吸\n(抄底57.83)', '8/14 T走\n(卖出59.54)', '8/14 大金补仓\n(41.92)'], axisLine: { lineStyle: { color: rule } }, axisTick: { show: false }, axisLabel: { color: ink, fontSize: 12 } },
-    yAxis: { type: 'value', max: 10, axisLabel: { color: muted }, splitLine: { lineStyle: { color: rule, type: 'dashed' } } },
-    series: [
-      { name: '执行正确度', type: 'bar', barWidth: 16, data: [
-        { value: 9, itemStyle: { color: accent, borderRadius: [4,4,0,0] } },
-        { value: 7, itemStyle: { color: accent, borderRadius: [4,4,0,0] } },
-        { value: 9, itemStyle: { color: accent, borderRadius: [4,4,0,0] } },
-        { value: 4, itemStyle: { color: accent, borderRadius: [4,4,0,0], opacity: 0.6 } }
-      ]},
-      { name: '结果如意度', type: 'bar', barWidth: 16, data: [
-        { value: 8, itemStyle: { color: accent2, borderRadius: [4,4,0,0] } },
-        { value: 6, itemStyle: { color: accent2, borderRadius: [4,4,0,0] } },
-        { value: 3, itemStyle: { color: accent2, borderRadius: [4,4,0,0] } },
-        { value: 5, itemStyle: { color: accent2, borderRadius: [4,4,0,0] } }
-      ]},
-    ]
+  // ============ CHART 10: 决策质量评分（执行 vs 结果 分离，懒渲染） ============
+  __regEvalChart('chart-decision', 360, function(chart) {
+    chart.setOption({
+      animation: true,
+      tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, appendToBody: true, formatter: function(p){
+        var name = p[0].name;
+        var exec = p[0].value, res = p[1].value;
+        return name + '<br>执行正确度: ' + exec + '/10<br>结果如意度: ' + res + '/10';
+      }},
+      legend: { bottom: 0, textStyle: { color: muted }, itemWidth: 14, itemHeight: 8 },
+      grid: { left: 50, right: 30, top: 30, bottom: 40 },
+      xAxis: { type: 'category', data: ['8/13 高抛\n(止盈+2293)', '8/13 低吸\n(抄底57.83)', '8/14 T走\n(卖出59.54)', '8/14 大金补仓\n(41.92)'], axisLine: { lineStyle: { color: rule } }, axisTick: { show: false }, axisLabel: { color: ink, fontSize: 12 } },
+      yAxis: { type: 'value', max: 10, axisLabel: { color: muted }, splitLine: { lineStyle: { color: rule, type: 'dashed' } } },
+      series: [
+        { name: '执行正确度', type: 'bar', barWidth: 16, data: [
+          { value: 9, itemStyle: { color: accent, borderRadius: [4,4,0,0] } },
+          { value: 7, itemStyle: { color: accent, borderRadius: [4,4,0,0] } },
+          { value: 9, itemStyle: { color: accent, borderRadius: [4,4,0,0] } },
+          { value: 4, itemStyle: { color: accent, borderRadius: [4,4,0,0], opacity: 0.6 } }
+        ]},
+        { name: '结果如意度', type: 'bar', barWidth: 16, data: [
+          { value: 8, itemStyle: { color: accent2, borderRadius: [4,4,0,0] } },
+          { value: 6, itemStyle: { color: accent2, borderRadius: [4,4,0,0] } },
+          { value: 3, itemStyle: { color: accent2, borderRadius: [4,4,0,0] } },
+          { value: 5, itemStyle: { color: accent2, borderRadius: [4,4,0,0] } }
+        ]},
+      ]
+    });
   });
-  window.addEventListener('resize', function() { c10.resize(); });
 
   // ============ CHART 11: 持仓时长（首笔建仓至今）============
   var c11El = document.getElementById('chart-elapsed');
@@ -489,4 +514,8 @@
       });
     }
   };
+
+  // 初始尝试一次懒渲染：若容器已存在于静态 HTML 则直接出图；否则等 data-loader.js
+  // 渲染 eval.json 展开块后由 window.__renderEvalCharts() 再次触发。
+  if (typeof window.__renderEvalCharts === 'function') window.__renderEvalCharts();
 })();
