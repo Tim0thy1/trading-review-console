@@ -1,0 +1,136 @@
+{
+  "_meta": {
+    "desc": "已了结持仓盈亏（file A）：按「每一轮独立建仓」记账，同股多轮拆 R1/R2…。网页只显示股票名与盈亏，点击展开逐笔买卖明细。",
+    "updated_at": "2026-09-02",
+    "data_date": "2026-09-02",
+    "authority": "东财卖出价 × 历史成本测算；兖矿/大金为 app 已验证口径"
+  },
+  "summary": {
+    "total_pnl": 4153.32,
+    "round_count": 6,
+    "win_count": 2,
+    "lose_count": 4,
+    "win_rate": 33,
+    "note": "交易级 2 盈 4 亏：亨通 +6,182、大金 +1,658 为盈；兖矿 -415、申菱 -592、星源 R1 -1,215 + R2 -1,465 为亏"
+  },
+  "positions": [
+    {
+      "name": "兖矿能源",
+      "code": "sh600188",
+      "rounds": [
+        {
+          "round": "R1",
+          "from": "07-14",
+          "to": "08-04",
+          "days": 21,
+          "t_count": 0,
+          "pnl": -415,
+          "hint": "持有段说明（点击展开/收起）",
+          "trades": [
+            { "date": "07-14", "action": "建仓", "shares": "+1100", "price": "19.32", "pnl": "—" },
+            { "date": "08-04", "action": "清仓", "shares": "-1100", "price": "18.67", "pnl": "-¥415" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "大金重工",
+      "code": "sz002487",
+      "rounds": [
+        {
+          "round": "R1",
+          "from": "07-23",
+          "to": "08-17",
+          "days": 25,
+          "t_count": 0,
+          "pnl": 1658,
+          "hint": "5买2卖 · 持有段说明（点击展开/收起）",
+          "trades": [
+            { "date": "07-23", "action": "建仓", "shares": "+300", "price": "39.32", "pnl": "—" },
+            { "date": "07-27", "action": "加仓", "shares": "+300", "price": "39.91", "pnl": "—" },
+            { "date": "07-28", "action": "加仓", "shares": "+100", "price": "40.01", "pnl": "—" },
+            { "date": "08-12", "action": "减仓", "shares": "-300", "price": "43.78", "pnl": "+¥1,221" },
+            { "date": "08-13", "action": "加仓", "shares": "+100", "price": "42.81", "pnl": "—" },
+            { "date": "08-14", "action": "加仓", "shares": "+100", "price": "41.92", "pnl": "—" },
+            { "date": "08-17", "action": "清仓", "shares": "-600", "price": "41.34", "pnl": "+¥437" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "亨通光电",
+      "code": "sh600487",
+      "rounds": [
+        {
+          "round": "R1",
+          "from": "08-04",
+          "to": "08-25",
+          "days": 21,
+          "t_count": 2,
+          "pnl": 6182,
+          "hint": "高抛+接回+做T · 持有段说明（点击展开/收起）",
+          "trades": [
+            { "date": "08-04", "action": "建仓", "shares": "+400", "price": "48.87", "pnl": "—" },
+            { "date": "08-13", "action": "减仓(高抛)", "shares": "-200", "price": "60.39", "pnl": "+¥2,293" },
+            { "date": "08-13", "action": "加仓(接回)", "shares": "+200", "price": "57.83", "pnl": "—" },
+            { "date": "08-14", "action": "做T卖出", "shares": "-100", "price": "59.54", "pnl": "+¥163" },
+            { "date": "08-25", "action": "清仓", "shares": "-300", "price": "64.41(均)", "pnl": "+¥6,182" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "申菱环境",
+      "code": "sz301018",
+      "rounds": [
+        {
+          "round": "R1",
+          "from": "08-17",
+          "to": "08-25",
+          "days": 8,
+          "t_count": 0,
+          "pnl": -592,
+          "hint": "持有段说明（点击展开/收起）",
+          "trades": [
+            { "date": "08-17", "action": "建仓", "shares": "+100", "price": "97.91", "pnl": "—" },
+            { "date": "08-18", "action": "加仓", "shares": "+100", "price": "96.50", "pnl": "—" },
+            { "date": "08-25", "action": "清仓", "shares": "-200", "price": "94.35", "pnl": "约 -¥591" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "星源材质",
+      "code": "sz300568",
+      "rounds": [
+        {
+          "round": "R1",
+          "from": "08-17",
+          "to": "08-25",
+          "days": 8,
+          "t_count": 0,
+          "pnl": -1215,
+          "hint": "持有段说明（点击展开/收起）",
+          "trades": [
+            { "date": "08-17", "action": "建仓", "shares": "+1000", "price": "15.05", "pnl": "—" },
+            { "date": "08-25", "action": "清仓", "shares": "-1000", "price": "13.85", "pnl": "-¥1,215" }
+          ]
+        },
+        {
+          "round": "R2",
+          "from": "08-26",
+          "to": "09-02",
+          "days": 8,
+          "t_count": 0,
+          "pnl": -1465,
+          "hint": "4连割 · 持有段说明（点击展开/收起）",
+          "trades": [
+            { "date": "08-26", "action": "回补", "shares": "+660", "price": "15.25", "pnl": "—" },
+            { "date": "08-27", "action": "回补", "shares": "+340", "price": "15.00", "pnl": "—" },
+            { "date": "09-02", "action": "清仓", "shares": "-1000", "price": "13.70", "pnl": "-¥1,465" }
+          ]
+        }
+      ]
+    }
+  ]
+}

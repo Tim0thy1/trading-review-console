@@ -1,5 +1,5 @@
 {
-  "synced_at": "2026-09-02 10:40:22",
+  "synced_at": "2026-09-02 22:56:18",
   "combin_id": "261944300000051189",
   "combin_name": "翻81681",
   "manager": "聪明的企业家6",
@@ -15,8 +15,8 @@
     "deal_win": 3,
     "deal_fail": 5,
     "basis": "盈亏绝对平移：真实总资产=5万+app累计盈亏3,977.44=53,977.44，收益率7.95%。累计盈亏含分红/除权/手续费等一切，持仓市值30,752.00/持仓盈亏+3,977.44均来自东财app口径",
-    "daily_pnl": -1702.62,
-    "prev_total_assets": 55680.060000000056
+    "daily_pnl": 0.0,
+    "prev_total_assets": 53977.439999999944
   },
   "prev_snapshot_note": "如需当日盈亏需与前一日快照对照：当日真实盈亏 = 今日真实总资产 - 昨日真实总资产",
   "positions": [
@@ -28,7 +28,7 @@
       "price": 13.9,
       "pct": -4.33,
       "return_pct": 0.0,
-      "days": 8
+      "days": 9
     },
     {
       "name": "申菱环境",
@@ -38,7 +38,7 @@
       "price": 106.82,
       "pct": 1.28,
       "return_pct": 4.68,
-      "days": 7
+      "days": 8
     },
     {
       "name": "亨通光电",
@@ -48,7 +48,7 @@
       "price": 66.9,
       "pct": -0.65,
       "return_pct": -2.96,
-      "days": 7
+      "days": 8
     }
   ],
   "recent_trades": [
@@ -89,11 +89,5 @@
       "price": "15.00"
     }
   ],
-  "trade_count": 28,
-  "equity_point": {
-    "label": "09-02",
-    "date": "2026-09-02",
-    "value": 53977.439999999944,
-    "is_latest": true
-  }
+  "trade_count": 28
 }

@@ -38,28 +38,34 @@
   });
 
   // ============ CHART 1: 账户净值曲线 ============
+  // 数据源：data/ledger.json → equity_points（逐日净值序列，由 gen_ledger.py 幂等重建）
   var c1 = init('chart-equity', 340);
-  var eqDates = ['07-14','07-15','07-16','07-17','07-20','07-21','07-22','07-23','07-24','07-27','07-28','07-29','07-30','07-31','08-03','08-04','08-05','08-06','08-07','08-10','08-11','08-12','08-13','08-14','08-17','08-18','08-19','08-20','08-21'];
-  var eqVals = [49899.85,51001.5,50100.15,49499.25,51602.4,51802.7,53305.0,53104.7,50400.6,51602.4,51101.7,51602.4,51402.1,51101.7,50701.1,51402.1,53805.7,53905.9,55508.3,55508.3,54406.6,56100.0,55825.0,56650.0,57300.0,57207.62,52959.63,53992.63,53665.63];
-  c1.setOption({
-    animation: false,
-    tooltip: { trigger: 'axis', appendToBody: true, valueFormatter: function(v){ return '¥' + Number(v).toLocaleString(); } },
-    grid: { left: 60, right: 20, top: 30, bottom: 30 },
-    xAxis: { type: 'category', data: eqDates, boundaryGap: false, axisLine: { lineStyle: { color: rule } }, axisTick: { show: false }, axisLabel: { color: muted } },
-    yAxis: { type: 'value', min: 49000, scale: true, axisLabel: { color: muted, formatter: function(v){ return '¥' + v.toLocaleString(); } }, splitLine: { lineStyle: { color: rule, type: 'dashed' } } },
-    series: [{
-      type: 'line', data: eqVals, smooth: true, symbol: 'circle', symbolSize: 6,
-      lineStyle: { color: accent, width: 2.5 },
-      itemStyle: { color: accent },
-      areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1, colorStops: [{ offset: 0, color: accent + '44' }, { offset: 1, color: accent + '05' }] } },
-      markPoint: {
-        data: [
-          { coord: [eqDates.length - 1, eqVals[eqVals.length - 1]], symbol: 'circle', symbolSize: 10, itemStyle: { color: accent2 } }
-        ],
-        label: { show: true, formatter: '¥54,571', position: 'top', color: accent2, fontFamily: 'JetBrainsMono', fontSize: 11 }
-      }
-    }]
-  });
+  var eqDates = [];
+  var eqVals = [];
+  function renderEquityChart() {
+    if (!eqDates.length) return;
+    var lastD = eqDates[eqDates.length - 1];
+    var lastV = eqVals[eqVals.length - 1];
+    c1.setOption({
+      animation: false,
+      tooltip: { trigger: 'axis', appendToBody: true, valueFormatter: function(v){ return '¥' + Number(v).toLocaleString(); } },
+      grid: { left: 60, right: 20, top: 30, bottom: 30 },
+      xAxis: { type: 'category', data: eqDates, boundaryGap: false, axisLine: { lineStyle: { color: rule } }, axisTick: { show: false }, axisLabel: { color: muted } },
+      yAxis: { type: 'value', min: 49000, scale: true, axisLabel: { color: muted, formatter: function(v){ return '¥' + v.toLocaleString(); } }, splitLine: { lineStyle: { color: rule, type: 'dashed' } } },
+      series: [{
+        type: 'line', data: eqVals, smooth: true, symbol: 'circle', symbolSize: 6,
+        lineStyle: { color: accent, width: 2.5 },
+        itemStyle: { color: accent },
+        areaStyle: { color: { type: 'linear', x: 0, y: 0, x2: 0, y2: 1, colorStops: [{ offset: 0, color: accent + '44' }, { offset: 1, color: accent + '05' }] } },
+        markPoint: {
+          data: [
+            { coord: [eqDates.length - 1, lastV], symbol: 'circle', symbolSize: 10, itemStyle: { color: accent2 } }
+          ],
+          label: { show: true, formatter: '¥' + Number(lastV).toLocaleString(undefined,{maximumFractionDigits:0}), position: 'top', color: accent2, fontFamily: 'JetBrainsMono', fontSize: 11 }
+        }
+      }]
+    });
+  }
   window.addEventListener('resize', function() { c1.resize(); });
 
   // ============ CHART 4(原5): 已实现 vs 浮动 (按标的) ============
@@ -269,9 +275,25 @@
 
     computeCal();
     renderYear();
-    // 快照刷新净值点后重算并重绘日历（由 __applySnapshot 调用）
+    // 由 loadEquity() 在拉取 ledger.json 后调用：填充序列 → 重算日历 → 重绘净值曲线
     window.__refreshCalendar = function() { computeCal(); renderYear(); };
   }
+
+  // ============ 加载每日净值序列（ledger.json → equity_points） ============
+  function loadEquity() {
+    fetch('data/ledger.json', { cache: 'no-store' })
+      .then(function(r){ return r.json(); })
+      .then(function(L){
+        var pts = (L && L.equity_points) || [];
+        if (!pts.length) return;
+        eqDates = pts.map(function(p){ return p.date.slice(5); });   // 'MM-DD'
+        eqVals = pts.map(function(p){ return p.close; });
+        renderEquityChart();
+        if (typeof window.__refreshCalendar === 'function') window.__refreshCalendar();
+      })
+      .catch(function(e){ if (window.console) console.warn('[charts] ledger.json 加载失败，净值曲线/收益日历为空:', e && e.message || e); });
+  }
+  loadEquity();
 
   // ============ CHART 10: 决策质量评分（执行 vs 结果 分离） ============
   var c10 = init('chart-decision', 360);
@@ -419,20 +441,9 @@
     var pos = d.positions || [];
     var fmt = function(n) { return Number(n).toLocaleString('zh-CN'); };
 
-    // 1) 净值曲线末点（若日期新于现存末点则追加，否则覆盖末点）
-    if (d.equity_point && d.equity_point.value != null) {
-      var epd = d.equity_point.label;
-      var lastD = eqDates[eqDates.length - 1];
-      if (epd !== lastD) { eqDates.push(epd); eqVals.push(Number(d.equity_point.value)); }
-      else { eqVals[eqVals.length - 1] = Number(d.equity_point.value); }
-      var lastPair = { coord: [eqDates.length - 1, eqVals[eqVals.length - 1]] };
-      c1.setOption({
-        xAxis: { data: eqDates },
-        series: [{ data: eqVals, markPoint: { data: [lastPair], label: { formatter: '¥' + fmt(Math.round(eqVals[eqVals.length - 1])) } } }]
-      });
-      // 净值点变化后同步重算/重绘收益日历（累计收益率、8月月收益随最新净值更新）
-      if (typeof window.__refreshCalendar === 'function') window.__refreshCalendar();
-    }
+    // 1) 净值曲线/收益日历：由 data/ledger.json → equity_points 驱动（gen_ledger.py 幂等重建），
+    //    快照不再单点追加，避免收益日历把相隔多天合并成一格。
+    if (typeof window.__refreshCalendar === 'function') window.__refreshCalendar();
 
     // 2) 逐持仓浮盈亏 = (price-cost) * shares，驱动盈亏构成/逐标的/股票级净收益
     var perPos = pos.map(function(p) {
