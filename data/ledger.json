@@ -1,27 +1,27 @@
 {
   "_meta": {
     "desc": "模拟盘完整账本 v2：由东财全量调仓+账户权威数据重建。已了结分票除兖矿/大金为 app 已验证外，其余由调仓记录自动核算；equity_points 为逐日净值序列（锚点+分段校正，末点对齐权威总资产）。",
-    "generated_at": "2026-09-07",
-    "data_date": "2026-09-07",
+    "generated_at": "2026-09-08",
+    "data_date": "2026-09-08",
     "equity_rebuild": "daily-sequence"
   },
   "account": {
-    "nominal_assets": 1001151.38,
-    "nominal_return_pct": 0.12,
-    "real_assets": 51151.380000000005,
-    "real_return_pct": 2.3,
-    "position_pct": 0.0,
-    "cash": 51151.38,
+    "nominal_assets": 1000413.5,
+    "nominal_return_pct": 0.04,
+    "real_assets": 50413.5,
+    "real_return_pct": 0.83,
+    "position_pct": 76.89,
+    "cash": 11652.5,
     "start_date": "2026-07-14",
-    "daily_pnl_today": 0.0,
+    "daily_pnl_today": -737.88,
     "survey": {
-      "日收益率": 0.0,
-      "5日收益率": -0.45,
-      "20日收益率": -0.44,
-      "60日收益率": 0.12,
-      "250日收益率": 0.12,
-      "总收益率": 0.12,
-      "回撤率": 0.67
+      "日收益率": -0.07,
+      "5日收益率": -0.42,
+      "20日收益率": -0.4,
+      "60日收益率": 0.04,
+      "250日收益率": 0.04,
+      "总收益率": 0.04,
+      "回撤率": 0.74
     }
   },
   "closed_positions": {
@@ -110,11 +110,35 @@
   },
   "realized_pnl_total": 1505.14,
   "reconcil": {
-    "app_authority_pnl": 1151.38,
-    "gap": -353.76,
+    "app_authority_pnl": 413.5,
+    "gap": -1091.64,
     "note": "已确认轮次(app权威)+自动归因合计 与 账户权威累计已实现 的差额（含分红/费用/股数口径差异）；为空仓期"
   },
   "trades": [
+    {
+      "time": "2026-09-08 09:39",
+      "name": "铭普光磁",
+      "dir": "买",
+      "px": 27.48,
+      "pos_bef": "1.10",
+      "pos_aft": "2.74"
+    },
+    {
+      "time": "2026-09-08 09:35",
+      "name": "铭普光磁",
+      "dir": "买",
+      "px": 27.38,
+      "pos_bef": "0.00",
+      "pos_aft": "1.09"
+    },
+    {
+      "time": "2026-09-07 14:55",
+      "name": "沃尔核材",
+      "dir": "买",
+      "px": 17.17,
+      "pos_bef": "0.00",
+      "pos_aft": "1.20"
+    },
     {
       "time": "2026-09-04 14:53",
       "name": "兖矿能源",
@@ -388,7 +412,7 @@
       "pos_aft": "2.13"
     }
   ],
-  "trade_count": 34,
+  "trade_count": 37,
   "equity_points": [
     {
       "date": "2026-07-14",
@@ -549,10 +573,14 @@
     {
       "date": "2026-09-07",
       "close": 51151.38
+    },
+    {
+      "date": "2026-09-08",
+      "close": 50413.5
     }
   ],
   "summary": {
-    "realized_today": -2647.38,
+    "realized_today": 0,
     "closed_count": 9,
     "win_count": 3,
     "lose_count": 6
