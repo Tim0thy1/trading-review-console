@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>模拟盘交易系统 · 复盘终端</title>
+<title>200万 · 复盘终端</title>
 <link rel="stylesheet" href="https://tim0thy1.github.io/design-system/design-system.css">
 <style>
   :root{}
@@ -354,34 +354,10 @@
   .cal-legend{display:flex;align-items:center;gap:16px;margin-top:14px;font-size:12px;color:var(--muted)}
   .cal-legend .lg-box{display:inline-block;width:14px;height:14px;border-radius:4px;margin-right:4px;vertical-align:middle}
 
-  /* ===== 东财实时同步抽屉 ===== */
-  .live-fab{
-    position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:120;
-    display:flex;align-items:center;gap:7px;
-    padding:11px 16px;border-radius:999px;border:1px solid rgba(13,148,136,.45);
-    background:linear-gradient(135deg,var(--accent),var(--accent2));
-    color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;
-    box-shadow:0 6px 20px rgba(13,148,136,.35);transition:transform .2s,box-shadow .2s;
-  }
-  .live-fab:hover{transform:translateY(-50%) scale(1.06);box-shadow:0 8px 26px rgba(13,148,136,.45)}
-  .live-drawer{
-    position:fixed;top:0;left:0;right:0;z-index:110;
-    background:var(--bg);border-bottom:1px solid var(--rule);
-    box-shadow:0 14px 44px rgba(0,0,0,.14);
-    max-height:0;overflow:hidden;opacity:0;visibility:hidden;
-    transition:max-height .42s cubic-bezier(.4,0,.2,1),opacity .3s ease,visibility .3s;
-  }
-  .live-drawer.open{max-height:78vh;opacity:1;visibility:visible;overflow-y:auto}
-  .live-drawer-head{
-    display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
-    padding:16px 22px 0;position:sticky;top:0;background:var(--bg);z-index:1;
-  }
-  .live-drawer-close{
-    background:var(--bg3);border:1px solid var(--rule);border-radius:8px;
-    width:32px;height:32px;font-size:14px;color:var(--muted);cursor:pointer;transition:all .15s;flex-shrink:0;
-  }
-  .live-drawer-close:hover{color:var(--red);border-color:var(--red)}
-  .live-drawer-body{padding:12px 22px 22px}
+  /* ===== 调仓记录筛选 ===== */
+  .tr-btn{background:var(--bg3);border:1px solid var(--rule);border-radius:8px;padding:6px 14px;font-size:12.5px;color:var(--muted);cursor:pointer;font-family:inherit;transition:all .15s}
+  .tr-btn:hover{border-color:var(--accent);color:var(--ink)}
+  .tr-btn.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
 </style>
 <script>
 /* 主题跟随：读取工作台 localStorage 的 wb_theme_v1，同 origin 共享 */
@@ -409,9 +385,9 @@
   <aside class="sidebar" id="sidebar">
     <button class="side-close" id="side-close" aria-label="关闭菜单">✕</button>
     <div class="brand">
-      <div class="brand-mark">T</div>
+      <div class="brand-mark">2</div>
       <div>
-        <div class="brand-name">Trading Console</div>
+        <div class="brand-name">200万</div>
         <div class="brand-sub">模拟盘复盘终端</div>
       </div>
     </div>
@@ -444,10 +420,6 @@
       <div class="nav-item" data-target="realm">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg>
         修炼境界
-      </div>
-      <div class="nav-item" data-link="us-market-reviews.html">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 2 22 6 18 10"/><path d="M22 6h-8a6 6 0 0 0-6 6v0"/><polyline points="6 22 2 18 6 14"/><path d="M2 18h8a6 6 0 0 0 6-6v0"/></svg>
-        美股复盘
       </div>
     </nav>
     <div class="side-foot">
@@ -524,41 +496,21 @@
       <div class="m-head">
         <div class="m-kicker">Trade Log · 调仓记录</div>
         <div class="m-title">全部调仓流水</div>
-        <div class="m-desc">按时间倒序记录每一笔建仓、加仓、清仓。含成交价、股数、金额、费用与当时的操作逻辑。</div>
+        <div class="m-desc">按时间倒序记录每一笔建仓、加仓、清仓。含成交价与仓位变化，可在「我的理由」中随手记录每笔操作思路（本地保存）。</div>
       </div>
 
       <div class="panel">
-        <div class="table-wrap">
+        <div id="tr-filter" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:12px;font-size:12.5px">
+          <button id="tr-btn-7d" class="tr-btn on">近 7 天</button>
+          <button id="tr-btn-all" class="tr-btn">显示全部</button>
+          <span style="color:var(--muted)">或选择起始时间</span>
+          <input type="date" id="tr-from" style="background:var(--bg3);border:1px solid var(--rule);border-radius:8px;padding:6px 10px;color:var(--ink);font-family:inherit;font-size:12.5px">
+          <span id="tr-count" class="mono" style="color:var(--muted);margin-left:auto"></span>
+        </div>
+        <div id="tr-wrap" class="table-wrap" style="max-height:560px;overflow:auto">
           <table>
-            <thead><tr><th>日期</th><th>操作</th><th>标的</th><th>方向</th><th>成交价</th><th>股数</th><th>金额</th><th>费用</th><th>操作逻辑</th><th>我的理由（可编辑）</th></tr></thead>
-            <tbody>
-              <tr><td class="mono">09-02</td><td>清仓</td><td>星源材质</td><td><span class="pill r">卖出</span></td><td class="mono">13.70</td><td class="mono">1000</td><td class="mono">13,700</td><td class="mono">20.55</td><td>🔴 又割在日内最低点附近，触发 -10% 止损（成本15.165，亏损约-1,465）</td><td class="note-inline"><input data-key="note-xy-s902" placeholder="填写清仓理由..."><span class="note-status" data-status="note-xy-s902"></span></td></tr>
-              <tr><td class="mono">08-31</td><td>减仓</td><td>申菱环境</td><td><span class="pill r">卖出</span></td><td class="mono">108.41</td><td class="mono">100</td><td class="mono">10,841</td><td class="mono">16.26</td><td>✅ 减半止盈兑现，拿到 +6.62% 浮盈不恋战，纠偏 8/25「反弹拿不住/又卖飞」旧病</td><td class="note-inline"><input data-key="note-sl-s831" placeholder="填写减仓理由..."><span class="note-status" data-status="note-sl-s831"></span></td></tr>
-              <tr><td class="mono">08-31</td><td>加仓</td><td>亨通光电</td><td><span class="pill g">买入</span></td><td class="mono">66.26</td><td class="mono">100</td><td class="mono">6,626</td><td class="mono">7.29</td><td>回调补仓 100 股摊低成本（成本 68.943→），回踩不破位加仓</td><td class="note-inline"><input data-key="note-ht-b831" placeholder="填写加仓理由..."><span class="note-status" data-status="note-ht-b831"></span></td></tr>
-              <tr><td class="mono">08-27</td><td>建仓</td><td>亨通光电</td><td><span class="pill g">买入</span></td><td class="mono">70.18</td><td class="mono">200</td><td class="mono">14,036</td><td class="mono">11.23</td><td>8/25清仓后重启底部仓位，收盘71.30浮盈约+1.49%</td><td class="note-inline"><input data-key="note-ht-b27" placeholder="填写建仓理由..."><span class="note-status" data-status="note-ht-b27"></span></td></tr>
-              <tr><td class="mono">08-27</td><td>建仓</td><td>申菱环境</td><td><span class="pill g">买入</span></td><td class="mono">105.04</td><td class="mono">200</td><td class="mono">21,008</td><td class="mono">16.81</td><td>8/25清仓后换手重新建仓，收盘107.88浮盈约+2.6%</td><td class="note-inline"><input data-key="note-sl-b27" placeholder="填写建仓理由..."><span class="note-status" data-status="note-sl-b27"></span></td></tr>
-              <tr><td class="mono">08-27</td><td>加仓</td><td>星源材质</td><td><span class="pill g">买入</span></td><td class="mono">15.00</td><td class="mono">340</td><td class="mono">5,100</td><td class="mono">4.08</td><td>回补底仓（与08-26的660股合计1000股，成本15.165），收盘15.53浮盈约+2.4%</td><td class="note-inline"><input data-key="note-xy-b27" placeholder="填写加仓理由..."><span class="note-status" data-status="note-xy-b27"></span></td></tr>
-              <tr><td class="mono">08-26</td><td>加仓</td><td>星源材质</td><td><span class="pill g">买入</span></td><td class="mono">15.25</td><td class="mono">660</td><td class="mono">10,065</td><td class="mono">8.05</td><td>8/25低位割出后回补底仓 660 股（与08-27的340股合计1000股，成本15.165）</td><td class="note-inline"><input data-key="note-xy-b26" placeholder="填写加仓理由..."><span class="note-status" data-status="note-xy-b26"></span></td></tr>
-              <tr><td class="mono">08-25</td><td>清仓</td><td>亨通光电</td><td><span class="pill r">卖出</span></td><td class="mono">65.60</td><td class="mono">300</td><td class="mono">19,680</td><td class="mono">15.74</td><td>⚠️ 大盘低开高走+V字拉升，13:20 尾段卖在较高位，但分割在 10:33@63.22 与 13:20@65.60 两笔，属「反弹拿不住」</td><td class="note-inline"><input data-key="note-ht-s25" placeholder="填写清仓理由..."><span class="note-status" data-status="note-ht-s25"></span></td></tr>
-              <tr><td class="mono">08-25</td><td>清仓</td><td>申菱环境</td><td><span class="pill r">卖出</span></td><td class="mono">95.45</td><td class="mono">200</td><td class="mono">19,090</td><td class="mono">15.27</td><td>🔴 分两笔清仓（10:01@93.24、10:33@95.45），均卖在拉升早段，收盘冲104.20，卖飞</td><td class="note-inline"><input data-key="note-sl-s25" placeholder="填写清仓理由..."><span class="note-status" data-status="note-sl-s25"></span></td></tr>
-              <tr><td class="mono">08-25</td><td>清仓</td><td>星源材质</td><td><span class="pill r">卖出</span></td><td class="mono">13.85</td><td class="mono">1000</td><td class="mono">13,850</td><td class="mono">11.08</td><td>🔴 在大盘低开走V瞬间割在低点13.85（收盘14.40），止损方向对但点位错</td><td class="note-inline"><input data-key="note-xy-s25" placeholder="填写清仓理由..."><span class="note-status" data-status="note-xy-s25"></span></td></tr>
-              <tr><td class="mono">08-18</td><td>加仓</td><td>申菱环境</td><td><span class="pill g">买入</span></td><td class="mono">96.50</td><td class="mono">100</td><td class="mono">9,650</td><td class="mono">5.00</td><td>⚠️ 回调中加仓摊薄。买在半山腰，8/19直接压到86.80深套，是今日最大亏损源</td><td class="note-inline"><input data-key="note-sl-add" placeholder="填写加仓理由..."><span class="note-status" data-status="note-sl-add"></span></td></tr>
-              <tr><td class="mono">08-17</td><td>建仓</td><td>星源材质</td><td><span class="pill g">买入</span></td><td class="mono">15.05</td><td class="mono">1000</td><td class="mono">15,050</td><td class="mono">5.00</td><td>第3票建仓（东财真实登记1000股）。8/19逼近14.20止损线</td><td class="note-inline"><input data-key="note-xy-buy" placeholder="填写星源建仓理由..."><span class="note-status" data-status="note-xy-buy"></span></td></tr>
-              <tr><td class="mono">08-17</td><td>建仓</td><td>申菱环境</td><td><span class="pill g">买入</span></td><td class="mono">97.91</td><td class="mono">100</td><td class="mono">9,791</td><td class="mono">5.00</td><td>⚠️ FOMO追高，仅凭MACD走强，介入偏晚，追高99+回落</td><td class="note-inline"><input data-key="note-sl-buy" placeholder="填写建仓理由..."><span class="note-status" data-status="note-sl-buy"></span></td></tr>
-              <tr><td class="mono">08-17</td><td>清仓</td><td>大金重工</td><td><span class="pill r">卖出</span></td><td class="mono">41.34</td><td class="mono">600</td><td class="mono">24,804</td><td class="mono">19.84</td><td>⚠️ 走弱迹象明显，浮盈落袋+437，但卖点不够好（午间反弹41.8+）</td><td class="note-inline"><input data-key="note-dj-sell-final" placeholder="填写清仓理由..."><span class="note-status" data-status="note-dj-sell-final"></span></td></tr>
-              <tr><td class="mono">08-14</td><td>加仓</td><td>大金重工</td><td><span class="pill g">买入</span></td><td class="mono">41.92</td><td class="mono">100</td><td class="mono">4,192</td><td class="mono">5.00</td><td>⚠️ 逢低补仓，摊低成本至40.578，但大金仍走弱、偏左侧</td><td class="note-inline"><input data-key="note-dj-buy3" placeholder="填写补仓理由..."><span class="note-status" data-status="note-dj-buy3"></span></td></tr>
-              <tr><td class="mono">08-14</td><td>减仓</td><td>亨通光电</td><td><span class="pill r">卖出</span></td><td class="mono">59.54</td><td class="mono">100</td><td class="mono">5,954</td><td class="mono">8.04</td><td>✅ 做T兑现昨日抄底仓，落袋+163，弥补抄底被动</td><td class="note-inline"><input data-key="note-ht-sell2" placeholder="填写做T理由..."><span class="note-status" data-status="note-ht-sell2"></span></td></tr>
-              <tr><td class="mono">08-13</td><td>加仓</td><td>亨通光电</td><td><span class="pill g">买入</span></td><td class="mono">57.83</td><td class="mono">200</td><td class="mono">11,566</td><td class="mono">5.12</td><td>⚠️ 下午冲动回补，尾盘收57.25被套</td><td class="note-inline"><input data-key="note-ht-buy2" placeholder="填写回补理由..."><span class="note-status" data-status="note-ht-buy2"></span></td></tr>
-              <tr><td class="mono">08-13</td><td>加仓</td><td>大金重工</td><td><span class="pill g">买入</span></td><td class="mono">42.81</td><td class="mono">100</td><td class="mono">4,281</td><td class="mono">5.00</td><td>⚠️ 下午冲动回补，尾盘收42.55被套</td><td class="note-inline"><input data-key="note-dj-buy2" placeholder="填写回补理由..."><span class="note-status" data-status="note-dj-buy2"></span></td></tr>
-              <tr><td class="mono">08-13</td><td>减仓</td><td>亨通光电</td><td><span class="pill r">卖出</span></td><td class="mono">60.39</td><td class="mono">200</td><td class="mono">12,078</td><td class="mono">11.16</td><td>长短线双轨止盈：机动仓兑现，落袋+2,293</td><td class="note-inline"><input data-key="note-ht-sell" placeholder="填写减仓理由..."><span class="note-status" data-status="note-ht-sell"></span></td></tr>
-              <tr><td class="mono">08-12</td><td>减仓</td><td>大金重工</td><td><span class="pill r">卖出</span></td><td class="mono">43.78</td><td class="mono">300</td><td class="mono">13,134</td><td class="mono">11.57</td><td>执行止盈：浮盈>10%减仓</td><td class="note-inline"><input data-key="note-dj-sell" placeholder="填写减仓理由..."><span class="note-status" data-status="note-dj-sell"></span></td></tr>
-              <tr><td class="mono">08-04</td><td>建仓</td><td>亨通光电</td><td><span class="pill g">买入</span></td><td class="mono">48.87</td><td class="mono">400</td><td class="mono">19,548</td><td class="mono">19.74</td><td>科技复苏+MACD准备金叉+业绩支撑</td><td class="note-inline"><input data-key="note-ht-buy" placeholder="填写建仓理由..."><span class="note-status" data-status="note-ht-buy"></span></td></tr>
-              <tr><td class="mono">08-04</td><td>清仓</td><td>兖矿能源</td><td><span class="pill r">卖出</span></td><td class="mono">18.67</td><td class="mono">1100</td><td class="mono">20,537</td><td class="mono">31.01</td><td>MACD死叉+趋势走坏+业绩预期一般</td><td class="note-inline"><input data-key="note-yk-sell" placeholder="填写清仓理由..."><span class="note-status" data-status="note-yk-sell"></span></td></tr>
-              <tr><td class="mono">07-28</td><td>加仓</td><td>大金重工</td><td><span class="pill g">买入</span></td><td class="mono">40.01</td><td class="mono">100</td><td class="mono">4,001</td><td class="mono">4.04</td><td>加仓</td><td class="note-inline"><input data-key="note-dj-3" placeholder="填写加仓理由..."><span class="note-status" data-status="note-dj-3"></span></td></tr>
-              <tr><td class="mono">07-27</td><td>加仓</td><td>大金重工</td><td><span class="pill g">买入</span></td><td class="mono">39.91</td><td class="mono">300</td><td class="mono">11,973</td><td class="mono">12.09</td><td>加仓</td><td class="note-inline"><input data-key="note-dj-2" placeholder="填写加仓理由..."><span class="note-status" data-status="note-dj-2"></span></td></tr>
-              <tr><td class="mono">07-23</td><td>建仓</td><td>大金重工</td><td><span class="pill g">买入</span></td><td class="mono">39.32</td><td class="mono">300</td><td class="mono">11,796</td><td class="mono">11.91</td><td>首次建仓</td><td class="note-inline"><input data-key="note-dj-1" placeholder="填写建仓理由..."><span class="note-status" data-status="note-dj-1"></span></td></tr>
-              <tr><td class="mono">07-14</td><td>建仓</td><td>兖矿能源</td><td><span class="pill g">买入</span></td><td class="mono">19.32</td><td class="mono">1100</td><td class="mono">21,252</td><td class="mono">21.47</td><td>初始建仓</td><td class="note-inline"><input data-key="note-yk-buy" placeholder="填写建仓理由..."><span class="note-status" data-status="note-yk-buy"></span></td></tr>
-            </tbody>
+            <thead><tr><th>日期时间</th><th>操作</th><th>标的</th><th>成交价</th><th>仓位变化</th><th>我的理由（可编辑）</th></tr></thead>
+            <tbody id="trade-body"></tbody>
           </table>
         </div>
       </div>
@@ -569,81 +521,22 @@
       <div class="m-head">
         <div class="m-kicker">Closed P&L · 历史盈亏</div>
         <div class="m-title">已了结持仓盈亏</div>
-        <div class="m-desc">截至 9/7，9 段已全部清仓了结：<strong>交易级 3 盈 6 亏，胜率 33%</strong>，已实现净盈亏 <strong>+¥1,505.14</strong>（亨通 +6,182、大金 +1,658、申菱R2 +190 为盈利；兖矿 -415、申菱 -592、星源 R1 -1,215 + R2 -1,465、亨通R2 -2,404、兖矿R2 -433 为亏损）。按「每一轮独立建仓」统计每只票的<strong>持有天数</strong>与<strong>盈亏</strong>——同股多次持有拆成多段、点开卡片观看；亏损靠「反弹拿不住 + 止损点位过晚 + 缩量死扛 + 9/4 尾盘全清」，盈利靠「拿住主线」。</div>
+        <div class="m-desc">截至 9/7，9 段已全部清仓了结：<strong>交易级 3 盈 6 亏，胜率 33%</strong>，已实现净盈亏 <strong>+¥1,505.14</strong>。按「每一轮独立建仓」记账，点击下表某一行可展开该票的各段逐笔买卖明细。</div>
       </div>
 
-      <div class="kpi-grid" id="history-kpis">
-        <div class="kpi"><div class="kpi-label">已了结整段盈亏</div><div class="kpi-value dn">—</div><div class="kpi-sub">从 ledger 加载</div></div>
-        <div class="kpi"><div class="kpi-label">最近清仓落袋</div><div class="kpi-value up">—</div><div class="kpi-sub">9/4 三连卖全清 -2,647.38</div></div>
-        <div class="kpi"><div class="kpi-label">已了结票数</div><div class="kpi-value">—</div><div class="kpi-sub">盈/亏</div></div>
-        <div class="kpi"><div class="kpi-label">总收益(5万口径)</div><div class="kpi-value">—</div><div class="kpi-sub">从 ledger 加载</div></div>
-      </div>
-
-      <div class="kpi-grid" style="margin-top:14px">
-        <div class="kpi"><div class="kpi-label">首笔建仓日</div><div class="kpi-value">07-14</div><div class="kpi-sub">兖矿能源 sh600188</div></div>
-        <div class="kpi"><div class="kpi-label">已历自然日</div><div class="kpi-value">55 天</div><div class="kpi-sub">7/14 → 9/7</div></div>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-label">整段盈亏（已了结）</div><div class="kpi-value dn">+¥1,505.14</div><div class="kpi-sub">累计 9 段</div></div>
         <div class="kpi"><div class="kpi-label">实际交易日</div><div class="kpi-value">40 天</div><div class="kpi-sub">剔除周末与节假日</div></div>
-        <div class="kpi"><div class="kpi-label">股票级胜率</div><div class="kpi-value" style="color:var(--accent2)">40%</div><div class="kpi-sub">2盈 / 5票：大金+亨通盈 · 兖矿+申菱+星源亏（同股多轮合并）</div></div>
-        <div class="kpi"><div class="kpi-label">交易级胜率(已了结)</div><div class="kpi-value" style="color:var(--accent2)">33%</div><div class="kpi-sub">9 段全了结 · 亨通+大金+申菱R2盈 · 余6段亏</div></div>
+        <div class="kpi"><div class="kpi-label">股票级胜率</div><div class="kpi-value" style="color:var(--accent2)">40%</div><div class="kpi-sub">2盈 / 5票（同股多轮合并）</div></div>
+        <div class="kpi"><div class="kpi-label">交易级胜率(已了结)</div><div class="kpi-value" style="color:var(--accent2)">33%</div><div class="kpi-sub">3盈 / 9单元（同股多轮拆段）</div></div>
       </div>
 
-      <!-- ===== 逐笔分段盈亏拆解（持仓卡片样式 + 多段展开） ===== -->
+      <!-- ===== 逐笔分段盈亏拆解（表格形式，点击展开该票逐笔明细） ===== -->
       <div class="panel" style="margin-top:20px">
-        <div class="panel-title">逐笔分段盈亏拆解 · 持仓卡片</div>
-        <div class="panel-sub">按「每一轮独立建仓」记账，同一只股票重复买入拆成多轮、各行单独统计；同股多轮不合并，历史亏损不会被后来盈利洗白（对齐东财/同花顺对账单口径）。点击卡片标题收起/展开各段明细。</div>
-
-        <div class="kpi-grid">
-          <div class="kpi"><div class="kpi-label">独立交易单元</div><div class="kpi-value">9 轮</div><div class="kpi-sub">兖矿拆 2 · 申菱拆 2 · 亨通拆 2 · 大金 1 · 星源 2</div></div>
-          <div class="kpi"><div class="kpi-label">交易级胜率·含浮盈</div><div class="kpi-value">33%</div><div class="kpi-sub">3盈 / 9单元 · 兖矿+申菱+星源×2+亨通R2+兖矿R2亏</div></div>
-          <div class="kpi"><div class="kpi-label">做T总笔数</div><div class="kpi-value">3 笔</div><div class="kpi-sub">亨通 2 · 申菱 1</div></div>
-          <div class="kpi"><div class="kpi-label">已实现盈亏(净)</div><div class="kpi-value">+¥1,505.14</div><div class="kpi-sub">累计 9 段 · 9/4 三连卖 -2,647.38 已计入</div></div>
-        </div>
-
-        <div id="review-cards" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:8px"><!-- 由 data/review.json 动态渲染：只显示股票名+盈亏，点击展开逐笔买卖 --></div>
-
-        <div class="callout" style="margin-top:14px"><strong>为什么不能只看股票级胜率：</strong>「股票级」把同一只股票的多轮交易<strong>合并</strong>成一条，正是你会担心的失真源——例如以后重新买入兖矿并盈利，股票级就会把 R1 的亏损和 R2 的盈利合并成「兖矿=赚」，胜率也随之拉成 100%，等于<strong>抹掉了上一轮 -¥415 的亏损事实</strong>。而本卡片按<strong>每一轮独立建仓</strong>记账——兖矿以后重买会<strong>新增一段「R2」</strong>，R1 亏损单独保留、R2 盈利单独记录，各段胜率分开统计，历史亏损不被洗白。<strong style="color:var(--ink)">结论：股票级看「选股能力」，交易级看「每笔交易的真实执行质量」，以后台账请以交易级（本卡片）为准。</strong></div>
+        <div class="panel-title">逐笔分段盈亏拆解</div>
+        <div class="panel-sub">以「票」为单位汇总净盈亏；点击任一行展开该票各段（R1/R2…）的逐笔买卖明细。</div>
+        <div id="review-cards" style="margin-top:8px"><!-- 由 data/review.json 动态渲染：股票/状态/净收益/盈亏% 表格，点击展开 --></div>
       </div>
-
-      <figure class="chart-figure">
-        <figcaption>持仓时长 · 从首笔建仓(7/14)到现在的完整持仓区间（虚线=今天 9/7）</figcaption>
-        <div id="chart-elapsed" class="chart-box" style="min-height:300px"></div>
-      </figure>
-
-      <figure class="chart-figure">
-        <figcaption>已实现盈亏 vs 当前浮动盈亏（按标的）</figcaption>
-        <div id="chart-pnlstock" class="chart-box" style="min-height:320px"></div>
-      </figure>
-
-      <div class="grid-2">
-        <div class="panel">
-          <div class="panel-title">股票级净收益</div>
-          <div class="panel-sub">已落袋 + 当前市值浮盈合并口径</div>
-          <figure class="chart-figure">
-            <figcaption style="font-size:12px;color:var(--muted)">每只股票的净盈亏（元）</figcaption>
-            <div id="chart-winrate-pnl" class="chart-box" style="min-height:300px"></div>
-          </figure>
-        </div>
-        <div class="panel">
-          <div class="panel-title">每只票的胜率明细</div>
-          <div class="panel-sub">以「票」为单位，不是每次操作</div>
-          <div class="table-wrap" style="max-height:360px;overflow:auto">
-            <table style="width:100%;font-size:13px;border-collapse:collapse">
-              <thead><tr><th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">股票</th><th style="padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">状态</th><th style="text-align:right;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">净收益</th><th style="text-align:right;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">盈亏%</th></tr></thead>
-              <tbody>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>兖矿能源 (R1+R2)</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill" style="background:rgba(220,38,38,.14);color:var(--red)">已清仓 · 亏</span></td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">约 -¥849</td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">约 -1.9%</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>大金重工</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill g">已清仓 · 盈</span></td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+¥1,658</td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+4.6%</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>亨通光电 (R1+R2)</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill g">已清仓 · 盈</span></td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+¥3,778</td><td class="mono up" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">+15.0%</td></tr>
-                <tr><td style="padding:8px;border-bottom:1px solid var(--rule)"><strong>申菱环境 (R1+R2)</strong></td><td style="padding:8px;border-bottom:1px solid var(--rule)"><span class="pill r">已清仓 · 亏</span></td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">约 -¥402</td><td class="mono dn" style="text-align:right;padding:8px;border-bottom:1px solid var(--rule)">约 -1.0%</td></tr>
-                <tr><td style="padding:8px"><strong>星源材质 (R1+R2)</strong></td><td style="padding:8px"><span class="pill r">已清仓 · 亏</span></td><td class="mono dn" style="text-align:right;padding:8px">-¥2,680</td><td class="mono dn" style="text-align:right;padding:8px">约 -8.9%</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div class="callout" id="history-lesson"><strong>教训（9/7 更新）：</strong>9/4 尾盘三连卖全清仓（亨通@61.78、申菱@103.05、兖矿@21.53），当日 -2,647.38 落袋，实际是此前几轮情绪拉扯的集中兑现——8/25「反弹拿不住」、8/27「FOMO 追高」、9/2「止损位清仓」，到 9/4 果断空仓过周末。星源两段已 -2,680、亨通 R2 转亏 -2,404，说明「补仓摊薄 + 拿不住」的复利式损耗最伤。已了结 9 段 3 盈 6 亏，交易级胜率 33%。</div>
-
-      <div class="callout" style="margin-top:14px"><strong>口径说明：</strong>截至 9/7，9 段已全部了结。股票级 40%（2 盈 3 亏，各股多轮合并）与交易级 33%（3 盈 6 亏，同股多轮拆段）口径不同——交易级才是本控制台的权威口径，同一股票的每一轮独立建仓单独记账，R1 亏损不因 R2 重买而被洗白。东财 app 成交级胜率口径亦不同（按每笔独立成交拆算，当前 3 胜 6 负 33%）。<strong style="color:var(--ink)">最集中的教训仍是执行面：星源 R1（8/25 割在低点）与 R2（9/2 又在日内最低点止损）、亨通 R2（9/4 三连卖清仓本可避免）多段都在恐慌/止损位被清洗，「补仓摊薄 + 拿不住」的复利式损耗远比「主动做 T、轻仓等机会」更伤本金。</strong></div>
     </section>
 
     <!-- ===== MODULE 5: 盘前预测 ===== -->
@@ -840,29 +733,7 @@
   </main>
 </div>
 
-<!-- ===== 东财实时同步抽屉（默认收起，点击悬浮按钮拉出） ===== -->
-<button class="live-fab" id="live-fab" aria-expanded="false" title="东财实时同步">🛰️ 实时</button>
-<div class="live-drawer" id="live-drawer" aria-hidden="true">
-  <div class="live-drawer-head">
-    <div>
-      <div class="m-kicker" style="margin-bottom:4px">🛰️ 东财实时同步</div>
-      <div class="panel-title" style="font-size:16px">组合「翻81681」· 官方持仓快照</div>
-    </div>
-    <button class="live-drawer-close" id="live-close" aria-label="收起">✕</button>
-  </div>
-  <div class="live-drawer-body">
-    <div class="panel-sub" id="live-synced" style="margin-bottom:14px">正在连接东方财富组合接口…</div>
-    <div class="kpi-grid" id="live-account" style="margin-bottom:16px">
-      <div class="kpi"><div class="kpi-label">总资产(5万基数)</div><div class="kpi-value" id="lv-assets">—</div><div class="kpi-sub" id="lv-assets-sub">人为控制实际本金5万</div></div>
-      <div class="kpi"><div class="kpi-label">总收益率</div><div class="kpi-value" id="lv-zsyl">—</div><div class="kpi-sub">按5万本金核算</div></div>
-      <div class="kpi"><div class="kpi-label">仓位</div><div class="kpi-value" id="lv-pos">—</div><div class="kpi-sub" id="lv-pos-sub">持仓市值/总资产</div></div>
-      <div class="kpi"><div class="kpi-label">成交胜率</div><div class="kpi-value" id="lv-rate">—</div><div class="kpi-sub" id="lv-rate-sub">已了结单</div></div>
-      <div class="kpi"><div class="kpi-label">调仓总笔数</div><div class="kpi-value" id="lv-cnt">—</div><div class="kpi-sub">已全量同步</div></div>
-    </div>
-    <div id="live-positions"><!-- 持仓行 JS 填充 --></div>
-    <div id="live-trades" style="margin-top:12px"><!-- 最近调仓 JS 填充 --></div>
-  </div>
-</div>
+<!-- 东财实时数据已由下方脚本直接刷新总览 KPI，无需悬浮抽屉 -->
 
 <!-- REQUIRED: ECharts -->
 <script src="./assets/echarts.min.js"></script>
@@ -877,39 +748,6 @@
       .then(function(r){ if(!r.ok) throw 0; return r.json(); })
       .then(function(d){
         var a = d.account || {}, fmtp = d.recent_trades || [];
-        document.getElementById('live-synced').textContent =
-          '已同步 · 同步时间 ' + d.synced_at + ' · 数据来源：东方财富组合详情接口（组合ID ' + d.combin_id + '）';
-        document.getElementById('lv-assets').textContent = '¥' + fmt(a.total_assets);
-        document.getElementById('lv-assets-sub').textContent = '人为控制实际本金5万 · 管理人 ' + (d.manager||'');
-        var z = a.total_return_pct; document.getElementById('lv-zsyl').textContent = (z>0?'+':'') + z + '%';
-        document.getElementById('lv-pos').textContent = (a.position_pct==null?'—':a.position_pct+'%');
-        document.getElementById('lv-pos-sub').textContent = '实际动用资金';
-        document.getElementById('lv-rate').textContent = (a.deal_rate==null?'—':a.deal_rate+'%');
-        document.getElementById('lv-rate-sub').textContent = a.deal_win + '胜 / ' + a.deal_fail + '负';
-        document.getElementById('lv-cnt').textContent = d.trade_count + ' 笔';
-
-        // 持仓表
-        var pos = d.positions || [];
-        var ph = '<div style="font-size:12px;color:var(--muted);letter-spacing:.05em;margin-bottom:8px">官方当前持仓</div>';
-        pos.forEach(function(p){
-          var up = p.return_pct>=0;
-          ph += '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px dashed var(--rule)">'
-            + '<div style="min-width:84px"><div style="font-weight:700">'+p.name+'</div><div style="font-size:11px;color:var(--muted)">'+p.code+' · 持'+p.days+'天</div></div>'
-            + '<div style="flex:1;text-align:center;color:var(--muted);font-size:12px">'+p.shares+'股 · 成本'+p.cost+'</div>'
-            + '<div style="text-align:right;min-width:120px"><div class="mono" style="font-weight:700">¥'+p.price+' <span style="font-size:12px">('+(p.pct>0?'+':'')+p.pct+'%)</span></div>'
-            + '<div style="font-size:12px;'+(up?'color:var(--red)':'color:var(--green)')+'">持仓收益 '+(p.return_pct>0?'+':'')+p.return_pct+'%</div></div></div>';
-        });
-        document.getElementById('live-positions').innerHTML = ph;
-
-        // 最近调仓
-        var tr = '<div style="font-size:12px;color:var(--muted);letter-spacing:.05em;margin-bottom:8px">最近调仓（东财记录）</div>';
-        fmtp.forEach(function(t){
-          var isBuy = t.mmbz==='买';
-          tr += '<div style="display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--rule);border-radius:8px;padding:6px 10px;margin:0 8px 8px 0;font-size:12px">'
-            + '<span style="color:'+(isBuy?'var(--green)':'var(--red)')+';font-weight:700">'+t.mmbz+'</span>'
-            + '<span>'+(t.name||'')+'</span><span class="mono" style="color:var(--muted)">@'+t.price+'</span><span class="mono" style="color:var(--muted)">'+t.time+'</span></div>';
-        });
-        document.getElementById('live-trades').innerHTML = tr;
 
         // ---- 总览 KPI / 页脚统一刷新（跟随快照，不再硬编码）----
         if(typeof window.__applySnapshot === 'function'){ window.__applySnapshot(d); }
@@ -1001,8 +839,6 @@
       })
       .catch(function(e){
         if(window.console) console.error('[snapshot] LOAD_ERR:', e && e.message || e, e && e.stack);
-        document.getElementById('live-synced').textContent =
-          '快照文件(live-snapshot.json)未找到或读取失败——请先运行 sync_eastmoney.py 生成，或稍后刷新。当前为静态占位。';
       });
   }
   // ---- 加载完整账本 ledger.json 并渲染「历史盈亏/胜率」 ----
@@ -1011,46 +847,7 @@
     fetch('data/ledger.json', {cache:'no-store'})
       .then(function(r){ return r.json(); })
       .then(function(L){
-        // 历史盈亏 KPI
-        var acc=L.account||{};
-        var hk=document.getElementById('history-kpis');
-        if(hk){
-          var ks=hk.querySelectorAll('.kpi-value');
-          var closed=L.closed_positions||{};
-          var closedPnl=0, wins=0, loses=0;
-          Object.keys(closed).forEach(function(k){ var v=closed[k].pnl||0; closedPnl+=v; v>=0?wins++:loses++; });
-          if(ks[0]){ ks[0].textContent=fmtMoney(closedPnl); ks[0].className='kpi-value '+(closedPnl>=0?'up':'dn'); ks[0].parentElement.querySelector('.kpi-sub').textContent=(L.summary?L.summary.closed_count:5)+' 只全部了结'; }
-          var today=(L.summary?L.summary.realized_today:0);
-          if(ks[1]){ ks[1].textContent=fmtMoney(today); ks[1].className='kpi-value '+(today>=0?'up':'dn'); }
-          if(ks[2]){ ks[2].textContent=wins+'盈 / '+loses+'亏'; ks[2].className='kpi-value'; }
-          if(ks[3]){ ks[3].textContent=(acc.real_return_pct!=null?(acc.real_return_pct>0?'+':'')+acc.real_return_pct+'%':'—'); ks[3].className='kpi-value '+(acc.real_return_pct>=0?'up':'dn'); }
-        }
-        // 已了结列表卡片
-        var cl=document.getElementById('history-closed-list');
-        if(cl){
-          var names=[['兖矿能源','兖矿能源 R1'],['兖矿能源R2','兖矿能源 R2'],['大金重工','大金重工'],['申菱环境','申菱环境 R1'],['申菱环境R2','申菱环境 R2'],['星源材质','星源材质 R1'],['星源材质R2','星源材质 R2'],['亨通光电','亨通光电 R1'],['亨通光电R2','亨通光电 R2']];
-          var html='';
-          names.forEach(function(pair){
-            var nm=pair[0], disp=pair[1];
-            var v=closed[nm]; if(!v) return;
-            var p=v.pnl||0, up=p>=0;
-            html+='<div class="panel"><div class="panel-title" style="display:flex;justify-content:space-between;align-items:center">'
-              +'<span>'+disp+' · 已了结</span><span class="pill '+(up?'g':'r')+'">'+(up?'盈利':'亏损')+' ¥'+Math.abs(p).toFixed(2)+'</span></div>';
-            if(v.shares){ html+='<div class="pos-metrics" style="grid-template-columns:repeat(2,1fr)">'
-              +'<div class="pm"><div class="pm-label">股数</div><div class="pm-value">'+v.shares+'</div></div>'
-              +(v.avg_sell?'<div class="pm"><div class="pm-label">卖出均价</div><div class="pm-value">'+v.avg_sell+'</div></div>':'')
-              +'<div class="pm"><div class="pm-label">成本价</div><div class="pm-value">'+(v.cost||v.buy_px||'—')+'</div></div>'
-              +(v.sell_px?'<div class="pm"><div class="pm-label">卖价明细</div><div class="pm-value" style="font-size:11px">'+v.sell_px.join(', ')+'</div></div>':'')
-              +'</div>'; }
-            if(v.note) html+='<div class="panel-sub" style="margin-top:8px;color:var(--muted)">'+v.note+'</div>';
-            html+='</div>';
-          });
-          cl.innerHTML=html || '<div class="panel"><div class="panel-title">暂无已了结记录</div></div>';
-        }
-        // 教训 callout
-        var hl=document.getElementById('history-lesson');
-        if(hl) hl.innerHTML='<strong>教训（9/7 更新）：</strong>9/4 尾盘三连卖全清仓（亨通@61.78、申菱@103.05、兖矿@21.53），当日 -2,647.38 落袋，实际是此前几轮情绪拉扯的集中兑现——8/25「反弹拿不住」、8/27「FOMO 追高」、9/2「止损位清仓」，到 9/4 果断空仓过周末。星源两段已 -2,680、亨通 R2 转亏 -2,404，说明「补仓摊薄 + 拿不住」的复利式损耗最伤。已了结 9 段 3 盈 6 亏，交易级胜率 33%。';
-        // 胜率数据已并入「历史盈亏」模块顶部 KPI，由上方 history-kpis 动态渲染
+        // 「历史盈亏」KPI 与逐笔拆解现在由 review.json 驱动（assets/data-loader.js 渲染表格），此处不再使用 closed_positions 直渲。
         // ---- 全景评估动态渲染 ----
         var closed=L.closed_positions||{};
         var panopnl=0; Object.keys(closed).forEach(function(k){ panopnl+=(closed[k].pnl||0); });
@@ -1076,25 +873,107 @@
   loadLedger();
 })();
 </script>
+
 <script>
-/* 东财实时同步抽屉：默认收起，点击悬浮按钮拉出；状态记忆在 localStorage */
+/* ===== 调仓记录：动态渲染（数据源 data/ledger.json → trades）=====
+   默认近 7 天；可切「显示全部」或按起始日期筛选；带滚动条。 */
 (function(){
-  var fab = document.getElementById('live-fab');
-  var drawer = document.getElementById('live-drawer');
-  var closeBtn = document.getElementById('live-close');
-  function setOpen(open){
-    drawer.classList.toggle('open', open);
-    drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
-    fab.setAttribute('aria-expanded', open ? 'true' : 'false');
-    fab.innerHTML = open ? '✕ 收起' : '🛰️ 实时';
-    try{ localStorage.setItem('live_drawer_open', open ? '1' : '0'); }catch(e){}
+  var NOTE_STORE_KEY = 'trading-console-notes-v1';
+  function notesLoad(){
+    try{ return JSON.parse(localStorage.getItem(NOTE_STORE_KEY)) || {}; }catch(e){ return {}; }
   }
-  fab.addEventListener('click', function(){ setOpen(!drawer.classList.contains('open')); });
-  closeBtn.addEventListener('click', function(){ setOpen(false); });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') setOpen(false); });
-  var saved = '0';
-  try{ saved = localStorage.getItem('live_drawer_open') || '0'; }catch(e){}
-  setOpen(saved === '1');
+  function notesSave(notes){ try{ localStorage.setItem(NOTE_STORE_KEY, JSON.stringify(notes)); }catch(e){} }
+
+  var MODE_7D = '7d', MODE_ALL = 'all';
+  var mode = MODE_7D;
+  var allTrades = [];
+
+  function dateKey(timeStr){ /* '2026-09-08 09:39' → '2026-09-08' */ return String(timeStr||'').slice(0,10); }
+  function dayOffset(offset){
+    var d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate()-offset);
+    var pad=function(n){return String(n).padStart(2,'0');};
+    return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+  }
+
+  function render(filterFrom){
+    var body = document.getElementById('trade-body');
+    if(!body) return;
+    var tbody = allTrades.slice();
+    var filtered, countLabel;
+    // 归一：确定一个 from（YYYY-MM-DD，>=from 的保留）
+    var from = null;
+    if(filterFrom) from = filterFrom;
+    else if(mode === MODE_7D) from = dayOffset(7);
+    if(from){ filtered = tbody.filter(function(t){ return dateKey(t.time) >= from; }); }
+    else { filtered = tbody; }
+    countLabel = (mode === MODE_ALL && !filterFrom) ? ('全部 '+filtered.length+' 笔') : ('显示 '+filtered.length+' 笔');
+
+    var html = '';
+    filtered.forEach(function(t){
+      var isBuy = (t.dir === '买');
+      var key = 'note-tr-' + String(t.time).replace(/[^0-9]/g,'') + '-' + String(t.name||'');
+      var noteVal = (notesLoad()[key]) || '';
+      html += '<tr>'
+        + '<td class="mono">'+t.time+'</td>'
+        + '<td><span class="pill '+(isBuy?'g':'r')+'">'+(isBuy?'买入':'卖出')+'</span></td>'
+        + '<td>'+t.name+'</td>'
+        + '<td class="mono">'+t.px+'</td>'
+        + '<td class="mono">'+(t.pos_bef||'—')+'% → '+(t.pos_aft||'—')+'%</td>'
+        + '<td class="note-inline"><input data-key="'+key+'" placeholder="填写理由..."'
+        + (noteVal?' value="'+noteVal.replace(/"/g,'&quot;')+'"':'') + '><span class="note-status" data-status="'+key+'"></span></td>'
+        + '</tr>';
+    });
+    if(!html) html = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:18px">该范围内暂无调仓记录</td></tr>';
+    body.innerHTML = html;
+    var cnt = document.getElementById('tr-count');
+    if(cnt) cnt.textContent = countLabel;
+    bindEditors();
+  }
+
+  function bindEditors(){
+    var notes = notesLoad();
+    document.querySelectorAll('#trade-body input[data-key]').forEach(function(inp){
+      if(inp.__bound) return; inp.__bound = true;
+      var key = inp.getAttribute('data-key');
+      var status = document.querySelector('[data-status="'+key+'"]');
+      var flash = function(msg){
+        if(!status) return;
+        status.textContent = msg;
+        clearTimeout(flash._t);
+        flash._t = setTimeout(function(){ status.textContent=''; }, 1600);
+      };
+      inp.addEventListener('blur', function(){
+        var v = inp.value.trim();
+        var notes = notesLoad();
+        if(v){ notes[key]=v; notesSave(notes); flash('已保存 ✓'); }
+        else { delete notes[key]; notesSave(notes); }
+      });
+      inp.addEventListener('keydown', function(e){ if(e.key==='Enter') inp.blur(); });
+    });
+  }
+
+  function refresh(filterFrom){
+    var from = filterFrom || null;
+    if(from){ mode=null; } 
+    render(from);
+    // 按钮高亮
+    var b7=document.getElementById('tr-btn-7d'), ba=document.getElementById('tr-btn-all');
+    if(b7 && ba){ b7.classList.toggle('on', !from && mode===MODE_7D); ba.classList.toggle('on', !from && mode===MODE_ALL); }
+  }
+
+  fetch('data/ledger.json', { cache:'no-store' })
+    .then(function(r){ return r.json(); })
+    .then(function(L){
+      allTrades = (L && L.trades) || [];
+      allTrades.sort(function(a,b){ return String(b.time) < String(a.time) ? -1 : (String(b.time) > String(a.time) ? 1 : 0); });
+      document.getElementById('tr-btn-7d').addEventListener('click', function(){ mode=MODE_7D; refresh(null); });
+      document.getElementById('tr-btn-all').addEventListener('click', function(){ mode=MODE_ALL; refresh(null); });
+      var fi = document.getElementById('tr-from');
+      fi.addEventListener('change', function(){ refresh(fi.value || null); });
+      fi.value = dayOffset(7);
+      refresh(null);
+    })
+    .catch(function(e){ if(window.console) console.warn('[trades] ledger 加载失败', e && e.message); });
 })();
 </script>
 

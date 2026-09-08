@@ -51,32 +51,35 @@
     });
   }
 
-  /* ============ 1. 已了结持仓盈亏（review.json → #review-cards） ============ */
+  /* ============ 1. 已了结持仓盈亏（review.json → #review-cards）
+     表格形式：每只票一行（股票/状态/净收益/盈亏%），点击行展开该票各段逐笔明细 ============ */
   function renderReview(data) {
     var el = document.getElementById('review-cards');
     if (!el || !data || !data.positions) return;
-    var cards = data.positions.map(function(pos) {
+    var rows = data.positions.map(function(pos) {
       var total = pos.rounds.reduce(function(s, r) { return s + (r.pnl || 0); }, 0);
+      var rounds = pos.rounds.length;
       var up = total >= 0;
+      var pct = pos.pct || '';
+      // 各段明细
       var roundsHtml = pos.rounds.map(function(r) {
         var rup = (r.pnl || 0) >= 0;
         var tradesHtml = (r.trades || []).map(function(t) {
-          var tp = String(t.pnl || '—');
-          var tup = tp.indexOf('-') === 0;
           return '<tr>'
             + '<td class="mono" style="padding:6px 8px;border-bottom:1px solid var(--rule);white-space:nowrap">' + esc(t.date) + '</td>'
             + '<td style="padding:6px 8px;border-bottom:1px solid var(--rule)">' + esc(t.action) + '</td>'
             + '<td class="mono" style="padding:6px 8px;border-bottom:1px solid var(--rule);text-align:right">' + esc(t.shares) + '</td>'
             + '<td class="mono" style="padding:6px 8px;border-bottom:1px solid var(--rule);text-align:right">' + esc(t.price) + '</td>'
-            + '<td class="mono" style="padding:6px 8px;border-bottom:1px solid var(--rule);text-align:right;color:' + (tup ? 'var(--green)' : 'var(--red)') + '">' + esc(tp) + '</td>'
+            + '<td class="mono" style="padding:6px 8px;border-bottom:1px solid var(--rule);text-align:right;color:' + (String(t.pnl).indexOf('-') === 0 ? 'var(--red)' : 'var(--green)') + '">' + esc(t.pnl || '—') + '</td>'
             + '</tr>';
         }).join('');
-        return '<div style="margin-top:10px">'
-          + '<div style="display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted)">'
-          + '<span>' + esc(pos.name) + ' ' + esc(r.round) + ' · ' + esc(r.from) + ' → ' + esc(r.to) + ' · ' + esc(r.days) + '天'
+        return '<div style="margin-top:12px;background:var(--bg2);border:1px solid var(--rule);border-radius:10px;overflow:hidden">'
+          + '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 14px;background:var(--bg3)">'
+          + '<span style="font-size:12.5px;font-weight:700">' + esc(r.round) + ' 段 · ' + esc(r.from) + ' → ' + esc(r.to) + ' · ' + esc(r.days) + '天'
           + (r.t_count ? ' · 做T ' + esc(r.t_count) + '笔' : '') + '</span>'
           + '<span class="mono" style="font-weight:700;color:' + (rup ? 'var(--red)' : 'var(--green)') + '">' + (r.pnl >= 0 ? '+' : '') + fmtMoney(r.pnl) + '</span>'
           + '</div>'
+          + '<div style="padding:2px 14px 14px">'
           + '<table style="width:100%;font-size:12.5px;border-collapse:collapse;margin-top:6px">'
           + '<thead><tr>'
           + '<th style="text-align:left;padding:6px 8px;color:var(--muted);border-bottom:1px solid var(--rule)">日期</th>'
@@ -84,25 +87,35 @@
           + '<th style="text-align:right;padding:6px 8px;color:var(--muted);border-bottom:1px solid var(--rule)">股数</th>'
           + '<th style="text-align:right;padding:6px 8px;color:var(--muted);border-bottom:1px solid var(--rule)">价格</th>'
           + '<th style="text-align:right;padding:6px 8px;color:var(--muted);border-bottom:1px solid var(--rule)">盈亏</th>'
-          + '</tr></thead><tbody>' + tradesHtml + '</tbody></table></div>';
+          + '</tr></thead><tbody>' + tradesHtml + '</tbody></table></div></div>';
       }).join('');
-      return '<div class="review-card" style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px;cursor:pointer">'
-        + '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">'
-        + '<div style="min-width:0"><div style="font-weight:700;font-size:14.5px">' + esc(pos.name)
-        + ' <span style="color:var(--muted);font-weight:400;font-size:12px">' + esc(pos.code) + '</span></div>'
-        + '<div style="font-size:12px;color:var(--muted);margin-top:3px">' + pos.rounds.length + ' 段 · 点击展开逐笔买卖</div></div>'
-        + '<div style="text-align:right;flex:0 0 auto"><div class="mono" style="font-weight:700;font-size:17px;color:' + (up ? 'var(--red)' : 'var(--green)') + '">' + (total >= 0 ? '+' : '') + fmtMoney(total) + '</div>'
-        + '<span class="pill ' + (up ? 'g' : 'r') + '" style="font-size:11px">' + (up ? '盈利' : '亏损') + '</span></div>'
-        + '</div>'
-        + '<div class="review-detail" style="display:none;margin-top:10px;border-top:1px dashed var(--rule);padding-top:6px">' + roundsHtml + '</div>'
-        + '</div>';
+      return '<tr class="review-row" data-name="' + esc(pos.name) + '" style="cursor:pointer">'
+        + '<td style="padding:10px 12px;border-bottom:1px solid var(--rule)"><strong>' + esc(pos.name) + '</strong>'
+        + ' <span style="color:var(--muted);font-weight:400;font-size:12px">' + esc(pos.code) + ' · ' + rounds + '段</span></td>'
+        + '<td style="padding:10px 12px;border-bottom:1px solid var(--rule)"><span class="pill ' + (up ? 'g' : 'r') + '">' + (up ? '盈利' : '亏损') + '</span></td>'
+        + '<td class="mono" style="padding:10px 12px;border-bottom:1px solid var(--rule);text-align:right;color:' + (up ? 'var(--red)' : 'var(--green)') + '">' + (total >= 0 ? '+' : '') + fmtMoney(total) + '</td>'
+        + '<td class="mono" style="padding:10px 12px;border-bottom:1px solid var(--rule);text-align:right">' + esc(pct) + '</td>'
+        + '</tr>'
+        + '<tr class="review-detail" data-name="' + esc(pos.name) + '" style="display:none;background:var(--bg2)"><td colspan="4" style="padding:4px 14px 14px">' + roundsHtml + '</td></tr>';
     }).join('');
-    el.innerHTML = cards;
+    el.innerHTML = '<table style="width:100%;font-size:13px;border-collapse:collapse">'
+      + '<thead><tr>'
+      + '<th style="text-align:left;padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--rule)">股票</th>'
+      + '<th style="text-align:left;padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--rule)">状态</th>'
+      + '<th style="text-align:right;padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--rule)">净收益</th>'
+      + '<th style="text-align:right;padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--rule)">盈亏%</th>'
+      + '</tr></thead><tbody>' + rows + '</tbody></table>';
     el.addEventListener('click', function(e) {
-      var card = e.target.closest('.review-card');
-      if (!card) return;
-      var d = card.querySelector('.review-detail');
-      if (d) d.style.display = (d.style.display === 'none') ? 'block' : 'none';
+      var row = e.target.closest('.review-row');
+      if (!row) return;
+      var name = row.getAttribute('data-name');
+      var details = el.querySelectorAll('tr.review-detail');
+      for (var i = 0; i < details.length; i++) {
+        if (details[i].getAttribute('data-name') === name) {
+          details[i].style.display = (details[i].style.display === 'none') ? '' : 'none';
+          break;
+        }
+      }
     });
   }
 
