@@ -47,6 +47,8 @@
   var modules = document.querySelectorAll('.module');
   navItems.forEach(function(item) {
     item.addEventListener('click', function() {
+      var link = item.getAttribute('data-link');
+      if (link) { window.location.href = link; return; }
       var target = item.getAttribute('data-target');
       navItems.forEach(function(n) { n.classList.remove('active'); });
       item.classList.add('active');

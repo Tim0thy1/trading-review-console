@@ -2,7 +2,9 @@
   "_meta": {
     "desc": "修炼手记（file: journal.json）：每关感悟与突破的持久化记录。新增段默认带 latest 标记（折叠态默认显示最新一条）。",
     "updated_at": "2026-09-08",
-    "count": 18
+    "count": 18,
+    "data_date": "2026-09-08",
+    "touched_by": "ai_pipeline.py"
   },
   "entries": [
     {

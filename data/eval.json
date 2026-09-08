@@ -2,7 +2,8 @@
   "_meta": {
     "desc": "交易者全面评测（file: eval.json）：每次复盘更新。网页只显示各块摘要，点击展开全文。综合评分/盘前纪律由 ledger.json + forecast.json 动态计算，不在此文件。",
     "updated_at": "2026-09-02",
-    "data_date": "2026-09-02"
+    "data_date": "2026-09-02",
+    "touched_by": "ai_pipeline.py"
   },
   "sections": [
     {
