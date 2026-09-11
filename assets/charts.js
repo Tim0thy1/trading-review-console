@@ -132,7 +132,7 @@
         type: 'radar',
         data: [
           {
-            value: [6, 3, 6, 2, 3, 2], name: '当前纪律',
+            value: [6, 4, 7, 3, 6, 7], name: '当前纪律',
             areaStyle: { color: accent2 + '44' }, lineStyle: { color: accent2, width: 2 }, itemStyle: { color: accent2 }
           },
           {

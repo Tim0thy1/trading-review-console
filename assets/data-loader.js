@@ -1,9 +1,10 @@
 // assets/data-loader.js — 数据文件化渲染器
-// 从 data/*.json 加载四块动态内容，HTML 保持只读摘要 + 点开展开：
-//   review.json  → #review-cards  已了结持仓盈亏（只显示股票名+盈亏，点击展开逐笔买卖）
-//   eval.json    → #eval-sections 交易者全面评测（只显示标题+摘要，点击展开全文）
-//   realm.json   → #realm-current + #realm-sections 修仙境界（当前定位 + 各块摘要，点击展开）
-//   journal.json → #realmJournal  修炼手记（默认折叠只显示最新一条）
+// 从 data/*.json 加载动态内容：
+//   review.json → #review-cards      已了结持仓盈亏（点击展开逐笔买卖）
+//   eval.json   → #review-calendar   当日复盘日历（点击日期显示该日复盘全文）
+//   ledger.json → #stage-assessment  阶段性评估（画像/三率/阶段/总结/雷达，实时重算）
+//   realm.json  → #realm-current + #realm-sections 修仙境界
+//   journal.json→ （修炼手记已下线，与当日复盘重复；数据文件保留）
 // 更新时只需改 JSON，HTML 不再改动，从而显著降低每次更新模拟盘的 token 消耗。
 (function() {
   function esc(s) {
@@ -119,15 +120,10 @@
     });
   }
 
-  /* ============ 2. 交易者全面评测（eval.json） ============
-     sections 中带 date 字段的“当日复盘”渲染成日历卡片（点击日期显示全文），
-     其余通用评测块仍为 #eval-sections 展开列表。 */
+  /* ============ 2. 当日复盘日历（eval.json 带 date 的 section → 复盘日历） ============ */
   function renderEval(data) {
     var secs = (data && data.sections) || [];
-    var daily = secs.filter(function(s) { return s.date; });
-    var blocks = secs.filter(function(s) { return !s.date; });
-    renderReviewCalendar(daily);
-    expandableBlocks(document.getElementById('eval-sections'), blocks);
+    renderReviewCalendar(secs.filter(function(s) { return s.date; }));
   }
 
   /* ============ 2b. 当日复盘日历：点日期卡片显示该日复盘全文 ============ */
@@ -203,6 +199,92 @@
     showDetail(selected);
   }
 
+  /* ============ 2c. 阶段性评估（整合：画像 / 三率 / 阶段定位 / 总结 / 雷达，实时重算自 ledger + forecast） ============ */
+  function renderStageAssessment(ledger) {
+    var cont = document.getElementById('stage-assessment');
+    if (!cont || !ledger) return;
+    loadJSON('data/forecast.json').then(function(fc) {
+      var acct = ledger.account || {};
+      var sm = ledger.summary || {};
+      var win = +sm.win_count || 0, lose = +sm.lose_count || 0, closed = +sm.closed_count || 0;
+      var total = win + lose;
+      var winRate = total ? Math.round(win / total * 100) : 0;
+      var ret = (typeof acct.real_return_pct === 'number') ? acct.real_return_pct : null;
+      var realized = (typeof ledger.realized_pnl_total === 'number') ? ledger.realized_pnl_total : null;
+      var pos = (typeof acct.position_pct === 'number') ? acct.position_pct : null;
+      var dateSrc = (ledger._meta && ledger._meta.data_date) || '今日';
+
+      var fList = Array.isArray(fc) ? fc : [];
+      var scored = fList.filter(function(f) { return f && f.review; });
+      var avgScore = scored.length ? Math.round(scored.reduce(function(s, f) { return s + f.review.score; }, 0) / scored.length) : null;
+      var hits = scored.filter(function(f) { return f.review.dir_hit === true || f.review.dir_hit === 'part'; }).length;
+      var hitRate = scored.length ? Math.round(hits / scored.length * 100) : null;
+      var withDisc = scored.filter(function(f) { return typeof f.review.discipline === 'number'; });
+      var disc = withDisc.length ? (withDisc.reduce(function(s, f) { return s + f.review.discipline; }, 0) / withDisc.length).toFixed(1) : null;
+
+      var rateOnline = winRate >= 50;
+      var retOnline = ret !== null && ret >= 0;
+      var discOnline = avgScore !== null && avgScore >= 70;
+      var onlineCount = (rateOnline ? 1 : 0) + (retOnline ? 1 : 0) + (discOnline ? 1 : 0);
+
+      var portrait = (rateOnline && retOnline)
+        ? '胜率与收益双在线，纪律待回升'
+        : (retOnline ? '收益为正但交易级胜率不足——净赚靠亨通等少数大赢覆盖多数小亏' : '长板 / 短板仍明显，核心短板在纪律与仓位');
+
+      cont.innerHTML = '<div class="dl-block" style="border:1px solid var(--rule);border-radius:14px;overflow:hidden;background:var(--bg2)">'
+        + '<div class="dl-head" style="padding:16px 18px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">'
+        + '<div style="font-weight:800;font-size:15px">🧭 阶段性评估 · 画像 / 三率 / 阶段定位</div>'
+        + '<div style="font-size:12px;color:var(--muted)">数据实时取自 <span class="mono">ledger.json</span>（' + esc(dateSrc) + '）</div></div>'
+        + '<div class="dl-body" style="padding:16px 18px">'
+
+        + '<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">'
+        + kpiCard('交易级胜率', (total ? winRate + '%' : '—'), win + ' 胜 / ' + lose + ' 负')
+        + kpiCard('累计收益率', (ret !== null ? (ret >= 0 ? '+' : '') + ret.toFixed(2) + '%' : '—'), '5万口径 · 东财权威')
+        + kpiCard('已实现净盈亏', (realized !== null ? (realized >= 0 ? '+' : '') + '¥' + Number(realized).toLocaleString() : '—'), '已了结 ' + closed + ' 段')
+        + kpiCard('当前仓位', (pos !== null ? pos.toFixed(2) + '%' : '—'), acct.real_assets ? '资产 ¥' + Number(acct.real_assets).toLocaleString() : '')
+        + '</div>'
+
+        + '<div style="margin-top:15px"><div style="font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:8px">三率检验（毕业验收：三率同时在线）</div>'
+        + rateRow('① 胜率', (total ? winRate + '%' : '—'), rateOnline, '胜率≥50% 才过关')
+        + rateRow('② 收益率', (ret !== null ? (ret >= 0 ? '+' : '') + ret.toFixed(2) + '%' : '—'), retOnline, '累计为正')
+        + rateRow('③ 纪律·盘前均分', (avgScore !== null ? avgScore + ' / 100' : '—'), discOnline, '预测均分≥70 · 命中 ' + (hitRate !== null ? hitRate + '%' : '—') + ' · 纪律分 ' + (disc !== null ? disc + '/10' : '—'))
+        + '</div>'
+
+        + '<div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">'
+        + '<div style="flex:1;min-width:230px;background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px"><div style="font-size:11px;color:var(--muted)">交易者画像</div><div style="font-weight:700;font-size:14px;margin-top:6px;line-height:1.6">' + esc(portrait) + '</div></div>'
+        + '<div style="flex:1;min-width:230px;background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px"><div style="font-size:11px;color:var(--muted)">当前阶段</div><div style="font-weight:700;font-size:14px;margin-top:6px">练气期 · 第二阶段「能不能不乱交易」</div>'
+        + (onlineCount === 3
+          ? '<div style="font-size:12px;color:var(--green);margin-top:6px">✅ 三率全部在线，可进入实盘前验收</div>'
+          : '<div style="font-size:12px;color:var(--red);margin-top:6px">⚠️ 尚差 ' + (3 - onlineCount) + ' 个维度未在线，暂不可毕业</div>') + '</div>'
+        + '</div>'
+
+        + '<div style="margin-top:15px"><div style="font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:6px">六维纪律雷达（当前 vs 合格线）</div>'
+        + '<div id="chart-radar" style="width:100%;height:400px"></div></div>'
+
+        + '<div style="margin-top:16px"><div style="font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:6px">阶段总结 · 更新至 ' + esc(dateSrc) + '</div>'
+        + '<div style="font-size:13.5px;line-height:1.85;color:var(--ink)">自 07-14 建仓（初始 5 万）实操至今，累计收益 <strong class="mono up">+10.62%</strong>，已了结 9 段（3 胜 6 负）、已实现净盈亏 +¥1,505。9/11 弱势普跌中守住光通信主线并按预案分批落袋，AI 批卷 70/100，纪律与心态较 8 月底明显转好。当前核心短板仍是 <strong>交易级胜率偏低（净赚靠亨通等少数大赢弥补）</strong>与「拿不住 / 做T 买卖点」的执行，正对应修炼的第二阶段——能不能不乱交易。</div></div>'
+
+        + '<div style="margin-top:14px;background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px"><div style="font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:8px">下一步（写给明天的自己）</div>'
+        + '<div style="font-size:13px;line-height:2;color:var(--ink)">・给剩余持仓补写死止盈 / 止损锚点（铭普 500 股、沃尔中线仓），把「奔跑」变成有锚的奔跑；<br>・坚持每日盘前预案 + 收盘自评，把计划外交易降为零；<br>・连续三周「胜率≥50% + 收益率在线 + 纪律在线」后再评估是否进入小资金实盘。</div></div>'
+
+        + '</div></div>';
+      if (typeof window.__renderEvalCharts === 'function') { try { window.__renderEvalCharts(); } catch (e) {} }
+    });
+
+    function kpiCard(t, v, s) {
+      return '<div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:13px 14px"><div style="font-size:11px;color:var(--muted)">' + esc(t) + '</div>'
+        + '<div class="mono up" style="font-weight:800;font-size:18px;margin-top:5px">' + v + '</div>'
+        + '<div style="font-size:11.5px;color:var(--muted);margin-top:4px">' + esc(s) + '</div></div>';
+    }
+    function rateRow(t, v, ok, rest) {
+      return '<div style="display:flex;align-items:center;gap:10px;background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:9px 12px;margin-bottom:6px">'
+        + '<span style="width:150px;flex:none;font-size:13px;color:var(--ink)">' + esc(t) + '</span>'
+        + '<span class="mono" style="font-weight:700;font-size:14px;color:' + (ok ? 'var(--green)' : 'var(--red)') + '">' + v + '</span>'
+        + '<span style="margin-left:auto;font-size:11.5px;color:' + (ok ? 'var(--green)' : 'var(--red)') + '">' + (ok ? '✓ 在线' : '✗ 未过') + '</span>'
+        + '<span style="font-size:11.5px;color:var(--muted)">' + esc(rest) + '</span></div>';
+    }
+  }
+
   /* ============ 3. 修仙境界（realm.json → #realm-current + #realm-sections） ============ */
   function renderRealm(data) {
     var cur = data && data.current;
@@ -272,6 +354,7 @@
   loadJSON('data/eval.json').then(renderEval).catch(function(e) { if (window.console) console.warn('[data-loader] eval.json 加载失败:', e && e.message); });
   loadJSON('data/realm.json').then(renderRealm).catch(function(e) { if (window.console) console.warn('[data-loader] realm.json 加载失败:', e && e.message); });
   loadJSON('data/journal.json').then(renderJournal).catch(function(e) { if (window.console) console.warn('[data-loader] journal.json 加载失败:', e && e.message); });
+  loadJSON('data/ledger.json').then(renderStageAssessment).catch(function(e) { if (window.console) console.warn('[data-loader] ledger.json 加载失败:', e && e.message); });
 
   // 供 forecast 模块在渲染完历史表后调用，限制只显示前 10 条
   window.__applyForecastLimit = applyForecastLimit;
