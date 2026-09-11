@@ -330,6 +330,19 @@
             <!-- ===== 评测各块（数据文件化：eval.json → 点击展开） ===== -->
       <div id="eval-sections"><!-- 由 data/eval.json 动态渲染：只显示标题+摘要，点击展开全文 --></div>
 
+<!-- 修炼手记（并入全景评估，默认折叠只显示最新一条） -->
+      <div class="panel">
+        <div class="panel-title" style="display:flex;justify-content:space-between;align-items:center;gap:12px"><span>📜 修炼手记</span><button id="journalToggle" class="journal-toggle" onclick="toggleJournal()">展开全部 (20条) ▼</button></div>
+        <div class="panel-sub">记录每一关的感悟与突破，见证从炼气到筑基的成长轨迹</div>
+        <div class="realm-journal collapsed" id="realmJournal"><!-- 由 data/journal.json 动态渲染：默认折叠只显示最新一条 --></div>
+        <div style="margin-top:14px"><textarea data-key="realm-note" placeholder="记录你的修炼感悟：这一关你学到了什么？下一步想修什么？..." style="width:100%;min-height:90px;background:var(--bg3);border:1px solid var(--rule);border-radius:9px;color:var(--ink);padding:12px 14px;font-size:13.5px;font-family:inherit;resize:vertical"></textarea>
+          <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:10px;align-items:center">
+            <span class="note-status" data-status="realm-note" style="font-size:12px;color:var(--muted)"></span>
+            <button class="note-save" data-key="realm-note" style="background:linear-gradient(135deg,var(--accent),var(--accent2));color:#ffffff;border:none;border-radius:8px;padding:8px 18px;font-weight:700;font-size:13px;cursor:pointer">保存修炼手记</button>
+          </div>
+        </div>
+      </div>
+
 <div class="footer-note">
         本系统为「翻81681」组合复盘工具，数据来自东方财富模拟组合API（组合ID: 261944300000051189），仅供学习记录，不构成投资建议。评分基于已执行操作的行为分析，动态更新。投资有风险，决策需谨慎。
       </div>
@@ -349,21 +362,8 @@
       <!-- 境界各块（数据文件化：realm.json → 点击展开） -->
       <div id="realm-sections"><!-- 由 data/realm.json 动态渲染：总览 / 炼气期 / 筑基期 / 导师评估 --></div>
 
-<!-- 修炼手记 -->
-      <div class="panel">
-        <div class="panel-title" style="display:flex;justify-content:space-between;align-items:center;gap:12px"><span>📜 修炼手记</span><button id="journalToggle" class="journal-toggle" onclick="toggleJournal()">展开全部 (15条) ▼</button></div>
-        <div class="panel-sub">记录每一关的感悟与突破，见证从炼气到筑基的成长轨迹</div>
-        <div class="realm-journal collapsed" id="realmJournal"><!-- 由 data/journal.json 动态渲染：默认折叠只显示最新一条 --></div>
-        <div style="margin-top:14px"><textarea data-key="realm-note" placeholder="记录你的修炼感悟：这一关你学到了什么？下一步想修什么？..." style="width:100%;min-height:90px;background:var(--bg3);border:1px solid var(--rule);border-radius:9px;color:var(--ink);padding:12px 14px;font-size:13.5px;font-family:inherit;resize:vertical"></textarea>
-          <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:10px;align-items:center">
-            <span class="note-status" data-status="realm-note" style="font-size:12px;color:var(--muted)"></span>
-            <button class="note-save" data-key="realm-note" style="background:linear-gradient(135deg,var(--accent),var(--accent2));color:#ffffff;border:none;border-radius:8px;padding:8px 18px;font-weight:700;font-size:13px;cursor:pointer">保存修炼手记</button>
-          </div>
-        </div>
-      </div>
-
       <div class="footer-note">
-        修炼境界为「资金体量 × 操作成熟度」的成长映射，用于记录与自省，非评级标签。当前定位为炼气中期（本金 5 万、资产 <span id="foot-assets" class="mono">¥50,413.50</span>）。境界会随复利与能力提升逐级跃迁，本系统持续追踪。
+        修炼境界为「资金体量 × 操作成熟度」的成长映射，用于记录与自省，非评级标签。当前定位为炼气中期（本金 5 万）。境界会随复利与能力提升逐级跃迁，本系统持续追踪。
       </div>
     </section>
 
