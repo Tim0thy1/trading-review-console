@@ -236,11 +236,15 @@
 
       cont.innerHTML = '<div class="dl-block" style="border:1px solid var(--rule);border-radius:14px;overflow:hidden;background:var(--bg2)">'
         + '<div class="dl-head" style="padding:16px 18px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">'
-        + '<div style="font-weight:800;font-size:15px">🧭 阶段性评估 · 画像 / 三率 / 阶段定位</div>'
-        + '<div style="font-size:12px;color:var(--muted)">数据实时取自 <span class="mono">ledger.json</span>（' + esc(dateSrc) + '）</div></div>'
-        + '<div class="dl-body" style="padding:16px 18px">'
+        + '<div style="font-weight:800;font-size:15px">🧭 导师评估 · 阶段性诊断（统一评估入口）</div>'
+        + '<div style="font-size:12px;color:var(--muted)">数据实时取自 <span class="mono">ledger.json</span>（' + esc(dateSrc) + '） · 修炼境界处不再重复评估</div></div>'
 
-        + '<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">'
+        + '<div style="padding:18px 16px 0">'
+        + '<div class="callout" style="margin:0 0 14px;font-size:12.5px;line-height:1.7"><strong style="color:var(--accent2)">评分口径 · 怎么算的</strong>：综合评分 = 每日盘前预测的对账评分（方向 35 分 + 个股 45 分 + 预案 25 分 + 纪律 10 分累出 <span class="mono">/100</span>）取均值，再按"三率（胜率/收益/纪律）是否同时在线"给出进阶结论。要涨分，核心在<b>盘前预案留白更少、触发价写死、计划外交易归零</b>。</div></div>'
+
+        + '<div class="dl-body" style="padding:0 18px 18px">'
+
+        + '<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px">'
         + kpiCard('交易级胜率', (total ? winRate + '%' : '—'), win + ' 胜 / ' + lose + ' 负')
         + kpiCard('累计收益率', (ret !== null ? (ret >= 0 ? '+' : '') + ret.toFixed(2) + '%' : '—'), '5万口径 · 东财权威')
         + kpiCard('已实现净盈亏', (realized !== null ? (realized >= 0 ? '+' : '') + '¥' + Number(realized).toLocaleString() : '—'), '已了结 ' + closed + ' 段')
@@ -264,13 +268,24 @@
         + '<div style="margin-top:15px"><div style="font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:6px">六维纪律雷达（当前 vs 合格线）</div>'
         + '<div id="chart-radar" style="width:100%;height:400px"></div></div>'
 
-        + '<div style="margin-top:16px"><div style="font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:6px">阶段总结 · 更新至 ' + esc(dateSrc) + '</div>'
-        + '<div style="font-size:13.5px;line-height:1.85;color:var(--ink)">自 07-14 建仓（初始 5 万）实操至今，累计收益 <strong class="mono up">+10.62%</strong>，已了结 9 段（3 胜 6 负）、已实现净盈亏 +¥1,505。9/11 弱势普跌中守住光通信主线并按预案分批落袋，AI 批卷 70/100，纪律与心态较 8 月底明显转好。当前核心短板仍是 <strong>交易级胜率偏低（净赚靠亨通等少数大赢弥补）</strong>与「拿不住 / 做T 买卖点」的执行，正对应修炼的第二阶段——能不能不乱交易。</div></div>'
+        + '<div style="margin-top:16px"><div style="font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:8px">导师诊断 · 更新至 ' + esc(dateSrc) + '</div>'
 
-        + '<div style="margin-top:14px;background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px"><div style="font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:8px">下一步（写给明天的自己）</div>'
-        + '<div style="font-size:13px;line-height:2;color:var(--ink)">・给剩余持仓补写死止盈 / 止损锚点（铭普 500 股、沃尔中线仓），把「奔跑」变成有锚的奔跑；<br>・坚持每日盘前预案 + 收盘自评，把计划外交易降为零；<br>・连续三周「胜率≥50% + 收益率在线 + 纪律在线」后再评估是否进入小资金实盘。</div></div>'
+        + '<div style="margin-bottom:12px"><div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:8px">✅ 已确认的进步（' + (retOnline ? '+' : '+') + '）</div>'
+        + '<div style="font-size:13px;line-height:1.7;color:var(--ink)">① <strong>弱势里守住了强者、按计划分批落袋</strong> —— 9/11 普跌、超5000股下挫、约96%个股收绿时，仍识别"弱势还能走强=强者"，铭普光磁 +10.02% 涨停、10:10@30.86 出 1/2，沃尔 +4.43% 出 1/3，无追高、无计划外交易；② <strong>心态从"追高焦虑"转向"能拿住、敢减仓、放得平"</strong> —— 较 9/8 追高即套（47分）明显转好，本次对账 +10.62%。</div></div>'
 
-        + '</div></div>';
+        + '<div style="margin-bottom:12px"><div style="font-size:13px;font-weight:700;color:var(--warn);margin-bottom:8px">⚠️ 反复出现的问题（当前关卡）</div>'
+        + '<div style="font-size:13px;line-height:1.7;color:var(--ink)">① <strong>盘前方向常给"中立/跷跷板"不给明确预判</strong> —— 9/9、9/10、9/11 多日如此，方向分始终被扣；② <strong>交易级胜率偏低（3胜6负）</strong> —— 账面靠亨通等少数大赢覆盖多数小亏；③ <strong>剩余持仓止盈/止损位未写死</strong> —— 铭普剩余 500 股、沃尔中线仓仍是"无锚奔跑"。</div></div>'
+
+        + '<div style="margin-bottom:12px"><div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px">🔍 深层诊断</div>'
+        + '<div class="callout" style="margin:0"><strong>矛盾：「减少操作」想打好下一笔，却总被"现金在手就焦虑"拉着开新仓。</strong>你已证明自己能按预案兑现（9/11 双票落袋），说明纪律在长；但一旦手痒想通过多交易"赚回来"，就滑回"追 2-3 线票"的老路（9/8 铭普）。<strong style="color:var(--accent2)">结论：你的每一点加分都来自"少做、做精"，而非多做。</strong>把"一场牛市赚回来"的念头换成"三率在线才算过关"的验收尺度。</div></div>'
+
+        + '<div><div style="font-size:13px;font-weight:700;color:var(--accent2);margin-bottom:8px">📌 下一步修炼方向</div>'
+        + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px">'
+        + '<div style="background:var(--bg3);border-radius:8px;padding:12px"><div style="color:var(--accent);font-weight:700;margin-bottom:4px">近期目标（1-2周）</div>'
+        + '<ul style="padding-left:16px;margin:0;color:var(--muted);font-size:12.5px"><li style="margin-bottom:4px">给每个剩余持仓<strong style="color:var(--ink)">写死止盈/止损锚点</strong>（铭普500、沃尔中线），把「奔跑」变「有锚奔跑」</li><li style="margin-bottom:4px">盘前必填<strong style="color:var(--ink)">明确方向+触发价</strong>，哪怕只写「低开破止损则出」</li><li style="margin-bottom:4px">连续 5 日<strong style="color:var(--ink)">计划外交易为 0</strong></li></ul></div>'
+        + '<div style="background:var(--bg3);border-radius:8px;padding:12px"><div style="color:var(--accent2);font-weight:700;margin-bottom:4px">中期目标（1个月）</div>'
+        + '<ul style="padding-left:16px;margin:0;color:var(--muted);font-size:12.5px"><li style="margin-bottom:4px">把<strong style="color:var(--ink)">交易级胜率拉回 ≥50%</strong>：只在有主线支撑且经盘前预案锁定的票上下手</li><li style="margin-bottom:4px">止盈/止损后<strong style="color:var(--ink)">空仓等待</strong>，不急于当天找下一只</li><li style="margin-bottom:4px">连续三周「胜率+收益+纪律」三率在线，再评估进阶</li></ul></div>'
+        + '</div></div></div></div>';
       if (typeof window.__renderEvalCharts === 'function') { try { window.__renderEvalCharts(); } catch (e) {} }
     });
 
@@ -297,8 +312,9 @@
         + '<div style="flex:1;min-width:240px">'
         + '<div style="font-size:12px;letter-spacing:.12em;color:var(--accent2);text-transform:uppercase;margin-bottom:8px">当前境界 · 修炼定位</div>'
         + '<div style="font-family:\'BricolageGrotesque\';font-weight:700;font-size:30px;color:var(--accent2)">' + esc(cur.realm) + '</div>'
-        + '<div style="font-size:13px;color:var(--muted);margin-top:6px">' + esc(cur.desc) + '</div>'
-        + '<div style="margin-top:14px;font-size:13.5px;line-height:1.7">' + (cur.detail || '') + '</div>'
+        + (cur.desc ? '<div style="font-size:13px;color:var(--muted);margin-top:6px">' + esc(cur.desc) + '</div>' : '')
+        + (cur.detail ? '<div style="margin-top:12px;font-size:13px;line-height:1.7;color:var(--ink)">' + esc(cur.detail) + '</div>' : '')
+        + '<a href="#module-profile" style="display:inline-block;margin-top:12px;font-size:12.5px;color:var(--accent2);text-decoration:none;border-bottom:1px dashed rgba(13,148,136,.5)">🧭 详细的行为诊断与改进建议 → 见「交易者全面评测」</a>'
         + '</div>'
         + '<div style="flex:0 0 200px;display:flex;flex-direction:column;justify-content:center;gap:10px">'
         + '<div style="background:var(--bg3);border-radius:10px;padding:12px 16px">'
