@@ -164,8 +164,17 @@ def main():
                 for h in holds
             ],
             "recent_trades": [
-                {"time": t["cjsj"], "name": t["stkName"], "mmbz": t["mmbz"], "price": t["cjjg"]}
+                {"time": t["cjsj"], "name": t["stkName"], "mmbz": t["mmbz"], "price": t["cjjg"],
+                 "pos_bef": str(t["holdPosBef"]), "pos_aft": str(t["holdPosAft"])}
                 for t in sorted(trades, key=lambda x: x["cjsj"], reverse=True)[:6]
+            ],
+            # 全量规范化流水（与 data/ledger.json 的 trades 同构）：
+            # 供 gen_ledger.py 增量合并，保证账本/页面调仓流水与东财完全一致、永不停更。
+            "all_trades": [
+                {"time": t["cjsj"], "name": t["stkName"], "dir": t["mmbz"],
+                 "px": float(t["cjjg"]), "pos_bef": str(t["holdPosBef"]), "pos_aft": str(t["holdPosAft"]),
+                 "code": t["stkCode"]}
+                for t in sorted(trades, key=lambda x: x["cjsj"], reverse=True)
             ],
             "trade_count": len(trades),
         }

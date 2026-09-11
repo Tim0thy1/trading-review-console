@@ -86,14 +86,26 @@ def main():
         "equity_rebuild": "daily-sequence(gen_ledger)",
     }
 
+    # ---- 调仓流水：旧账本 ∪ 东财全量流水（all_trades），按 (time,name,dir,px) 去重，时间倒序 ----
+    # 修复：此前原样保留旧 trades，导致账本流水停在旧日期（页面「全部调仓流水」不更新）。
+    def _trade_key(t):
+        return (str(t.get("time")), str(t.get("name")), str(t.get("dir")), str(t.get("px")))
+    merged, seen_keys = [], set()
+    for t in list(snap.get("all_trades") or []) + list(prev.get("trades") or []):
+        k = _trade_key(t)
+        if k in seen_keys: continue
+        seen_keys.add(k)
+        merged.append(t)
+    merged.sort(key=lambda t: str(t.get("time")), reverse=True)
+
     ledger = {
         "_meta": meta,
         "account": acct,
         "closed_positions": prev.get("closed_positions", {}),
         "realized_pnl_total": prev.get("realized_pnl_total", 0.0),
         "reconcil": prev.get("reconcil", {}),
-        "trades": prev.get("trades", []),
-        "trade_count": prev.get("trade_count", len(prev.get("trades", []))),
+        "trades": merged,
+        "trade_count": len(merged),
         "equity_points": eq,
         "daily_calendar": daily_calendar,
         "summary": summary,

@@ -84,11 +84,26 @@
     if(b7 && ba){ b7.classList.toggle('on', !from && mode===MODE_7D); ba.classList.toggle('on', !from && mode===MODE_ALL); }
   }
 
+  // 双源兜底：账本 trades ∪ 当日快照 recent_trades（东财直拉，字段映射对齐）。
+  // 即便 gen_ledger 重建滞后，页面调仓流水也能显示到最新交易日。
   fetch('data/ledger.json', { cache:'no-store' })
     .then(function(r){ return r.json(); })
     .then(function(L){
       allTrades = (L && L.trades) || [];
-      allTrades.sort(function(a,b){ return String(b.time) < String(a.time) ? -1 : (String(b.time) > String(a.time) ? 1 : 0); });
+      return fetch('live-snapshot.json', { cache:'no-store' }).then(function(r){ return r.json(); }).catch(function(){ return {}; });
+    })
+    .then(function(snap){
+      var extra = (snap && snap.recent_trades) || [];
+      var seen = {};
+      allTrades.forEach(function(t){ seen[String(t.time)+'|'+String(t.name)+'|'+String(t.dir)] = true; });
+      extra.forEach(function(t){
+        var dir = (t.mmbz === '买') ? '买' : (t.mmbz === '卖') ? '卖' : t.mmbz;
+        var key = String(t.time)+'|'+String(t.name)+'|'+dir;
+        if(seen[key]) return;
+        seen[key] = true;
+        allTrades.push({ time:t.time, name:t.name, dir:dir, px:t.price, pos_bef:t.pos_bef||'—', pos_aft:t.pos_aft||'—' });
+      });
+      allTrades.sort(function(a,b){ return String(a.time) < String(b.time) ? 1 : (String(a.time) > String(b.time) ? -1 : 0); });
       document.getElementById('tr-btn-7d').addEventListener('click', function(){ mode=MODE_7D; refresh(null); });
       document.getElementById('tr-btn-all').addEventListener('click', function(){ mode=MODE_ALL; refresh(null); });
       var fi = document.getElementById('tr-from');
