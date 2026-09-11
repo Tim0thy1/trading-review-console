@@ -194,7 +194,10 @@
         if (typeof window.__renderEvalCharts === 'function') setTimeout(function() { window.__renderEvalCharts(); }, 30);
       }
     }
-    selected = reviews[0].date;   // 默认展示最新一条复盘
+    selected = reviews[0].date;   // 默认展示最新一条复盘（若无 review-* 顺序依赖，选取日期最大的一条）
+    var latest = null;
+    for (var i = 0; i < reviews.length; i++) { if (!latest || reviews[i].date > latest.date) { latest = reviews[i]; } }
+    if (latest) selected = latest.date;
     render();
     showDetail(selected);
   }
