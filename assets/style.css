@@ -350,3 +350,22 @@ table .realm-on td:first-child{color:var(--accent2)}
 .tr-btn{background:var(--bg3);border:1px solid var(--rule);border-radius:8px;padding:6px 14px;font-size:12.5px;color:var(--muted);cursor:pointer;font-family:inherit;transition:all .15s}
 .tr-btn:hover{border-color:var(--accent);color:var(--ink)}
 .tr-btn.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+
+/* ===== 当日复盘 · 复盘日历（rc- 前缀，与收益日历 cal- 区分） ===== */
+.rc-nav{width:32px;height:32px;border-radius:8px;border:1px solid var(--rule);background:var(--bg3);color:var(--accent);font-size:20px;line-height:1;font-weight:700;cursor:pointer;transition:all .15s}
+.rc-nav:hover{border-color:var(--accent)}
+.rc-week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
+.rc-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.rc-cell{position:relative;min-height:54px;border-radius:9px;background:var(--bg3);border:1px solid var(--rule);padding:6px 7px;box-sizing:border-box;transition:all .15s}
+.rc-cell.none{opacity:.42}
+.rc-cell.has{cursor:pointer;border-color:var(--accent)}
+.rc-cell.has:hover{background:rgba(13,148,136,.10);transform:translateY(-1px)}
+.rc-cell.sel{background:var(--accent);border-color:var(--accent)}
+.rc-cell.today{box-shadow:inset 0 0 0 1.5px var(--accent2)}
+.rc-num{display:block;font-size:13px;font-weight:700;color:var(--ink)}
+.rc-cell.none .rc-num{color:var(--muted)}
+.rc-cell.sel .rc-num{color:#fff}
+.rc-tag{position:absolute;right:6px;bottom:6px;font-size:10px;font-weight:700;font-family:'InstrumentSans',sans-serif;color:var(--accent)}
+.rc-cell.sel .rc-tag{color:#fff}
+.rc-dow{min-height:0;background:transparent;border:none;text-align:center;font-size:11px;font-weight:700;color:var(--muted);padding:6px 0;opacity:1;font-family:'InstrumentSans',sans-serif}
+.rc-void{visibility:hidden}

@@ -327,21 +327,17 @@
         <div id="pano-fc-verdict" style="margin-top:12px;font-size:13px;line-height:1.8"></div>
       </div>
 
-            <!-- ===== 评测各块（数据文件化：eval.json → 点击展开） ===== -->
-      <div id="eval-sections"><!-- 由 data/eval.json 动态渲染：只显示标题+摘要，点击展开全文 --></div>
-
-<!-- 修炼手记（并入全景评估，默认折叠只显示最新一条） -->
-      <div class="panel">
-        <div class="panel-title" style="display:flex;justify-content:space-between;align-items:center;gap:12px"><span>📜 修炼手记</span><button id="journalToggle" class="journal-toggle" onclick="toggleJournal()">展开全部 (20条) ▼</button></div>
-        <div class="panel-sub">记录每一关的感悟与突破，见证从炼气到筑基的成长轨迹</div>
-        <div class="realm-journal collapsed" id="realmJournal"><!-- 由 data/journal.json 动态渲染：默认折叠只显示最新一条 --></div>
-        <div style="margin-top:14px"><textarea data-key="realm-note" placeholder="记录你的修炼感悟：这一关你学到了什么？下一步想修什么？..." style="width:100%;min-height:90px;background:var(--bg3);border:1px solid var(--rule);border-radius:9px;color:var(--ink);padding:12px 14px;font-size:13.5px;font-family:inherit;resize:vertical"></textarea>
-          <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:10px;align-items:center">
-            <span class="note-status" data-status="realm-note" style="font-size:12px;color:var(--muted)"></span>
-            <button class="note-save" data-key="realm-note" style="background:linear-gradient(135deg,var(--accent),var(--accent2));color:#ffffff;border:none;border-radius:8px;padding:8px 18px;font-weight:700;font-size:13px;cursor:pointer">保存修炼手记</button>
-          </div>
-        </div>
+            <!-- ===== 当日复盘 · 复盘日历（eval.json 带 date 的 section：点日期显示该日复盘全文） ===== -->
+      <div class="panel" style="margin-top:20px">
+        <div class="m-kicker" style="margin-bottom:6px">📅 当日复盘 · 复盘日历</div>
+        <div class="panel-title">点日期，查看当日复盘</div>
+        <div class="panel-sub">每日收盘的复盘汇聚成日历，点击日历上带标记的日期即可展开当天全文。</div>
+        <div id="review-calendar" style="margin-top:12px"><!-- 由 data/eval.json 动态渲染：日期卡片 --></div>
+        <div id="review-detail"><!-- 选中日期的复盘全文 --></div>
       </div>
+
+            <!-- ===== 通用评测各块（数据文件化：eval.json → 点击展开） ===== -->
+      <div id="eval-sections"><!-- 由 data/eval.json 动态渲染：阶段定位 / 演进追踪 / 审计 / 画像 / 改进建议 / 方法论 / 总结 --></div>
 
 <div class="footer-note">
         本系统为「翻81681」组合复盘工具，数据来自东方财富模拟组合API（组合ID: 261944300000051189），仅供学习记录，不构成投资建议。评分基于已执行操作的行为分析，动态更新。投资有风险，决策需谨慎。

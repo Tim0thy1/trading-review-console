@@ -119,9 +119,88 @@
     });
   }
 
-  /* ============ 2. 交易者全面评测（eval.json → #eval-sections） ============ */
+  /* ============ 2. 交易者全面评测（eval.json） ============
+     sections 中带 date 字段的“当日复盘”渲染成日历卡片（点击日期显示全文），
+     其余通用评测块仍为 #eval-sections 展开列表。 */
   function renderEval(data) {
-    expandableBlocks(document.getElementById('eval-sections'), data && data.sections);
+    var secs = (data && data.sections) || [];
+    var daily = secs.filter(function(s) { return s.date; });
+    var blocks = secs.filter(function(s) { return !s.date; });
+    renderReviewCalendar(daily);
+    expandableBlocks(document.getElementById('eval-sections'), blocks);
+  }
+
+  /* ============ 2b. 当日复盘日历：点日期卡片显示该日复盘全文 ============ */
+  function renderReviewCalendar(reviews) {
+    var wrap = document.getElementById('review-calendar');
+    var detail = document.getElementById('review-detail');
+    if (!wrap) return;
+    if (!reviews || !reviews.length) {
+      wrap.innerHTML = '<div class="panel-sub" style="color:var(--muted)">暂无当日复盘记录。</div>';
+      return;
+    }
+    var byDate = {};
+    reviews.forEach(function(r) { if (r.date) byDate[r.date] = r; });
+    var months = [];
+    reviews.forEach(function(r) { if (r.date) { var mk = r.date.slice(0, 7); if (months.indexOf(mk) < 0) months.push(mk); } });
+    months = months.sort();
+    var cur = months[months.length - 1];   // 默认打开“最近复盘所在月”
+    var selected = null;
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+    function tag(dm) { var m = parseInt(dm.slice(5, 7), 10), d = parseInt(dm.slice(8, 10), 10); return m + '/' + d; }
+    function render() {
+      var y = parseInt(cur.slice(0, 4), 10), m = parseInt(cur.slice(5, 7), 10);
+      var firstDow = new Date(y, m - 1, 1).getDay();
+      var nDays = new Date(y, m, 0).getDate();
+      var now = new Date();
+      var today = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+      var head = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">'
+        + '<button type="button" class="rc-nav" data-dir="-1" title="上月">‹</button>'
+        + '<div style="font-weight:800;font-size:15px;color:var(--ink)">' + y + ' 年 ' + m + ' 月</div>'
+        + '<button type="button" class="rc-nav" data-dir="1" title="下月">›</button></div>';
+      var header = '<div class="rc-week">' + ['日', '一', '二', '三', '四', '五', '六'].map(function(w) {
+        return '<div class="rc-cell rc-dow">' + w + '</div>';
+      }).join('') + '</div>';
+      var cells = '';
+      for (var b = 0; b < firstDow; b++) cells += '<div class="rc-cell rc-void"></div>';
+      for (var d = 1; d <= nDays; d++) {
+        var dm = cur + '-' + pad(d);
+        var has = !!byDate[dm];
+        var cls = 'rc-cell' + (has ? ' has' : ' none') + (dm === selected ? ' sel' : '') + (dm === today ? ' today' : '');
+        cells += '<div class="' + cls + '"' + (has ? ' data-dm="' + dm + '" title="' + esc(byDate[dm].title) + '"' : '') + '>'
+          + '<span class="rc-num">' + d + '</span>'
+          + (has ? '<span class="rc-tag">' + tag(dm) + '</span>' : '')
+          + '</div>';
+      }
+      wrap.innerHTML = head + header + '<div class="rc-grid">' + cells + '</div>';
+      wrap.querySelectorAll('button.rc-nav').forEach(function(b) {
+        b.addEventListener('click', function() {
+          var mi = months.indexOf(cur) + parseInt(b.getAttribute('data-dir'), 10);
+          if (mi < 0 || mi >= months.length) return;
+          cur = months[mi]; render();
+        });
+      });
+      wrap.querySelectorAll('div[data-dm]').forEach(function(c) {
+        c.addEventListener('click', function() { selected = c.getAttribute('data-dm'); render(); showDetail(selected); });
+      });
+    }
+    function showDetail(dm) {
+      var r = byDate[dm];
+      if (detail) {
+        if (!r) { detail.innerHTML = ''; return; }
+        detail.innerHTML = '<div class="dl-block" style="margin-top:14px;border:1px solid var(--rule);border-radius:14px;overflow:hidden;background:var(--bg2)">'
+          + '<div class="dl-head" style="padding:15px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px">'
+          + '<div style="min-width:0"><div style="font-weight:800;font-size:15px">' + esc(r.title) + '</div>'
+          + (r.summary ? '<div style="font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.65">' + esc(r.summary) + '</div>' : '')
+          + '</div></div>'
+          + '<div class="dl-body" style="padding:0 18px 18px;border-top:1px solid var(--rule)">' + (r.html || '') + '</div>'
+          + '</div>';
+        if (typeof window.__renderEvalCharts === 'function') setTimeout(function() { window.__renderEvalCharts(); }, 30);
+      }
+    }
+    selected = reviews[0].date;   // 默认展示最新一条复盘
+    render();
+    showDetail(selected);
   }
 
   /* ============ 3. 修仙境界（realm.json → #realm-current + #realm-sections） ============ */
