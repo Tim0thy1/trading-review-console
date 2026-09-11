@@ -171,18 +171,19 @@
         ? '<b class="mono" style="font-size:15px;color:'+(f.review.score>=70?'var(--green)':f.review.score>=40?'var(--accent2)':'var(--red)')+'">'+f.review.score+'</b>'
         : '<span style="color:var(--muted)">—</span>';
       return '<tr>'+
-        '<td style="padding:8px;border-bottom:1px solid var(--rule);white-space:nowrap" class="mono">'+f.date+(f.weekend?' ☀️':'')+'</td>'+
-        '<td style="padding:8px;border-bottom:1px solid var(--rule)">'+dirCell+'</td>'+
-        '<td style="padding:8px;border-bottom:1px solid var(--rule);max-width:220px">'+esc(firstLine(f.hold_view))+(f.hold_view&&f.hold_view.indexOf('\\n')>=0?' …':'')+'</td>'+
-        '<td style="padding:8px;border-bottom:1px solid var(--rule);max-width:220px;color:var(--muted)">'+esc(firstLine(f.plan))+(f.plan&&f.plan.indexOf('\\n')>=0?' …':'')+'</td>'+
-        '<td style="text-align:center;padding:8px;border-bottom:1px solid var(--rule)">'+scoreCell+'</td>'+
-        '<td style="padding:8px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--muted);max-width:260px">'+(f.review?esc(f.review.comment):'<span style="color:var(--muted)">待收盘后生成</span>')+'</td>'+
+        '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);white-space:nowrap;vertical-align:top" class="mono">'+f.date+(f.weekend?' ☀️':'')+'</td>'+
+        '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top">'+dirCell+'</td>'+
+        '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);max-width:280px;vertical-align:top;white-space:normal;word-break:break-word">'+nlbr(f.hold_view)+'</td>'+
+        '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);max-width:280px;vertical-align:top;white-space:normal;word-break:break-word;color:var(--muted)">'+nlbr(f.plan)+'</td>'+
+        '<td style="text-align:center;padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top">'+scoreCell+'</td>'+
+        '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--muted);vertical-align:top;white-space:normal;word-break:break-word;max-width:280px">'+(f.review?nlbr(f.review.comment):'<span style="color:var(--muted)">待收盘后生成</span>')+'</td>'+
       '</tr>';
     }).join('');
     if (typeof window.__applyForecastLimit === 'function') { try { window.__applyForecastLimit(); } catch(e){} }
   }
   function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-  function firstLine(s){ s=(s||'').trim(); var i=s.indexOf('\\n'); return i>0?s.slice(0,i):s; }
+  function firstLine(s){ s=(s||'').trim(); var i=s.indexOf('\n'); return i>0?s.slice(0,i):s; }
+  function nlbr(s){ return esc(s||'').replace(/\n/g,'<br>'); }
 
   /* ---------- 提交 ---------- */
   var submitting = false;
