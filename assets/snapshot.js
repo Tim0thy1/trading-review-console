@@ -95,6 +95,30 @@
         set('realm-assets', '¥' + fmt(a.total_assets));
         set('realm-return', (a.total_return_pct>0?'+':'') + a.total_return_pct + '%');
         set('foot-assets', '¥' + fmt(a.total_assets));
+
+        // ---- 侧栏「更新」日期 + 总览「最新收盘实况」横幅：跟随快照，永不再写死日期 ----
+        var dateStr = (d.synced_at || '').slice(0, 10);
+        var fu = document.getElementById('foot-updated');
+        if (fu) fu.textContent = dateStr || '—';
+        var oc = document.getElementById('overview-callout');
+        if (oc) {
+          var posNames = active.map(function(p) {
+            return p.name + ' ' + p.shares + '股@' + p.cost + '（现 ' + p.price + '，' + (p.return_pct >= 0 ? '+' : '') + p.return_pct + '%）';
+          }).join('、');
+          var dp = a.daily_pnl;
+          var dpStr = (dp == null) ? '—' : ((dp > 0 ? '+' : '') + '¥' + fmt(Math.round(dp * 100) / 100));
+          var dpColor = dp == null ? '' : (dp >= 0 ? 'var(--red)' : 'var(--green)');
+          var recent = (d.recent_trades || []).slice(0, 3).map(function(t) {
+            return (t.time || '').slice(5, 16).replace('-', '/') + ' ' + t.mmbz + ' ' + t.name + '@' + t.price;
+          }).join('；');
+          var dealStr = (a.deal_rate != null) ? ('，成交胜率 ' + a.deal_rate + '%（' + a.deal_win + '胜' + a.deal_fail + '负）') : '';
+          oc.innerHTML = '<strong>' + dateStr + ' 收盘实况（东财权威）：</strong>账户收在 <span class="mono">'
+            + fmt(a.total_assets) + '（收益率 ' + (a.total_return_pct > 0 ? '+' : '') + a.total_return_pct
+            + '%，仓位 ' + a.position_pct + '%）</span>，当日 <span class="mono" style="color:' + dpColor + '">' + dpStr
+            + '</span>' + dealStr + '。'
+            + (posNames ? '持仓：' + posNames + '。' : '当前空仓。')
+            + (recent ? ' 近期操作：' + recent + '。' : '');
+        }
       })
       .catch(function(e){
         if(window.console) console.error('[snapshot] LOAD_ERR:', e && e.message || e, e && e.stack);
@@ -104,30 +128,54 @@
   // ---- 加载完整账本 ledger.json 并渲染「全景评估」 ----
   function fmtMoney(n){ var s=(n<0?'-¥':'¥')+Math.abs(n).toLocaleString('zh-CN',{maximumFractionDigits:2}); return s; }
   function loadLedger(){
-    fetch('data/ledger.json', {cache:'no-store'})
-      .then(function(r){ return r.json(); })
-      .then(function(L){
-        // 「历史盈亏」KPI 与逐笔拆解现在由 review.json 驱动（assets/data-loader.js 渲染表格），此处不再使用 closed_positions 直渲。
-        // ---- 全景评估动态渲染 ----
-        var closed=L.closed_positions||{};
-        var panopnl=0; Object.keys(closed).forEach(function(k){ panopnl+=(closed[k].pnl||0); });
-        var wins=Object.keys(closed).filter(function(k){return (closed[k].pnl||0)>=0;}).length;
-        var loses=Object.keys(closed).length-wins;
-        var winRate=L.summary&&L.summary.closed_count? Math.round(wins/L.summary.closed_count*100):0;
-        // 综合评分：从胜率、纪律、回撤等合成（固定口径，展示当前画像）
-        var panoVal=77;
-        if(winRate){ panoVal = Math.max(30, Math.min(95, 40 + winRate*0.8 + (panopnl>=0?8:0) - (Object.keys(closed).length>3?3:0))); }
-        var ring=document.getElementById('pano-ring');
-        var pscore=document.getElementById('pano-score');
-        if(pscore) pscore.textContent=Math.round(panoVal);
-        var doff=314*(1-panoVal/100);
-        if(ring) ring.setAttribute('stroke-dashoffset', doff.toFixed(1));
-        var pgrade=document.getElementById('pano-grade');
-        if(pgrade) pgrade.textContent = winRate>=50 && panopnl>=0 ? '胜率与收益双在线，纪律待回升' : (panopnl>=0?'收益为正但胜率需改善':'长板稳、短板明显');
-        var pver=document.getElementById('pano-verdict');
-        if(pver) pver.innerHTML='整体画像：<strong>「截至 9/7，交易级 9 段 3 盈 6 亏，胜率 '+winRate+'%，已实现盈亏 '+fmtMoney(panopnl)+'」</strong>。亨通 R1 +¥6,182 是最大盈利段，大金 +¥1,658、申菱R2 +¥190 次之；兖矿 R1+R2、申菱 R1、星源 R1+R2、亨通 R2 均亏损。核心短板：<strong style="color:var(--red)">「反弹拿不住 + 止损点位过晚 + 缩量死扛」</strong>——8/25 三票清仓均卖在拉升早段、星源割在低点；9/2 星源 R2 又在日内最低点触发 -10% 止损；9/4 尾盘三连卖清仓落袋 -2,647.38。当前收益 <strong>'+(L.account.real_return_pct>0?'+':'')+L.account.real_return_pct+'%</strong>、已实现盈亏 '+fmtMoney(panopnl)+'。纪律缺席仍是最关键短板（9/4 能果断空仓是纪律的一次进步，但空仓期需把下一笔进场的触发价/止损位落实为纸面预案）。';
-      })
-      .catch(function(){});
+    Promise.all([
+      fetch('data/ledger.json', {cache:'no-store'}).then(function(r){ return r.json(); }),
+      fetch('live-snapshot.json', {cache:'no-store'}).then(function(r){ return r.json(); }).catch(function(){ return null; })
+    ]).then(function(arr){
+      var L = arr[0], snap = arr[1];
+
+      // ---- 核心动态口径：成交胜率（东财权威，最新）、累计收益、已了结口径 ----
+      var a = (snap && snap.account) || {};
+      var dealRate = (a.deal_rate != null) ? a.deal_rate : null;
+      var dealWin = (a.deal_win != null) ? a.deal_win : null;
+      var dealFail = (a.deal_fail != null) ? a.deal_fail : null;
+      var ret = (typeof L.account.real_return_pct === 'number') ? L.account.real_return_pct : null;
+      var closed = L.closed_positions || {};
+      var panopnl = 0; Object.keys(closed).forEach(function(k) { panopnl += (closed[k].pnl || 0); });
+      var dateStr = (snap && snap.synced_at ? String(snap.synced_at).slice(0, 10) : (L._meta && L._meta.data_date) || '');
+
+      // ---- 综合评分（固定口径）----
+      var panoVal = 77;
+      if (dealRate != null) {
+        panoVal = Math.max(30, Math.min(95, 40 + dealRate * 0.7 + (ret != null && ret >= 0 ? 8 : 0) + (panopnl >= 0 ? 3 : -3)));
+      }
+      var ring = document.getElementById('pano-ring');
+      var pscore = document.getElementById('pano-score');
+      if (pscore) pscore.textContent = Math.round(panoVal);
+      var doff = 314 * (1 - panoVal / 100);
+      if (ring) ring.setAttribute('stroke-dashoffset', doff.toFixed(1));
+
+      // ---- 结论与画像（动态生成，不再写死日期/胜率）----
+      var pgrade = document.getElementById('pano-grade');
+      if (pgrade) {
+        if (dealRate != null && ret != null) {
+          if (dealRate >= 50 && ret >= 0) pgrade.textContent = '胜率与收益双在线，纪律待回升';
+          else if (ret >= 0) pgrade.textContent = '收益为正（+' + ret.toFixed(2) + '%），成交胜率 ' + dealRate + '% 待改善';
+          else pgrade.textContent = '长板稳、短板明显';
+        } else {
+          pgrade.textContent = '从 ledger/snapshot 加载';
+        }
+      }
+      var pver = document.getElementById('pano-verdict');
+      if (pver) {
+        var dealTxt = (dealRate != null)
+          ? '「截至 ' + dateStr + '，累计 ' + (dealWin != null ? dealWin + ' 胜 ' + dealFail + ' 负' : '') + '，成交胜率 ' + dealRate + '%」'
+          : '「成交胜率待同步」';
+        pver.innerHTML = '整体画像：<strong>' + dealTxt + '</strong>，累计收益 <strong>' + (ret != null ? (ret > 0 ? '+' : '') + ret.toFixed(2) + '%' : '—')
+          + '</strong>、已实现净盈亏 ' + fmtMoney(panopnl)
+          + '（已了结 ' + Object.keys(closed).length + ' 段）。核心短板：<strong style="color:var(--red)">「反弹拿不住 + 止损点位过晚 + 缩量死扛」</strong>。纪律缺席仍是最关键短板——把下一笔进场的触发价/止损位落实为纸面预案，是当前最重要的修炼动作。';
+      }
+    }).catch(function(){});
   }
   load();
   loadLedger();

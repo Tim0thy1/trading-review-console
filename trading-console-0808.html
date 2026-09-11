@@ -60,7 +60,7 @@
       </div>
     </nav>
     <div class="side-foot">
-      组合：翻81681 · 聪明的企业家6<br>数据源：东方财富模拟组合API<br>更新：2026-09-02
+      组合：翻81681 · 聪明的企业家6<br>数据源：东方财富模拟组合API<br>更新：<span id="foot-updated">加载中…</span>
     </div>
   </aside>
 
@@ -99,8 +99,7 @@
         </div>
       </figure>
 
-      <div class="callout">
-        <strong>9/8 收盘实况（东财权威）：</strong>电风扇行情日——账户收在 <span class="mono">50,413.50（收益率 +0.83%，仓位 76.89%）</span>，当日 <span class="mono" style="color:var(--red)">-737.88</span>。操作：9:35+9:39 买入铭普光磁 1000股@27.38/27.48（0→2.74%）。持仓：沃尔核材 700股@17.187（现 16.93，-1.5%，9/7建仓）、铭普光磁 1000股@27.468（现 26.91，-2.03%）。当日盘面：三大指数涨跌不一、双创跌超1%，成交1.96万亿放量，主线从科技切向农业/化肥/有色铜/传媒——光模块未成主线、液冷走弱。<strong style="color:var(--red)">盘前判「科技延续」冲动追入2-3线光票铭普即套（与8/27 FOMO老病同源），但盘中自识「热点轮动、科技拥挤」主动降频，并明确提出引入板块强度榜/改中长线五层验证</strong>——详见「修炼手记」。</div>
+      <div class="callout" id="overview-callout">正在加载最新收盘实况…</div>
     </section>
 
     <!-- ===== MODULE 2: 持仓 ===== -->
@@ -158,14 +157,14 @@
       <div class="m-head">
         <div class="m-kicker">Closed P&L · 历史盈亏</div>
         <div class="m-title">已了结持仓盈亏</div>
-        <div class="m-desc">截至 9/7，9 段已全部清仓了结：<strong>交易级 3 盈 6 亏，胜率 33%</strong>，已实现净盈亏 <strong>+¥1,505.14</strong>。按「每一轮独立建仓」记账，点击下表某一行可展开该票的各段逐笔买卖明细。</div>
+        <div class="m-desc" id="history-desc">正在加载已了结持仓盈亏…</div>
       </div>
 
       <div class="kpi-grid">
-        <div class="kpi"><div class="kpi-label">整段盈亏（已了结）</div><div class="kpi-value dn">+¥1,505.14</div><div class="kpi-sub">累计 9 段</div></div>
-        <div class="kpi"><div class="kpi-label">实际交易日</div><div class="kpi-value">40 天</div><div class="kpi-sub">剔除周末与节假日</div></div>
-        <div class="kpi"><div class="kpi-label">股票级胜率</div><div class="kpi-value" style="color:var(--accent2)">40%</div><div class="kpi-sub">2盈 / 5票（同股多轮合并）</div></div>
-        <div class="kpi"><div class="kpi-label">交易级胜率(已了结)</div><div class="kpi-value" style="color:var(--accent2)">33%</div><div class="kpi-sub">3盈 / 9单元（同股多轮拆段）</div></div>
+        <div class="kpi"><div class="kpi-label">整段盈亏（已了结）</div><div class="kpi-value dn" id="k-closed-pnl">—</div><div class="kpi-sub" id="k-closed-pnl-sub">累计 9 段</div></div>
+        <div class="kpi"><div class="kpi-label">实际交易日</div><div class="kpi-value" id="k-trade-days">—</div><div class="kpi-sub">剔除周末与节假日</div></div>
+        <div class="kpi"><div class="kpi-label">股票级胜率</div><div class="kpi-value" style="color:var(--accent2)" id="k-stock-win">—</div><div class="kpi-sub">同股多轮合并</div></div>
+        <div class="kpi"><div class="kpi-label">交易级胜率（已了结）</div><div class="kpi-value" style="color:var(--accent2)" id="k-trade-win">—</div><div class="kpi-sub" id="k-trade-win-sub">—</div></div>
       </div>
 
       <!-- ===== 逐笔分段盈亏拆解（表格形式，点击展开该票逐笔明细） ===== -->

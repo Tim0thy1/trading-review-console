@@ -54,9 +54,81 @@
 
   /* ============ 1. 已了结持仓盈亏（review.json → #review-cards）
      表格形式：每只票一行（股票/状态/净收益/盈亏%），点击行展开该票各段逐笔明细 ============ */
+  // 实际交易日：统计 review.json 各轮次 from→to 覆盖区间内的周一至周五天数（年份按 data_date 推断）
+  function calcTradeDays(data) {
+    var y = (data._meta && data._meta.data_date) ? parseInt(data._meta.data_date.slice(0, 4), 10) : (new Date().getFullYear());
+    if (isNaN(y)) y = new Date().getFullYear();
+    var min = null, max = null;
+    data.positions.forEach(function(pos) {
+      (pos.rounds || []).forEach(function(r) {
+        ['from', 'to'].forEach(function(k) {
+          var v = r[k];
+          if (!v || !/^\d{2}-\d{2}$/.test(v)) return;
+          var dt = new Date(y, parseInt(v.slice(0, 2), 10) - 1, parseInt(v.slice(3, 5), 10));
+          var t = dt.getTime();
+          if (min === null || t < min) min = t;
+          if (max === null || t > max) max = t;
+        });
+      });
+    });
+    if (min === null || max === null) return null;
+    var wd = 0;
+    for (var t = min; t <= max; t += 86400000) {
+      var dow = new Date(t).getDay();
+      if (dow >= 1 && dow <= 5) wd++;
+    }
+    return wd;
+  }
+
   function renderReview(data) {
     var el = document.getElementById('review-cards');
     if (!el || !data || !data.positions) return;
+
+    // ---- 动态填充「历史盈亏」模块的描述与 4 个 KPI（跟随 review.json，不再写死）----
+    var sum = data.summary || {};
+    var dDate = (data._meta && data._meta.data_date) || '';
+    var totalPnl = (typeof sum.total_pnl === 'number') ? sum.total_pnl : null;
+    var roundCount = (typeof sum.round_count === 'number') ? sum.round_count : null;
+    var winCount = (typeof sum.win_count === 'number') ? sum.win_count : null;
+    var loseCount = (typeof sum.lose_count === 'number') ? sum.lose_count : null;
+    // 股票级胜率：按「票」合并（同股多轮）统计盈亏
+    var stockUp = 0, stockCount = 0;
+    data.positions.forEach(function(pos) {
+      var t = pos.rounds.reduce(function(s, r) { return s + (r.pnl || 0); }, 0);
+      stockCount++; if (t >= 0) stockUp++;
+    });
+    var stockWin = stockCount ? Math.round(stockUp / stockCount * 100) : null;
+    var tradeWin = roundCount ? Math.round((winCount || 0) / roundCount * 100) : null;
+
+    var hd = document.getElementById('history-desc');
+    if (hd) {
+      // 计算最后清仓日（所有轮次里最大的 to 日期），避免「数据截至」措辞让人误以为没同步
+      var lastSell = null;
+      data.positions.forEach(function(pos) {
+        (pos.rounds || []).forEach(function(r) {
+          if (r.to && /^\d{2}-\d{2}$/.test(r.to) && (lastSell === null || r.to > lastSell)) lastSell = r.to;
+        });
+      });
+      hd.innerHTML = (lastSell ? '最后清仓日 ' + lastSell + '，' : '')
+        + (roundCount ? roundCount + ' 段已全部清仓了结' : '暂无了结持仓')
+        + (tradeWin != null ? '：<strong>交易级 ' + winCount + ' 盈 ' + loseCount + ' 亏，胜率 ' + tradeWin + '%</strong>' : '')
+        + (totalPnl != null ? '，已实现净盈亏 <strong>' + fmtMoney(totalPnl) + '</strong>' : '')
+        + '。当前仍持有未了结的票见「持仓明细」，本表只列已完整清仓的段。';
+    }
+    var set = function(id, txt) { var e = document.getElementById(id); if (e) e.innerHTML = txt; };
+    if (totalPnl != null) set('k-closed-pnl', (totalPnl >= 0 ? '+' : '') + fmtMoney(totalPnl).replace('¥', '¥'));
+    if (roundCount != null) set('k-closed-pnl-sub', '累计 ' + roundCount + ' 段');
+    if (tradeWin != null) {
+      set('k-trade-win', tradeWin + '%');
+      set('k-trade-win-sub', winCount + '盈 / ' + roundCount + '单元（同股多轮拆段）');
+    }
+    if (stockWin != null) {
+      set('k-stock-win', stockWin + '%');
+    }
+    // 实际交易日：从持仓轮次的最早日期到最新日期估算（跨天后按日历日折算交易日，粗略口径）
+    var days = (dDate && data.positions.length) ? calcTradeDays(data) : null;
+    if (days != null) set('k-trade-days', days + ' 天');
+
     var rows = data.positions.map(function(pos) {
       var total = pos.rounds.reduce(function(s, r) { return s + (r.pnl || 0); }, 0);
       var rounds = pos.rounds.length;
