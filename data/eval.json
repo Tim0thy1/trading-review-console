@@ -1,11 +1,17 @@
 {
   "_meta": {
     "desc": "交易者全面评测（file: eval.json）：每次复盘更新。网页只显示各块摘要，点击展开全文。综合评分/盘前纪律由 ledger.json + forecast.json 动态计算，不在此文件。",
-    "updated_at": "2026-09-02",
-    "data_date": "2026-09-02",
-    "touched_by": "ai_pipeline.py"
+    "updated_at": "2026-09-11",
+    "data_date": "2026-09-11",
+    "touched_by": "manual（AI批卷 70/100）"
   },
   "sections": [
+    {
+      "id": "review-0911",
+      "title": "当日复盘 · 9/11 收盘",
+      "summary": "「弱势守强者、按计划分批落袋」——方向上没猜对跌、但守住了主线并在强势处兑现，纪律较前几轮明显转好（AI 70/100）",
+      "html": "<div class=\"panel-sub\">大盘普跌（超5000股下跌、约96%个股绿盘，早盘一度重挫、午后修复，上证收 -1.18%），唯光通信/半导体元器件逆势成避风港。账户（东财权威）5万口径总资产 <strong class=\"mono up\">55,309.63</strong>、收益率 +10.62%、仓位 53.83%。<br>持仓：沃尔核材 800股@成本16.943现17.93（+5.82%）、铭普光磁 500股@成本24.122现30.86（+27.93%）。</div><div style=\"display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px\"><div style=\"background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px\"><div style=\"font-size:12px;color:var(--muted);letter-spacing:.05em\">AI综合</div><div class=\"mono up\" style=\"font-size:22px;font-weight:700\">70 / 100</div><div style=\"font-size:12px;color:var(--muted);margin-top:4px\">方向18+个股26+预案18+纪律8</div></div><div style=\"background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px\"><div style=\"font-size:12px;color:var(--muted);letter-spacing:.05em\">今日落袋动作</div><div style=\"font-size:15px;font-weight:700;margin-top:4px;color:var(--green)\">铭普1/2 + 沃尔1/3</div><div style=\"font-size:12px;color:var(--muted);margin-top:4px\">10:10 铭普@30.86 · 沃尔@17.89</div></div><div style=\"background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px\"><div style=\"font-size:12px;color:var(--muted);letter-spacing:.05em\">单日盈亏</div><div style=\"font-size:15px;font-weight:700;margin-top:4px;color:var(--green)\">+3,671.88</div><div style=\"font-size:12px;color:var(--muted);margin-top:4px\">09-08权威→09-10测算递推，最终以APP为准</div></div></div><div style=\"margin-top:16px;font-size:13.5px;color:var(--ink);line-height:1.85\"><strong style=\"color:var(--green)\">① 识别「弱势还能走强=强者」，主升处按计划兑现 ✅</strong>盘前预案是「看机会出掉铭普」，盘中光通信逆势走强，10:10 铭普@30.86 出1/2落袋、剩余持有，与预案一致——这次没有被拉升诱惑去贪涨停、也没有恐慌清仓，兑现节奏清晰。<br><strong style=\"color:var(--orange)\">② 沃尔意外走高、出1/3留中线 ✅</strong>沃尔核材 600→800股后今日+4.43%逆势红盘，均线/MACD/KDJ乐观判断清楚，出1/3落袋、留中线仓，属可执行计划外的合理机动。<br><strong style=\"color:var(--red)\">③ 方向分最弱 ⚠️</strong>盘前仅给「通胀与科技跷跷板」的中性偏谨慎，未预判收跌、无明确指数方向，方向维度只拿 18/35。<br><strong style=\"color:var(--red)\">④ 预案缺锚点 ⚠️</strong>「出铭普」有动作无触发价，剩余 500股 与沃尔中线仓的止盈/止损位未写死，「剩余奔跑」易变无锚持有。</div><div class=\"callout\" style=\"margin-top:14px;border-left:3px solid var(--accent)\"><strong>给明天的应对预案（现在写，不盘中想）：</strong><br>・铭普光磁：剩余 500股，止盈位挂 成本+~30% 或跌破 5日线/失守 30.86 区间逐级减，不裸奔。<br>・沃尔核材：中线仓，破位即走（如跌破 17.3 成本区上方 3% 且不放量则暂持，破 16.9 成本果断离场）。<br>・康龙化成（观察）：底仓未成，等 MA 兜底与量能企稳再议，不抢。<br>・总体：弱势普跌里继续保持「光通信/半导体只拿强者、不重仓不追高」，明日先看反抽量能与方向，再决定加减。</div>"
+    },
     {
       "id": "review-0825",
       "title": "清仓复盘 · 8/25 收盘",
