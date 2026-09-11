@@ -1,0 +1,222 @@
+[
+  {
+    "date": "2026-07-14",
+    "close": 49899.85,
+    "source": "authority"
+  },
+  {
+    "date": "2026-07-15",
+    "close": 51001.5,
+    "source": "authority"
+  },
+  {
+    "date": "2026-07-16",
+    "close": 50100.15,
+    "source": "authority"
+  },
+  {
+    "date": "2026-07-17",
+    "close": 49499.25,
+    "source": "authority"
+  },
+  {
+    "date": "2026-07-20",
+    "close": 51602.4,
+    "source": "authority"
+  },
+  {
+    "date": "2026-07-21",
+    "close": 51802.7,
+    "source": "authority"
+  },
+  {
+    "date": "2026-07-22",
+    "close": 53305.0,
+    "source": "authority"
+  },
+  {
+    "date": "2026-07-23",
+    "close": 53104.7,
+    "source": "authority"
+  },
+  {
+    "date": "2026-07-24",
+    "close": 50400.6,
+    "source": "authority"
+  },
+  {
+    "date": "2026-07-27",
+    "close": 51602.4,
+    "source": "authority"
+  },
+  {
+    "date": "2026-07-28",
+    "close": 51101.7,
+    "source": "authority"
+  },
+  {
+    "date": "2026-07-29",
+    "close": 51602.4,
+    "source": "authority"
+  },
+  {
+    "date": "2026-07-30",
+    "close": 51402.1,
+    "source": "authority"
+  },
+  {
+    "date": "2026-07-31",
+    "close": 51101.7,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-03",
+    "close": 50701.1,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-04",
+    "close": 51402.1,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-05",
+    "close": 53805.7,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-06",
+    "close": 53905.9,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-07",
+    "close": 55508.3,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-10",
+    "close": 55508.3,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-11",
+    "close": 54406.6,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-12",
+    "close": 56100.0,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-13",
+    "close": 55825.0,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-14",
+    "close": 56650.0,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-17",
+    "close": 57300.0,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-18",
+    "close": 57207.62,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-19",
+    "close": 52959.63,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-20",
+    "close": 53992.63,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-21",
+    "close": 53665.63,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-24",
+    "close": 52262.97,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-25",
+    "close": 55598.88,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-26",
+    "close": 55602.35,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-27",
+    "close": 56766.42,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-28",
+    "close": 54928.13,
+    "source": "authority"
+  },
+  {
+    "date": "2026-08-31",
+    "close": 55680.06,
+    "source": "authority"
+  },
+  {
+    "date": "2026-09-01",
+    "close": 54570.24,
+    "source": "authority"
+  },
+  {
+    "date": "2026-09-02",
+    "close": 53977.44,
+    "source": "authority"
+  },
+  {
+    "date": "2026-09-03",
+    "close": 55980.98,
+    "source": "authority"
+  },
+  {
+    "date": "2026-09-04",
+    "close": 51151.38,
+    "source": "authority"
+  },
+  {
+    "date": "2026-09-07",
+    "close": 51151.38,
+    "source": "authority"
+  },
+  {
+    "date": "2026-09-08",
+    "close": 50413.5,
+    "source": "authority"
+  },
+  {
+    "date": "2026-09-09",
+    "close": 50871.5,
+    "source": "derived(腾讯日K测算)"
+  },
+  {
+    "date": "2026-09-10",
+    "close": 51637.75,
+    "source": "derived(腾讯日K测算)"
+  },
+  {
+    "date": "2026-09-11",
+    "close": 55309.63,
+    "source": "authority(东财)"
+  }
+]
