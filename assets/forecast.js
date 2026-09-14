@@ -94,6 +94,16 @@
     var lockedPanel = document.getElementById('fc-locked-panel');
     document.getElementById('fc-form-date').textContent = '('+today+' · 现在 '+nowTime()+')';
 
+    /* 今日盘中思路 / 盘后反思回显（存在则填入，供用户随时修改） */
+    document.getElementById('fc-intraday-date').textContent = '('+today+')';
+    document.getElementById('fc-reflect-date').textContent = '('+today+')';
+    document.getElementById('fc-intraday').value = rec && rec.intraday ? rec.intraday : '';
+    document.getElementById('fc-reflect').value = rec && rec.reflect ? rec.reflect : '';
+    var iTip = document.getElementById('fc-intraday-tip');
+    var rTip = document.getElementById('fc-reflect-tip');
+    if(iTip) iTip.textContent = rec && rec.intraday ? '✅ 已保存（'+ (rec.intraday_at||'') +'）' : '';
+    if(rTip) rTip.textContent = rec && rec.reflect ? '✅ 已保存（'+ (rec.reflect_at||'') +'）' : '';
+
     /* 今日状态条 */
     var wd = new Date().getDay();
     if(wd === 0 || wd === 6){
@@ -170,13 +180,23 @@
       var scoreCell = f.review
         ? '<b class="mono" style="font-size:15px;color:'+(f.review.score>=70?'var(--green)':f.review.score>=40?'var(--accent2)':'var(--red)')+'">'+f.review.score+'</b>'
         : '<span style="color:var(--muted)">—</span>';
+      var intraCell = f.intraday
+        ? '<div style="color:var(--ink)">'+nlbr(f.intraday)+'</div>'
+        : '<span style="color:var(--muted);font-size:12px">待记录</span>';
+      var reflectCell = f.reflect
+        ? '<div style="color:var(--ink)">'+nlbr(f.reflect)+'</div>'
+        : '<span style="color:var(--muted);font-size:12px">待记录</span>';
       return '<tr>'+
         '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);white-space:nowrap;vertical-align:top" class="mono">'+f.date+(f.weekend?' ☀️':'')+'</td>'+
-        '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top">'+dirCell+'</td>'+
-        '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);max-width:280px;vertical-align:top;white-space:normal;word-break:break-word">'+nlbr(f.hold_view)+'</td>'+
-        '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);max-width:280px;vertical-align:top;white-space:normal;word-break:break-word;color:var(--muted)">'+nlbr(f.plan)+'</td>'+
+        '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);max-width:240px;vertical-align:top;white-space:normal;word-break:break-word">'+
+          '<div style="margin-bottom:4px"><span style="color:var(--muted);font-size:11px">大盘：</span>'+dirCell+'</div>'+
+          (f.hold_view?'<div style="margin-bottom:4px"><span style="color:var(--muted);font-size:11px">持仓：</span>'+nlbr(f.hold_view)+'</div>':'')+
+          (f.plan?'<div><span style="color:var(--muted);font-size:11px">预案：</span>'+nlbr(f.plan)+'</div>':'')+
+        '</td>'+
+        '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);max-width:240px;vertical-align:top;white-space:normal;word-break:break-word">'+intraCell+'</td>'+
+        '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);max-width:240px;vertical-align:top;white-space:normal;word-break:break-word">'+reflectCell+'</td>'+
         '<td style="text-align:center;padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top">'+scoreCell+'</td>'+
-        '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--muted);vertical-align:top;white-space:normal;word-break:break-word;max-width:280px">'+(f.review?nlbr(f.review.comment):'<span style="color:var(--muted)">待收盘后生成</span>')+'</td>'+
+        '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--muted);vertical-align:top;white-space:normal;word-break:break-word;max-width:260px">'+(f.review?nlbr(f.review.comment):'<span style="color:var(--muted)">待收盘后生成</span>')+'</td>'+
       '</tr>';
     }).join('');
     if (typeof window.__applyForecastLimit === 'function') { try { window.__applyForecastLimit(); } catch(e){} }
@@ -229,4 +249,30 @@
   });
 
   loadForecasts().then(function(list){ forecasts = list; renderAll(); });
+
+  /* ---------- 盘中思路 保存 ---------- */
+  function bindDailySave(btnId, tipId, key, atKey){
+    var btn = document.getElementById(btnId);
+    if(!btn) return;
+    btn.addEventListener('click', async function(){
+      var tip = document.getElementById(tipId);
+      var token = getToken();
+      if(!token){ tip.textContent='⚠️ 未配置 GitHub Token：请先在交易工作台侧边栏设置并保存 token 后再保存。'; tip.className='token-status err'; return; }
+      var val = document.querySelector('#'+(key==='intraday'?'fc-intraday':'fc-reflect')).value.trim();
+      if(!val){ tip.textContent='先写下内容再保存吧'; tip.className='token-status err'; return; }
+      var today = todayStr();
+      var rec = forecasts.find(function(x){ return x.date===today; });
+      if(!rec){
+        rec = { date:today, weekday:['日','一','二','三','四','五','六'][new Date().getDay()] };
+        forecasts.push(rec);
+      }
+      rec[key] = val;
+      rec[atKey] = nowTime();
+      var ok = await saveForecasts(forecasts);
+      if(ok){ tip.textContent='✅ 已保存'; tip.className='token-status'; renderAll(); }
+      else { tip.textContent='❌ 保存失败（检查网络/token 权限），请重试'; tip.className='token-status err'; forecasts = forecasts.slice(); }
+    });
+  }
+  bindDailySave('fc-intraday-save','fc-intraday-tip','intraday','intraday_at');
+  bindDailySave('fc-reflect-save','fc-reflect-tip','reflect','reflect_at');
 })();

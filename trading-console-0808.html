@@ -246,6 +246,28 @@
         <div id="fc-today-review" style="margin-top:10px"></div>
       </div>
 
+      <!-- 盘中思路 -->
+      <div class="panel" id="fc-intraday-panel" style="margin-top:20px">
+        <div class="panel-title">🕐 盘中思路 <span id="fc-intraday-date" style="font-weight:400;color:var(--muted);font-size:13px"></span></div>
+        <div class="panel-sub">盘中随手记：看到什么异动、情绪变化、临时操作及其理由。可随时修改保存，收盘后用于和盘前预测对账。</div>
+        <textarea id="fc-intraday" rows="5" style="width:100%;box-sizing:border-box;background:var(--bg3);color:var(--ink);border:1px solid var(--rule);border-radius:10px;padding:12px;font-size:13.5px;line-height:1.7" placeholder="例：金安国纪水下-6%都能拉起来，强势就是不一样；沃尔、铭普就没那么厉害了，特别是铭普拉红都做不到，盘前预测错了…"></textarea>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <button id="fc-intraday-save" class="primary" style="flex:1;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:700;font-size:14px;cursor:pointer">💾 保存盘中思路</button>
+        </div>
+        <div id="fc-intraday-tip" class="token-status" style="margin-top:8px"></div>
+      </div>
+
+      <!-- 盘后反思 -->
+      <div class="panel" id="fc-reflect-panel" style="margin-top:20px">
+        <div class="panel-title">🌙 盘后反思 <span id="fc-reflect-date" style="font-weight:400;color:var(--muted);font-size:13px"></span></div>
+        <div class="panel-sub">收盘后整理：今天操作对不对、盘前预案有无执行到位、心态有没有动摇。可随时修改保存，是"修炼复盘"的核心输入。</div>
+        <textarea id="fc-reflect" rows="5" style="width:100%;box-sizing:border-box;background:var(--bg3);color:var(--ink);border:1px solid var(--rule);border-radius:10px;padding:12px;font-size:13.5px;line-height:1.7" placeholder="例：太容易被一天涨跌引得心动了，CRO/CXO动了心痒痒。虽然操作没变，但策略在动摇，不知道是好事的动态变化还是坏事的摇摆…"></textarea>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <button id="fc-reflect-save" class="primary" style="flex:1;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-weight:700;font-size:14px;cursor:pointer">💾 保存盘后反思</button>
+        </div>
+        <div id="fc-reflect-tip" class="token-status" style="margin-top:8px"></div>
+      </div>
+
       <!-- 评分规则说明 -->
       <div class="panel" style="margin-top:20px">
         <div class="panel-title">📊 评分规则（收盘后自动计算）</div>
@@ -273,9 +295,9 @@
           <table style="width:100%;font-size:12.5px;border-collapse:collapse" id="fc-history-table">
             <thead><tr>
               <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule);white-space:nowrap">日期</th>
-              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">大盘预判→实际</th>
-              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">持仓预判</th>
-              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">预案要点</th>
+              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">盘前预测</th>
+              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">盘中思路</th>
+              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">盘后反思</th>
               <th style="text-align:center;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">得分</th>
               <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">对账点评</th>
             </tr></thead>
