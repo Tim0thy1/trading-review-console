@@ -1,19 +1,19 @@
 {
   "_meta": {
     "desc": "模拟盘完整账本 v2：由东财全量调仓+账户权威数据重建。已了结分票除兖矿/大金为 app 已验证外，其余由调仓记录自动核算；equity_points 为逐日净值序列（锚点+分段校正，末点对齐权威总资产）。",
-    "generated_at": "2026-09-11",
-    "data_date": "2026-09-11",
+    "generated_at": "2026-09-14",
+    "data_date": "2026-09-14",
     "equity_rebuild": "daily-sequence(gen_ledger)"
   },
   "account": {
-    "nominal_assets": 1005309.63,
+    "nominal_assets": 1004596.63,
     "nominal_return_pct": 0.04,
-    "real_assets": 55309.63,
-    "real_return_pct": 10.62,
-    "position_pct": 53.83,
-    "cash": 25535.63,
+    "real_assets": 54596.63,
+    "real_return_pct": 9.19,
+    "position_pct": 59.6,
+    "cash": 22056.63,
     "start_date": "2026年07月14日",
-    "daily_pnl_today": 3671.88,
+    "daily_pnl_today": -713.0,
     "survey": {
       "日收益率": -0.07,
       "5日收益率": -0.42,
@@ -115,6 +115,15 @@
     "note": "已确认轮次(app权威)+自动归因合计 与 账户权威累计已实现 的差额（含分红/费用/股数口径差异）；为空仓期"
   },
   "trades": [
+    {
+      "time": "2026-09-14 09:59",
+      "name": "沃尔核材",
+      "dir": "买",
+      "px": 17.37,
+      "pos_bef": "1.38",
+      "pos_aft": "1.73",
+      "code": "002130"
+    },
     {
       "time": "2026-09-11 10:10",
       "name": "沃尔核材",
@@ -476,7 +485,7 @@
       "code": "600188"
     }
   ],
-  "trade_count": 40,
+  "trade_count": 41,
   "equity_points": [
     {
       "date": "2026-07-14",
@@ -653,6 +662,10 @@
     {
       "date": "2026-09-11",
       "close": 55309.63
+    },
+    {
+      "date": "2026-09-14",
+      "close": 54596.63
     }
   ],
   "daily_calendar": [
@@ -919,6 +932,12 @@
       "close": 55309.63,
       "daily_pnl": 3671.88,
       "cum_return_pct": 10.62
+    },
+    {
+      "date": "2026-09-14",
+      "close": 54596.63,
+      "daily_pnl": -713.0,
+      "cum_return_pct": 9.19
     }
   ],
   "summary": {
