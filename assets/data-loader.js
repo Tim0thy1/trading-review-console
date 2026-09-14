@@ -278,7 +278,10 @@
   function renderStageAssessment(ledger) {
     var cont = document.getElementById('stage-assessment');
     if (!cont || !ledger) return;
-    loadJSON('data/forecast.json').then(function(fc) {
+    var mentorPromise = loadJSON('data/eval.json').catch(function(){ return { mentor: null }; });
+    Promise.all([loadJSON('data/forecast.json'), mentorPromise]).then(function(_a) {
+      var fc = _a[0], ev = _a[1] || { mentor: null };
+      var mentor = ev.mentor || null;
       var acct = ledger.account || {};
       var sm = ledger.summary || {};
       var win = +sm.win_count || 0, lose = +sm.lose_count || 0, closed = +sm.closed_count || 0;
@@ -353,26 +356,38 @@
           : '<div style="font-size:12px;color:var(--red);margin-top:6px">⚠️ 尚差 ' + (3 - onlineCount) + ' 个维度未在线，暂不可毕业</div>') + '</div>'
         + '</div>'
 
-        + '<div style="margin-top:15px"><div style="font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:6px">六维纪律雷达（当前 vs 合格线）</div>'
-        + '<div id="chart-radar" style="width:100%;height:400px"></div></div>'
+        + '<div style="margin-top:15px"><div style="font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:6px">六维纪律（今日文字版 · 基于当日批改）</div>'
+        + '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">'
+        + sixCell('仓位纪律', '未满仓 · 9/14 仓位59.6%', true)
+        + sixCell('止损纪律', '待练 · 9/14 无止损操作，铭普-3%未离场', false)
+        + sixCell('止盈落袋', '不足 · 9/14 低开走弱未兑现止盈', false)
+        + sixCell('加仓纪律', '合格 · 9/14 低吸沃尔@当日低位，无计划外加仓', true)
+        + sixCell('情绪控制', '合格 · CRO动心但克制，未追高', true)
+        + sixCell('计划执行', '一般 · 方向命中但预案无具体触发价', false)
+        + '</div></div>'
 
-        + '<div style="margin-top:16px"><div style="font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:8px">导师诊断 · 更新至 ' + esc(dateSrc) + '</div>'
+        + '<div style="margin-top:16px"><div style="font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:8px">导师诊断 · 更新至 ' + esc(mentor && mentor.updated_at ? mentor.updated_at : dateSrc) + '</div>'
+        + (mentor && mentor.analysis_basis ? '<div style="font-size:11.5px;color:var(--muted);margin-bottom:12px;line-height:1.6">评证依据：' + esc(mentor.analysis_basis) + '</div>' : '')
 
-        + '<div style="margin-bottom:12px"><div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:8px">✅ 已确认的进步（' + (retOnline ? '+' : '+') + '）</div>'
-        + '<div style="font-size:13px;line-height:1.7;color:var(--ink)">① <strong>弱势里守住了强者、按计划分批落袋</strong> —— 9/11 普跌、超5000股下挫、约96%个股收绿时，仍识别"弱势还能走强=强者"，铭普光磁 +10.02% 涨停、10:10@30.86 出 1/2，沃尔 +4.43% 出 1/3，无追高、无计划外交易；② <strong>心态从"追高焦虑"转向"能拿住、敢减仓、放得平"</strong> —— 较 9/8 追高即套（47分）明显转好，本次对账 +10.62%。</div></div>'
+        + '<div style="margin-bottom:12px"><div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:8px">✅ 已确认的进步</div>'
+        + (mentor && mentor.progress && mentor.progress.length
+          ? mentor.progress.map(function(t, i) { return '<div style="font-size:13px;line-height:1.7;color:var(--ink)">' + (i + 1) + '. <strong>' + esc(t.split('：')[0]) + '</strong>' + (t.indexOf('：') >= 0 ? '：' + esc(t.slice(t.indexOf('：') + 1)) : '') + '</div>'; }).join('<div style="height:6px"></div>')
+          : '<div style="font-size:13px;color:var(--muted)">暂无进步记录。</div>') + '</div>'
 
         + '<div style="margin-bottom:12px"><div style="font-size:13px;font-weight:700;color:var(--warn);margin-bottom:8px">⚠️ 反复出现的问题（当前关卡）</div>'
-        + '<div style="font-size:13px;line-height:1.7;color:var(--ink)">① <strong>盘前方向常给"中立/跷跷板"不给明确预判</strong> —— 9/9、9/10、9/11 多日如此，方向分始终被扣；② <strong>交易级胜率偏低（3胜6负）</strong> —— 账面靠亨通等少数大赢覆盖多数小亏；③ <strong>剩余持仓止盈/止损位未写死</strong> —— 铭普剩余 500 股、沃尔中线仓仍是"无锚奔跑"。</div></div>'
+        + (mentor && mentor.problems && mentor.problems.length
+          ? mentor.problems.map(function(t, i) { return '<div style="font-size:13px;line-height:1.7;color:var(--ink)">' + (i + 1) + '. ' + esc(t) + '</div>'; }).join('<div style="height:6px"></div>')
+          : '<div style="font-size:13px;color:var(--muted)">暂无问题记录。</div>') + '</div>'
 
         + '<div style="margin-bottom:12px"><div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px">🔍 深层诊断</div>'
-        + '<div class="callout" style="margin:0"><strong>矛盾：「减少操作」想打好下一笔，却总被"现金在手就焦虑"拉着开新仓。</strong>你已证明自己能按预案兑现（9/11 双票落袋），说明纪律在长；但一旦手痒想通过多交易"赚回来"，就滑回"追 2-3 线票"的老路（9/8 铭普）。<strong style="color:var(--accent2)">结论：你的每一点加分都来自"少做、做精"，而非多做。</strong>把"一场牛市赚回来"的念头换成"三率在线才算过关"的验收尺度。</div></div>'
+        + '<div class="callout" style="margin:0"><span style="margin-right:3px">' + esc(mentor && mentor.deep_diagnosis || '暂无深层诊断。') + '</span></div></div>'
 
         + '<div><div style="font-size:13px;font-weight:700;color:var(--accent2);margin-bottom:8px">📌 下一步修炼方向</div>'
         + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px">'
         + '<div style="background:var(--bg3);border-radius:8px;padding:12px"><div style="color:var(--accent);font-weight:700;margin-bottom:4px">近期目标（1-2周）</div>'
-        + '<ul style="padding-left:16px;margin:0;color:var(--muted);font-size:12.5px"><li style="margin-bottom:4px">给每个剩余持仓<strong style="color:var(--ink)">写死止盈/止损锚点</strong>（铭普500、沃尔中线），把「奔跑」变「有锚奔跑」</li><li style="margin-bottom:4px">盘前必填<strong style="color:var(--ink)">明确方向+触发价</strong>，哪怕只写「低开破止损则出」</li><li style="margin-bottom:4px">连续 5 日<strong style="color:var(--ink)">计划外交易为 0</strong></li></ul></div>'
+        + '<ul style="padding-left:16px;margin:0;color:var(--muted);font-size:12.5px">' + (mentor && mentor.next_short && mentor.next_short.length ? mentor.next_short.map(function(t) { return '<li style="margin-bottom:4px">' + esc(t) + '</li>'; }).join('') : '<li style="margin-bottom:4px">暂无。</li>') + '</ul></div>'
         + '<div style="background:var(--bg3);border-radius:8px;padding:12px"><div style="color:var(--accent2);font-weight:700;margin-bottom:4px">中期目标（1个月）</div>'
-        + '<ul style="padding-left:16px;margin:0;color:var(--muted);font-size:12.5px"><li style="margin-bottom:4px">把<strong style="color:var(--ink)">交易级胜率拉回 ≥50%</strong>：只在有主线支撑且经盘前预案锁定的票上下手</li><li style="margin-bottom:4px">止盈/止损后<strong style="color:var(--ink)">空仓等待</strong>，不急于当天找下一只</li><li style="margin-bottom:4px">连续三周「胜率+收益+纪律」三率在线，再评估进阶</li></ul></div>'
+        + '<ul style="padding-left:16px;margin:0;color:var(--muted);font-size:12.5px">' + (mentor && mentor.next_mid && mentor.next_mid.length ? mentor.next_mid.map(function(t) { return '<li style="margin-bottom:4px">' + esc(t) + '</li>'; }).join('') : '<li style="margin-bottom:4px">暂无。</li>') + '</ul></div>'
         + '</div></div>'
 
         + '<div style="margin-top:16px;background:var(--bg2);border:1px solid var(--rule);border-radius:12px;padding:14px 16px">'
@@ -394,6 +409,12 @@
       return '<div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:13px 14px"><div style="font-size:11px;color:var(--muted)">' + esc(t) + '</div>'
         + '<div class="mono up" style="font-weight:800;font-size:18px;margin-top:5px">' + v + '</div>'
         + '<div style="font-size:11.5px;color:var(--muted);margin-top:4px">' + esc(s) + '</div></div>';
+    }
+    function sixCell(t, d, ok) {
+      return '<div style="background:var(--bg3);border:1px solid ' + (ok ? 'rgba(16,185,129,.28)' : 'rgba(239,68,68,.24)') + ';border-radius:10px;padding:9px 12px">'
+        + '<div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--ink)">'
+        + '<span style="flex:none;width:8px;height:8px;border-radius:50%;background:' + (ok ? 'var(--green)' : 'var(--red)') + '"></span>' + esc(t) + '</div>'
+        + '<div style="font-size:11.5px;color:var(--muted);line-height:1.5;margin-top:4px">' + esc(d) + '</div></div>';
     }
     function rateRow(t, v, ok, rest) {
       return '<div style="display:flex;align-items:center;gap:10px;background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:9px 12px;margin-bottom:6px">'

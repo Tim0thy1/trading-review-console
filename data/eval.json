@@ -1,12 +1,43 @@
 {
   "_meta": {
     "desc": "交易者全面评测（eval.json）：仅保留“当日复盘”（带 date，进复盘日历）。画像/三率/阶段/总结/雷达由 阶段性评估 根据 ledger.json+forecast.json 实时计算，不在此文件。",
-    "updated_at": "2026-09-11",
-    "data_date": "2026-09-11",
-    "touched_by": "manual（AI批卷 70/100）",
-    "last_fill": "2026-09-11"
+    "updated_at": "2026-09-14",
+    "data_date": "2026-09-14",
+    "touched_by": "manual（AI批改 72/100）",
+    "last_fill": "2026-09-14"
+  },
+  "mentor": {
+    "updated_at": "2026-09-14",
+    "analysis_basis": "跨周期全景评估：基于 9/11-9/14 连续五维批改 + 24笔成交位置%核验 + 9/11双票落袋与9/14低吸沃尔",
+    "progress": [
+      "弱势里守住了强者、按计划分批落袋：9/11 普跌仍识别强势，铭普+10.02%涨停10:10@30.86出1/2、沃尔+4.43%出1/3，无追高（对照当日位置%落袋区间合理）",
+      "心态从\"追高焦虑\"转向\"能拿住、敢减仓\"：较 9/8 追高即套（47分）明显转好；9/14 仅低吸沃尔@17.37当日低位区，未被 CRO 动心带走"
+    ],
+    "problems": [
+      "盘前方向常给\"中立/跷跷板\"不预判：9/9-9/11 连续如此、方向分被扣；9/14 明确判跌是向好信号",
+      "交易级胜率偏低（账面靠亨通等少数大赢覆盖多数小亏），且\"纪律首批改\"维度多次不过关",
+      "剩余持仓止盈/止损位未写死：铭普 500 股、沃尔中线仍是\"无锚奔跑\"，9/14 铭普 -3% 未按预案减仓即印证"
+    ],
+    "deep_diagnosis": "矛盾仍是\"少做\"vs\"手痒\"：想打精下一笔，却被现金在手焦虑拉着开新仓。你已证明能按预案兑现（9/11 双票落袋、9/14 低吸沃尔），但一旦想靠多交易\"赚回来\"就滑回追 2-3 线票（9/8 铭普）。每一点加分都来自\"少做、做精\"而非多做；把\"一场牛市赚回来\"换成\"三率在线才算过关\"。",
+    "next_short": [
+      "给每个剩余持仓写死止盈/止损锚点（铭普500、沃尔中线），把\"奔跑\"变\"有锚奔跑\"：铭普高开≥+2%滞涨减1/2，跌破29.9减至底仓",
+      "盘前必填明确方向+触发价，量化到价，不写\"高开再炮一点\"这类无锚表达",
+      "连续 5 日计划外交易为 0"
+    ],
+    "next_mid": [
+      "交易级胜率拉回 ≥50%：只在有主线支撑且经盘前预案锁定的票上下手",
+      "止盈/止损后空仓等待，不急于当天找下一只",
+      "连续三周\"胜率+收益+纪律\"三率同时在线，再评估进阶"
+    ]
   },
   "sections": [
+    {
+      "id": "review-0914",
+      "date": "2026-09-14",
+      "title": "当日复盘 · 9/14 收盘",
+      "summary": "「方向判对、兑现不足」——盘前判跌命中双创-1.1%，但铭普低开走弱未按预案减仓；唯一低吸沃尔属理性买点，止盈节奏待练（AI 72/100）",
+      "html": "<div class=\"panel-sub\">三大指数收跌、双创重挫（上证 -0.07%/深成 -0.64%/创业板 -1.1%），成交缩至 1.63 万亿；盘前「高开跑路」预案在低开走弱下未触发。账户总资产 <strong class=\"mono\">54,596.63</strong>、当日 -713、仓位 59.6%。<br>操作：09:59 沃尔核材 +200股@17.37（价处当日低位区=低吸非追涨，现17.58 浮盈）；铭普光磁 500股 收29.92（较昨30.86 -3%，未减仓）。</div><div style=\"display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px\"><div style=\"background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px\"><div style=\"font-size:12px;color:var(--muted);letter-spacing:.05em\">AI综合</div><div class=\"mono up\" style=\"font-size:22px;font-weight:700\">72/100</div><div style=\"font-size:12px;color:var(--muted);margin-top:4px\">方向30+个股22+预案12+纪律8</div></div><div style=\"background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px\"><div style=\"font-size:12px;color:var(--muted);letter-spacing:.05em\">当日动作</div><div style=\"font-size:15px;font-weight:700;margin-top:4px;color:var(--green)\">低吸沃尔 +200股</div><div style=\"font-size:12px;color:var(--muted);margin-top:4px\">@17.37 当日低位区 · 09:59</div></div><div style=\"background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px\"><div style=\"font-size:12px;color:var(--muted);letter-spacing:.05em\">单日盈亏</div><div class=\"mono\" style=\"font-size:15px;font-weight:700;margin-top:4px;color:var(--red)\">-¥713</div><div style=\"font-size:12px;color:var(--muted);margin-top:4px\">仓位59.6%未满仓</div></div></div><div style=\"margin-top:16px;font-size:13.5px;color:var(--ink);line-height:1.85\"><strong style=\"color:var(--green)\">① 方向判对 ✅</strong>盘前判跌+高开跑路，双创 -1.1% 验证方向（沪深收跌、创业板重挫），方向维度不扣分；这是从 9/9-9/11 连续「中立/跷跷板」以来少有的明确预判命中。<br><strong style=\"color:var(--green)\">② 低吸沃尔=理性买点 ✅</strong>09:59 @17.37 价处当日低位区（对照当日K线=非追高非追涨），且与盘前「跌开低吸」预案一致，无计划外交易、未被 CRO 动心带走。<br><strong style=\"color:var(--red)\">③ 止盈预案未兑现 ⚠️</strong>盘前「高开跑路」遇低开走弱未触发，铭普 -3% 仍持仓、仓内浮盈未落袋；「left running」仍是无锚。<br><strong style=\"color:var(--red)\">④ 预案与盘面映射度偏低 ⚠️</strong>「高开再炮一点」语义含糊，未写成具体触发价，落地时无法判断该出还是该留。</div><div class=\"callout\" style=\"margin-top:14px;border-left:3px solid var(--accent)\"><strong>给明天的自己（现在写，不盘中想）：</strong><br>・铭普光磁 500股：把「高开跑路」写死成触发价——高开≥+2% 且冲高滞涨则减 1/2，跌破 29.9 前低则减至底仓，不裸奔。<br>・沃尔核材 1000股：中线仓破 17.0（成本区上方3%）且不放量则暂持，破 16.9 果断离场。<br>・总：方向命中率在回升，只差「预案写死」这一题；明日紧盯铭普高开动作，不要让 -EW 稀里糊涂变深套。・宏观：AI 高管放缓言论压制硬件，若延续则科技反弹是减仓机会不是加仓机会。</div>"
+    },
     {
       "id": "review-0911",
       "date": "2026-09-11",

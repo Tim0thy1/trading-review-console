@@ -110,39 +110,10 @@
   });
   window.addEventListener('resize', function() { c5.resize(); });
 
-  // ============ CHART 6: 六维纪律雷达（懒渲染） ============
-  __regEvalChart('chart-radar', 400, function(chart) {
-    chart.setOption({
-      animation: false,
-      tooltip: { trigger: 'item', appendToBody: true },
-      legend: { bottom: 0, textStyle: { color: muted }, itemWidth: 14, itemHeight: 8 },
-      radar: {
-        indicator: [
-          { name: '仓位纪律', max: 10 }, { name: '止损纪律', max: 10 },
-          { name: '止盈落袋', max: 10 }, { name: '加仓纪律', max: 10 },
-          { name: '情绪控制', max: 10 }, { name: '计划执行', max: 10 }
-        ],
-        radius: '62%', center: ['50%', '48%'],
-        splitArea: { areaStyle: { color: [bg2, bg3] } },
-        axisName: { color: ink, fontSize: 12 },
-        splitLine: { lineStyle: { color: rule } },
-        axisLine: { lineStyle: { color: rule } }
-      },
-      series: [{
-        type: 'radar',
-        data: [
-          {
-            value: [6, 4, 7, 3, 6, 7], name: '当前纪律',
-            areaStyle: { color: accent2 + '44' }, lineStyle: { color: accent2, width: 2 }, itemStyle: { color: accent2 }
-          },
-          {
-            value: [8, 8, 8, 8, 8, 8], name: '合格线',
-            areaStyle: { color: accent + '22' }, lineStyle: { color: accent, width: 2, type: 'dashed' }, itemStyle: { color: accent }
-          }
-        ]
-      }]
-    });
-  });
+  // ============ CHART 6: 六维纪律雷达 ============
+  // 【改作业优化】雷达图使用硬编码伪值（[6,4,7,3,6,7]）会误导为"实测"，
+  // 现改为纯文字版六维评分（由 data-loader.js 从数据渲染），此图不再挂载。
+  // 保留 __regEvalChart 注册但容器改为 text-only，不再生硬编码图。
 
   // ============ CHART 7: 逐笔操作评分（懒渲染） ============
   __regEvalChart('chart-tradescore', 320, function(chart) {
