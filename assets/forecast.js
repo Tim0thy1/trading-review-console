@@ -236,10 +236,11 @@
             var on = v.pass === true;
              var col = on ? 'var(--green)' : 'var(--red)';
              var bg = on ? 'rgba(16,185,129,.10)' : 'rgba(239,68,68,.10)';
+             var note = v.note || '';
              return '<div style="background:'+bg+';border:1px solid '+(on?'rgba(16,185,129,.25)':'rgba(239,68,68,.25)')+';border-radius:8px;padding:5px 7px;text-align:center">'
                + '<div style="font-size:11px;color:var(--muted)">'+d[1]+'</div>'
-               + '<div style="font-size:13px;font-weight:700;color:'+col+';margin-top:1px">'+(on?'✓':'✗')+'</div>'
-               + '<div style="font-size:10.5px;color:var(--muted);line-height:1.4;margin-top:2px">'+Math.round((v.score/v.total||0)*100)+'%</div>'
+               + '<div style="font-size:13px;font-weight:700;color:'+col+';margin-top:1px">'+(on?'✓':'✗')+' <span style="font-size:10.5px">'+Math.round((v.score/v.total||0)*100)+'%</span></div>'
+               + (note?'<div style="font-size:10px;color:var(--muted);line-height:1.45;margin-top:2px;text-align:left">'+nlbr(note)+'</div>':'')
                + '</div>';
           }).join('')
         + '</div></div>');
