@@ -51,6 +51,9 @@ AI 不得改写，也**不得凭空编造缺失的数字**——缺的字段留�
 3. **汇总原料**：`python3 setup/ai_pipeline.py` 生成 `data/_ai_context.json`。
 4. **AI 批改**：读当日盘前预测+盘中+盘后+成交+盘面，产出并回写：
    - `forecast.json` 当日 review（盘面实际 actual + 七维 judge + overall）——只动判断字段
+     - **对账点评只点评当天**：当日 review 的 actual / judge / overall 一律聚焦当天这台行情
+       与实际操作，不得把历史单（如往日的追高/杀跌/满仓）拉进当天点评做对照；
+       跨周期的综合评估（追涨杀跌成性、止损节奏、能力进化）只放在全景评估里做。
    - `realm.json` `current`（境界/进度随资金与成熟度演进）
    - `eval.json` sections（全面评测当日复盘）
    - `journal.json` entries 头部插入当日修炼手记（`latest:true`，去掉旧 latest）
