@@ -302,6 +302,22 @@
       var discOnline = avgScore !== null && avgScore >= 70;
       var onlineCount = (rateOnline ? 1 : 0) + (retOnline ? 1 : 0) + (discOnline ? 1 : 0);
 
+      /* 修炼关卡：进度 = 三率在线数 折算；空仓克制/决策可说清作为两个附加考核维 */
+      var progress = onlineCount / 3;
+      var stageName, stageHint;
+      if (onlineCount === 3) { stageName = '炼气·毕业验收'; stageHint = '三率全部在线，可进入实盘前验收。真正的考验是：放得下本金之外的胜负心。'; }
+      else if (onlineCount === 2) { stageName = '炼气·「能不能不乱交易」'; stageHint = '已过半。纪律是筑基的地基——把止损止盈写死、计划外交易清零，向第三关迈进。'; }
+      else { stageName = '炼气·「能不能做对判断」'; stageHint = '方向判断正在长，但常在「判断对、执行差」之间反复。先把预案落到触发价，再谈仓位。'; }
+      /* 空仓克制 & 决策可说清：本次接近全勤判断为合格，长期以复盘记录为依据 */
+      var emptyLock = true;       /* 9/11 落袋后未手痒加仓，9/14 低吸符合预案 */
+      var decideOk = false;       /* 待强化：铭普「高开再炮一点」语义含糊，止盈锚未明确 */
+      function guardRow(t, ok, tip){
+        var col = ok ? 'var(--green)' : 'var(--red)';
+        return '<div style="background:'+(ok?'rgba(16,185,129,.08)':'rgba(239,68,68,.08)')+';border:1px solid '+(ok?'rgba(16,185,129,.25)':'rgba(239,68,68,.25)')+';border-radius:8px;padding:6px 8px">'
+          + '<div style="font-size:11.5px;color:'+col+';font-weight:700">'+(ok?'✓':'✗')+' '+esc(t)+'</div>'
+          + '<div style="font-size:11px;color:var(--muted);margin-top:2px">'+esc(tip)+'</div></div>';
+      }
+
       var portrait = (rateOnline && retOnline)
         ? '胜率与收益双在线，纪律待回升'
         : (retOnline ? '收益为正但交易级胜率不足——净赚靠亨通等少数大赢覆盖多数小亏' : '长板 / 短板仍明显，核心短板在纪律与仓位');
@@ -357,6 +373,19 @@
         + '<ul style="padding-left:16px;margin:0;color:var(--muted);font-size:12.5px"><li style="margin-bottom:4px">给每个剩余持仓<strong style="color:var(--ink)">写死止盈/止损锚点</strong>（铭普500、沃尔中线），把「奔跑」变「有锚奔跑」</li><li style="margin-bottom:4px">盘前必填<strong style="color:var(--ink)">明确方向+触发价</strong>，哪怕只写「低开破止损则出」</li><li style="margin-bottom:4px">连续 5 日<strong style="color:var(--ink)">计划外交易为 0</strong></li></ul></div>'
         + '<div style="background:var(--bg3);border-radius:8px;padding:12px"><div style="color:var(--accent2);font-weight:700;margin-bottom:4px">中期目标（1个月）</div>'
         + '<ul style="padding-left:16px;margin:0;color:var(--muted);font-size:12.5px"><li style="margin-bottom:4px">把<strong style="color:var(--ink)">交易级胜率拉回 ≥50%</strong>：只在有主线支撑且经盘前预案锁定的票上下手</li><li style="margin-bottom:4px">止盈/止损后<strong style="color:var(--ink)">空仓等待</strong>，不急于当天找下一只</li><li style="margin-bottom:4px">连续三周「胜率+收益+纪律」三率在线，再评估进阶</li></ul></div>'
+        + '</div></div>'
+
+        + '<div style="margin-top:16px;background:var(--bg2);border:1px solid var(--rule);border-radius:12px;padding:14px 16px">'
+        + '<div style="font-size:12px;letter-spacing:.08em;color:var(--muted);margin-bottom:10px">🧗 修炼关卡 · 本关考核（资金体量 × 操作成熟度）</div>'
+        + '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">'
+        + '<div style="position:relative;width:92px;height:92px;flex:none"><svg viewBox="0 0 92 92" width="92" height="92"><circle cx="46" cy="46" r="38" fill="none" stroke="var(--rule)" stroke-width="9"/><circle cx="46" cy="46" r="38" fill="none" stroke="var(--accent2)" stroke-width="9" stroke-linecap="round" stroke-dasharray="' + (2*Math.PI*38) + '" stroke-dashoffset="' + (2*Math.PI*38*(1-progress)) + '" transform="rotate(-90 46 46)"/><text x="46" y="52" text-anchor="middle" font-size="20" font-weight="800" fill="var(--accent2)">' + Math.round(progress*100) + '</text><text x="46" y="64" text-anchor="middle" font-size="8" fill="var(--muted)">%过关</text></svg></div>'
+        + '<div style="flex:1;min-width:230px"><div style="font-weight:800;font-size:15px">当前关卡：' + stageName + '</div>'
+        + '<div style="font-size:12.5px;color:var(--muted);line-height:1.7;margin-top:4px">' + stageHint + '</div>'
+        + '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:10px">'
+        + guardRow('空仓克制', emptyLock, '止盈/止损后能否忍住空仓等待，说明「手痒」关口的实控力')
+        + guardRow('决策可说清', decideOk, '每笔操作能否一句话说清「为什么买/卖」，说不清=大脑空转')
+        + '</div></div></div></div>'
+
         + '</div></div></div></div>';
       if (typeof window.__renderEvalCharts === 'function') { try { window.__renderEvalCharts(); } catch (e) {} }
     });

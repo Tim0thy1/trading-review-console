@@ -186,6 +186,7 @@
       var reflectCell = f.reflect
         ? '<div style="color:var(--ink)">'+nlbr(f.reflect)+'</div>'
         : '<span style="color:var(--muted);font-size:12px">待记录</span>';
+      var reviewCell = f.review ? renderJudgeCell(f.review) : '<span style="color:var(--muted)">待收盘后生成</span>';
       return '<tr>'+
         '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);white-space:nowrap;vertical-align:top" class="mono">'+f.date+(f.weekend?' ☀️':'')+'</td>'+
         '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);max-width:240px;vertical-align:top;white-space:normal;word-break:break-word">'+
@@ -196,7 +197,7 @@
         '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);max-width:240px;vertical-align:top;white-space:normal;word-break:break-word">'+intraCell+'</td>'+
         '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);max-width:240px;vertical-align:top;white-space:normal;word-break:break-word">'+reflectCell+'</td>'+
         '<td style="text-align:center;padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top">'+scoreCell+'</td>'+
-        '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--muted);vertical-align:top;white-space:normal;word-break:break-word;max-width:260px">'+(f.review?nlbr(f.review.comment):'<span style="color:var(--muted)">待收盘后生成</span>')+'</td>'+
+        '<td style="padding:8px 10px;border-bottom:1px solid var(--rule);font-size:12px;vertical-align:top;white-space:normal;word-break:break-word;max-width:340px">'+reviewCell+'</td>'+
       '</tr>';
     }).join('');
     if (typeof window.__applyForecastLimit === 'function') { try { window.__applyForecastLimit(); } catch(e){} }
@@ -204,6 +205,55 @@
   function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function firstLine(s){ s=(s||'').trim(); var i=s.indexOf('\n'); return i>0?s.slice(0,i):s; }
   function nlbr(s){ return esc(s||'').replace(/\n/g,'<br>'); }
+
+  /* ---------- 对账点评：盘面实际 + AI判断(七维) ---------- */
+  // 兼容三种结构：新(v2: actual + judge + overall) / 旧(comment)
+  var __JUDGE_DEFS = [
+    ['emotion','情绪纪律','冲动情绪'],
+    ['plan_exec','计划执行','没有纪律'],
+    ['chase','追涨杀跌','追涨杀跌'],
+    ['position','仓位管理','容易满仓'],
+    ['analysis','分析质量','—'],
+    ['stop','止损止盈','没有纪律'],
+    ['reflect','反思质量','—']
+  ];
+  var __JUDGE_LABEL = { emotion:'情绪纪律', plan_exec:'计划执行', chase:'追涨杀跌', position:'仓位管理', analysis:'分析质量', stop:'止损止盈', reflect:'反思质量' };
+  function renderJudgeCell(rv){
+    var out = [];
+    /* 盘面实际 */
+    if(rv.actual){
+      out.push('<div style="margin-bottom:6px"><span style="display:inline-block;background:rgba(16,185,129,.12);color:#10b981;border-radius:4px;padding:0 6px;font-size:11px;font-weight:700">盘面实际</span>'
+        + '<div style="margin-top:4px;color:var(--ink);line-height:1.6">'+nlbr(rv.actual)+'</div></div>');
+    }
+    /* AI判断 七维 */
+    var hasJudge = rv.judge && typeof rv.judge === 'object' && Object.keys(rv.judge).length;
+    if(hasJudge){
+      var bad = __JUDGE_DEFS.filter(function(d){ var v=rv.judge[d[0]]; return v && v.pass===false; });
+      out.push('<div style="margin-bottom:6px"><span style="display:inline-block;background:rgba(217,119,6,.12);color:#d97706;border-radius:4px;padding:0 6px;font-size:11px;font-weight:700">AI判断</span>'
+        + '<div style="margin-top:6px;display:grid;grid-template-columns:repeat(2,1fr);gap:5px">'
+        + __JUDGE_DEFS.map(function(d){
+            var v = rv.judge[d[0]]; if(!v) return '';
+            var on = v.pass === true;
+             var col = on ? 'var(--green)' : 'var(--red)';
+             var bg = on ? 'rgba(16,185,129,.10)' : 'rgba(239,68,68,.10)';
+             return '<div style="background:'+bg+';border:1px solid '+(on?'rgba(16,185,129,.25)':'rgba(239,68,68,.25)')+';border-radius:8px;padding:5px 7px;text-align:center">'
+               + '<div style="font-size:11px;color:var(--muted)">'+d[1]+'</div>'
+               + '<div style="font-size:13px;font-weight:700;color:'+col+';margin-top:1px">'+(on?'✓':'✗')+'</div>'
+               + '<div style="font-size:10.5px;color:var(--muted);line-height:1.4;margin-top:2px">'+Math.round((v.score/v.total||0)*100)+'%</div>'
+               + '</div>';
+          }).join('')
+        + '</div></div>');
+      if(bad.length){
+        out.push('<div style="margin:6px 0 6px"><b style="color:var(--red)">待强化</b>：'+bad.map(function(d){ return d[1]; }).join('、')+'</div>');
+      }
+    }
+    /* 综合点评 */
+    var overall = rv.overall || rv.comment || '';
+    if(overall){
+      out.push('<div style="background:var(--bg3);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:6px 8px;color:var(--ink);line-height:1.6">'+nlbr(String(overall))+'</div>');
+    }
+    return out.join('');
+  }
 
   /* ---------- 提交 ---------- */
   var submitting = false;
