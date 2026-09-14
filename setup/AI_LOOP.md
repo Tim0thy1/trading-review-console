@@ -38,6 +38,32 @@ review.json ─────────┘        │
 凡是带数字的权威字段（pnl、total_assets、win_rate、equity_points…）一律以脚本/东财为准，
 AI 不得改写，也**不得凭空编造缺失的数字**——缺的字段留空并向用户说明。
 
+## 触发暗号：`前辈，干活了`（= 每日改作业）
+
+> 用户喊出这句暗号，即要求执行一轮完整「改作业」。执行体把当天数据、AI 批改、
+> 修炼进度、推送全部一次做完，并回报一句复盘小结。口径与边界遵循上文职责表。
+
+### 改作业 = 5 步（按序）
+1. **取数对账**：跑 `sync_eastmoney.py`（或读已由 GitHub Actions 同步好的 `live-snapshot.json`），
+   再 `python3 gen_ledger.py` 重建账本；确保账户数字为东财权威、净值到当日。
+2. **核验成交位置**：`python3 tools/trade_position_check.py` 把当日成交对照日K算出位置%；
+   **仅作复盘证据**，识别是否临场情绪冲动，绝不据此判定买卖权限（见该文件定位边界）。
+3. **汇总原料**：`python3 setup/ai_pipeline.py` 生成 `data/_ai_context.json`。
+4. **AI 批改**：读当日盘前预测+盘中+盘后+成交+盘面，产出并回写：
+   - `forecast.json` 当日 review（盘面实际 actual + 七维 judge + overall）——只动判断字段
+   - `realm.json` `current`（境界/进度随资金与成熟度演进）
+   - `eval.json` sections（全面评测当日复盘）
+   - `journal.json` entries 头部插入当日修炼手记（`latest:true`，去掉旧 latest）
+   - 复盘里「位置% 高 ≠ 不能买」等判读口径，落进批改注释而非当禁令
+5. **校验+推送**：`python3 setup/ai_pipeline.py --check` 校验 JSON 合法 && 时间戳更新；
+   `git add data/ setup/ tools/ && git commit -m "改作业: <日期>" && git push`，再由 AI 回报小结。
+
+### 改作业的边界（不许越）
+- 数字权威字段（total_assets / pnl / win_rate / equity_points…）一律以脚本/东财为准，AI 只读不改。
+- 用户写的盘前/盘中/盘后文字，AI 不改写，只据此批改与点评。
+- 位置% 是复盘信号不是买卖令；是否有预案、是否破止损，才是开平仓的判断依据。
+- 数据缺失、接口不可达 → 如实标注 `[MISSING]` 并告知，绝不臆造数字。
+
 ## 标准步骤（每次复盘）
 
 1. **取数**：运行 `sync_eastmoney.py` 与 `gen_ledger.py`（在 portfolio-update-0807 目录），
