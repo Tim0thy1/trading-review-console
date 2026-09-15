@@ -1,10 +1,10 @@
 {
   "_meta": {
     "desc": "交易者全面评测（eval.json）：仅保留“当日复盘”（带 date，进复盘日历）。画像/三率/阶段/总结/雷达由 阶段性评估 根据 ledger.json+forecast.json 实时计算，不在此文件。",
-    "updated_at": "2026-09-14",
-    "data_date": "2026-09-14",
-    "touched_by": "manual（AI批改 72/100）",
-    "last_fill": "2026-09-14"
+    "updated_at": "2026-09-15",
+    "data_date": "2026-09-15",
+    "touched_by": "manual（AI批改 50/100，动态短板）",
+    "last_fill": "2026-09-15"
   },
   "mentor": {
     "updated_at": "2026-09-14",
@@ -31,6 +31,13 @@
     ]
   },
   "sections": [
+    {
+      "id": "review-0915",
+      "date": "2026-09-15",
+      "title": "当日复盘 · 9/15 收盘",
+      "summary": "「弱市拿住、不追不割、零操作」——方向判低开高走落空，但纪律克制达到高点；铭普止盈依旧犹豫（AI 50/100）",
+      "html": "<div class=\"panel-sub\">三大指数收跌、弱势延续（上证 -0.54%/3864.28、深成 -0.72%/13287.97、创业板 -1.15%/3247.92）。账户（东财权威）5万口径总资产 <strong class=\"mono\">53,596.63</strong>、当日 <strong class=\"mono\" style=\"color:var(--red)\">-1,000</strong>、收益率 7.19%（较昨 9.19% 降约 2pt）、仓位 58.85%。<br>操作：当日零操作。持仓：沃尔核材 1000股@成本17.034现16.93（-0.61%，当日 -3.70%）、铭普光磁 500股@成本24.122现29.22（+21.13% 浮盈，当日 -2.34%）。成交胜率 36.36%（4胜7负）。</div><div style=\"display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px\"><div style=\"background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px\"><div style=\"font-size:12px;color:var(--muted);letter-spacing:.05em\">AI综合</div><div class=\"mono\" style=\"font-size:22px;font-weight:700;color:var(--red)\">50/100</div><div style=\"font-size:12px;color:var(--muted);margin-top:4px\">方向15+个股16+预案12+纪律7</div></div><div style=\"background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px\"><div style=\"font-size:12px;color:var(--muted);letter-spacing:.05em\">当日动作</div><div style=\"font-size:15px;font-weight:700;margin-top:4px\">零操作</div><div style=\"font-size:12px;color:var(--muted);margin-top:4px\">缩量弱市拿住·不追风电</div></div><div style=\"background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px\"><div style=\"font-size:12px;color:var(--muted);letter-spacing:.05em\">单日盈亏</div><div class=\"mono\" style=\"font-size:15px;font-weight:700;margin-top:4px;color:var(--red)\">-¥1,000</div><div style=\"font-size:12px;color:var(--muted);margin-top:4px\">仓位58.85%未满仓</div></div></div><div style=\"margin-top:16px;font-size:13.5px;color:var(--ink);line-height:1.85\"><strong style=\"color:var(--green)\">① 零操作·弱市守得住 ✅</strong>全天无任何买卖，看着风电（大金重工）拉涨忍住没追金安国纪/大金，盘中浮亏也没割或加——无追高、无杀跌、无计划外交易，是「拿得住、不乱动」最好的一天之一。<br><strong style=\"color:var(--orange)\">② 方向判「低开高走」落空 ⚠️</strong>盘前判低开高走，实际三大指数收跌（创业板 -1.15%），反弹判断过早；但「美股半导体杀跌→A股科技凶多吉少」归因正确（科技弱、资金未护盘）。<br><strong style=\"color:var(--red)\">③ 铭普「需割肉」预案未兑现 ❌</strong>盘前「看竞价需割肉」，竞价高开 +0.57% 却回落至 -2.34% 全程未动，+21.13% 浮盈没在高开落袋；「冰点将至？再等等」的犹豫连续第三天让出止盈窗口。<br><strong style=\"color:var(--red)\">④ 止盈锚依旧缺失 ❌</strong>铭普500/沃尔1000 仍「无锚奔跑」，触发价未写死；盘后诚恳自省「心态不稳、看着持仓下跌、FOMO 未动手」，自我觉察在进步。</div><div class=\"callout\" style=\"margin-top:14px;border-left:3px solid var(--accent)\"><strong>给明天的自己（现在写，不盘中想）：</strong><br>・铭普光磁 500股：写死止盈触发价——竞价高开 ≥+2% 且冲高滞涨则减 1/2，跌破 29.9 前低则减至底仓，不裸奔。<br>・沃尔核材 1000股：破 17.0（成本区上方 3%）且不放量暂持，破 16.9 果断离场。<br>・总：把「止盈/割肉」从愿望写成触发价——竞价高开即触发，别让犹豫吃掉浮盈。<br>・心态：今天没追风电那口 FOMO 就是最大的进步，把它复制到每根 K 线。<br>・宏观：科技弱延续、缩量临近假期，反弹是减仓机会不是加仓机会，耐心等冰点。</div>"
+    },
     {
       "id": "review-0914",
       "date": "2026-09-14",
