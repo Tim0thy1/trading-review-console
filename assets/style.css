@@ -99,7 +99,7 @@ body{
 .side-foot{margin-top:14px;padding:12px;border-top:1px solid var(--rule);font-size:11px;color:var(--muted);line-height:1.5}
 
 /* Main */
-.main{flex:1;min-width:0;padding:26px 30px 60px;padding-top:74px}
+.main{flex:1;min-width:0;width:100%;max-width:1180px;margin:0 auto;padding:26px 30px 60px;padding-top:74px}
 .m-head{margin-bottom:24px}
 .m-kicker{font-size:12px;letter-spacing:.16em;color:var(--accent);text-transform:uppercase;margin-bottom:6px}
 .m-title{font-family:'BricolageGrotesque';font-weight:700;font-size:26px;line-height:1.2}
