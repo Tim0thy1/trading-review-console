@@ -130,9 +130,10 @@
   function loadLedger(){
     Promise.all([
       fetch('data/ledger.json', {cache:'no-store'}).then(function(r){ return r.json(); }),
-      fetch('live-snapshot.json', {cache:'no-store'}).then(function(r){ return r.json(); }).catch(function(){ return null; })
+      fetch('live-snapshot.json', {cache:'no-store'}).then(function(r){ return r.json(); }).catch(function(){ return null; }),
+      fetch('data/forecast.json', {cache:'no-store'}).then(function(r){ return r.json(); }).catch(function(){ return null; })
     ]).then(function(arr){
-      var L = arr[0], snap = arr[1];
+      var L = arr[0], snap = arr[1], forecasts = arr[2] || [];
 
       // ---- 核心动态口径：成交胜率（东财权威，最新）、累计收益、已了结口径 ----
       var a = (snap && snap.account) || {};
@@ -171,9 +172,31 @@
         var dealTxt = (dealRate != null)
           ? '「截至 ' + dateStr + '，累计 ' + (dealWin != null ? dealWin + ' 胜 ' + dealFail + ' 负' : '') + '，成交胜率 ' + dealRate + '%」'
           : '「成交胜率待同步」';
+
+        // ---- 核心短板 / 修炼动作：动态取自最新一天批改(forecast.json)，不再写死 ----
+        var FIELD_LABEL = {emotion:'情绪纪律',plan_exec:'计划执行',chase:'追涨杀跌',position:'仓位管理',analysis:'分析质量',stop:'止损止盈',reflect:'反思质量'};
+        var lr = null, newest = '';
+        (forecasts||[]).forEach(function(fd){
+          if(fd && fd.review && (!newest || fd.date > newest)){ newest = fd.date; lr = fd.review; }
+        });
+        var short = '', action = '';
+        if (lr) {
+          var names = [], j = lr.judge || {};
+          Object.keys(j).forEach(function(k){ if(j[k] && j[k].pass === false && FIELD_LABEL[k]) names.push(FIELD_LABEL[k]); });
+          short = names.length ? names.join('、') : '当日七维判断均达标';
+          var ov = lr.overall || '';
+          ['下一阶段目标','下一课','下一步'].forEach(function(kw){
+            if(!action){ var i = ov.lastIndexOf(kw); if(i >= 0){ action = ov.slice(i + kw.length).replace(/^[：:，,。\s]*(还是|仍然|依然是)?[：:，,。\s]*/,'').split('。')[0].trim(); } }
+          });
+        } else {
+          short = '反弹拿不住+止损点位过晚+缩量死扛';
+        }
+        var tail = '核心短板：<strong style="color:var(--red)">「' + short + '」</strong>。'
+          + (action ? '修炼动作：' + action + '。' : '纪律缺席仍是最关键短板——当前最重要的修炼动作：把下一笔进场的触发价/止损位落实为纸面预案。');
+
         pver.innerHTML = '整体画像：<strong>' + dealTxt + '</strong>，累计收益 <strong>' + (ret != null ? (ret > 0 ? '+' : '') + ret.toFixed(2) + '%' : '—')
           + '</strong>、已实现净盈亏 ' + fmtMoney(panopnl)
-          + '（已了结 ' + Object.keys(closed).length + ' 段）。核心短板：<strong style="color:var(--red)">「反弹拿不住 + 止损点位过晚 + 缩量死扛」</strong>。纪律缺席仍是最关键短板——把下一笔进场的触发价/止损位落实为纸面预案，是当前最重要的修炼动作。';
+          + '（已了结 ' + Object.keys(closed).length + ' 段）。' + tail;
       }
     }).catch(function(){});
   }
