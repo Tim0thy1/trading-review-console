@@ -223,5 +223,10 @@
     "date": "2026-09-14",
     "close": 54596.63,
     "source": "authority(东财9/14)"
+  },
+  {
+    "date": "2026-09-15",
+    "close": 53596.63,
+    "source": "authority(东财)"
   }
 ]
