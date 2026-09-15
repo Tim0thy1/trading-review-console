@@ -271,12 +271,12 @@
       <!-- 评分规则说明 -->
       <div class="panel" style="margin-top:20px">
         <div class="panel-title">📊 评分规则（收盘后自动计算）</div>
-        <div class="panel-sub">满分100 = 方向30 + 个股30 + 预案25 + 纪律15</div>
+        <div class="panel-sub">满分100 = 方向25 + 个股25 + 预案25 + 纪律25。按「上班族 + 开盘半小时盯盘 + 中线持有」的真实能力设计，不逼精确点位。</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:12px;font-size:12.5px;line-height:1.7">
-          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent)">方向 30分</b><br>完全命中30 / 相邻方向12（如判跌实为震荡）/ 完全反向0。"低开高走/高开低走"命中额外+5奖励分（封顶35）</div>
-          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent)">个股 30分</b><br>每只持仓等权10分：方向对6分 + 价位判断对4分（关键位是否守住/触及）。无持仓日按大盘幅度预期给分</div>
-          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent)">预案 25分</b><br>有明确触发价+动作=20分；写了但当日未用到=17分；模糊无触发条件=8分；没写=0</div>
-          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent2)">纪律 15分</b><br>当日实际操作是否都在预案内：全部在内15分；出现1笔计划外交易扣8分；情绪标"焦躁/亢奋"仍交易再扣7</div>
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent)">方向 25分</b><br>只判「方向级」，不要求点位：涨/跌/平、或低开高走/高开低走。完全命中25 / 相邻方向10（如判跌实为震荡）/ 反向0。开盘半小时内可判即可</div>
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent)">个股 25分（中线口径）</b><br>不追精确点位。看「中线持有逻辑」：是否守住持有逻辑（趋势/主线/基本面未破）= 满分；趋势走坏仍不处理 = 扣分。方向对 15 + 中线持有合理性 10</div>
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent)">预案 25分（轻量触发句）</b><br>开盘 30 分钟能执行的一句话即可：有明确触发条件+动作=25；写了但当日没触发=20；模糊无触发=8；没写=0。不要求盯全天</div>
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent2)">纪律 25分</b><br>当日实际操作是否都在预案内、是否守住中线不加乱仓：全部在内25；1笔计划外交易扣8；情绪标"焦躁/亢奋"仍交易再扣7</div>
         </div>
       </div>
 

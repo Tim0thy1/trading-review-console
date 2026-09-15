@@ -161,9 +161,9 @@
         v.innerHTML = '<span style="color:var(--red)">尚未建立预测记录。</span>盘前预测是全景评估的"事前思考"维度——从下个交易日开始，每天开盘前花3分钟填写预测与预案，收盘自动对账。';
       } else {
         var avg = Math.round(scored.reduce(function(s,f){ return s+f.review.score; },0)/scored.length);
-        var lvl = avg>=75?['强','var(--green)','预测质量高、预案可执行，继续保持']:avg>=55?['中','var(--accent2)','方向感尚可，重点提升关键价位的预判精度']:avg>0?['弱','var(--red)','预测与实际偏差大——先不求准，先把"有预案"这件事做到']:['待观察','var(--muted)','已开始记录，收盘对账后生成评估'];
+        var lvl = avg>=75?['强','var(--green)','方向判断稳定、预案可执行，守住中线持有逻辑，继续保持']:avg>=55?['中','var(--accent2)','方向感尚可，重点提升方向判定的稳定性和守住持有逻辑']:avg>0?['弱','var(--red)','预测与实际偏差大——先不求准，先把"有预案、守住中线"这件事做到']:['待观察','var(--muted)','已开始记录，收盘对账后生成评估'];
         v.innerHTML = '当前评估：<b style="color:'+lvl[1]+'">'+lvl[0]+'</b>（均分 '+avg+'/100，样本 '+scored.length+' 天）。'+lvl[2]+
-          (scored.some(function(f){return typeof f.review.discipline==='number'&&f.review.discipline<15;})?'<br><span style="color:var(--red)">⚠️ 存在计划外交易记录——盘中操作脱离了盘前预案，这是当前最大失分点。</span>':'');
+          (scored.some(function(f){return typeof f.review.discipline==='number'&&f.review.discipline<20;})?'<br><span style="color:var(--red)">⚠️ 存在计划外交易记录——盘中操作脱离了盘前预案，这是当前最大失分点。</span>':'');
       }
     }
 
