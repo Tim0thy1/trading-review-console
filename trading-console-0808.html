@@ -183,6 +183,36 @@
         <div class="m-desc">预测在开盘前提交并锁定（不可改）；收盘拉数据时按实际表现自动评分。预测准确度与预案质量纳入全景评估——用制度消灭"盘中临时起意"。</div>
       </div>
 
+      <!-- 赚钱类型引导：买之前先答你在赚哪种钱 -->
+      <div class="panel" style="margin-top:14px;padding:16px">
+        <div style="display:flex;align-items:center;gap:10px;font-weight:800;font-size:14px">🎯 买之前先答：你在赚哪一种钱？</div>
+        <div style="font-size:12.5px;color:var(--muted);margin-top:4px">类型决定持有周期、要不要估值锚、何时走、和主要病根。答不上来 = 在赚"感觉的钱"，进场即设错、扣分。</div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px">
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:12px">
+            <div style="font-weight:800;font-size:14px">β · 产业</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">赚行业景气 / 政策 / 主线的钱</div>
+            <div style="font-size:12px;margin-top:8px;line-height:1.75">
+              <b>判定：</b>行业是不是正在往上？<br><b>验证：</b>行业指数 / 政策 / 景气度<br><b>周期：</b>1–4周以上趋势<br><b>估值锚：</b>可弱（看行业）<br><b>何时走：</b>主线转弱 / 破位<br><b style="color:var(--red)">病根：</b>赚β的票当短线做
+            </div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:12px">
+            <div style="font-weight:800;font-size:14px">α · 公司</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">赚公司自身超预期的钱</div>
+            <div style="font-size:12px;margin-top:8px;line-height:1.75">
+              <b>判定：</b>凭啥跑赢同行？<br><b>验证：</b>业绩 / 订单 / 估值锚（≥5家覆盖、离散&lt;30%）<br><b>周期：</b>到逻辑兑现<br><b>估值锚：</b>必须（5家覆盖）<br><b>何时走：</b>逻辑证伪（业绩miss）<br><b style="color:var(--red)">病根：</b>用"长期看好"扛交易仓亏损
+            </div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:12px">
+            <div style="font-weight:800;font-size:14px">资金筹码 · 情绪</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">赚资金流 / 筹码 / 情绪波动的钱</div>
+            <div style="font-size:12px;margin-top:8px;line-height:1.75">
+              <b>判定：</b>情绪 / 筹码站在哪边？<br><b>验证：</b>资金流 / 筹码结构 / 情绪周期<br><b>周期：</b>天级短打<br><b>估值锚：</b>不需要<br><b>何时走：</b>止损前置，破位立刻走<br><b style="color:var(--red)">病根：</b>追高 / 上头 / 高频全在这
+            </div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:12px;border-top:1px solid var(--rule);padding-top:10px;line-height:1.7">最怕把三种混成一种买法：<b style="color:var(--red)">用α"长期看好"的理由，去做筹码仓</b>——那是"舍不得卖"的根源。每次下单先标：<b>这笔赚的是 β / α / 筹码情绪 里的哪一种？</b></div>
+      </div>
+
       <!-- 今日状态条 -->
       <div id="fc-status-bar" class="callout" style="margin-bottom:18px"></div>
 
