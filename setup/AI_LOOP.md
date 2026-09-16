@@ -77,7 +77,7 @@ AI 不得改写，也**不得凭空编造缺失的数字**——缺的字段留�
 
 ## 标准步骤（每次复盘）
 
-1. **取数**：运行 `sync_eastmoney.py` 与 `gen_ledger.py`（在 portfolio-update-0807 目录），
+1. **取数**：运行 `sync_eastmoney.py` 与 `gen_ledger.py`（在 trading-review-console 目录），
    确保 `live-snapshot.json` / `ledger.json` / `review.json` 为最新权威数据。
 2. **汇总原料**：`python3 setup/ai_pipeline.py` → 生成 `data/_ai_context.json`。
 3. **AI 分析**：读取 `_ai_context.json`，对照当前 eval / realm / journal 已有内容，
