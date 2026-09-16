@@ -688,6 +688,10 @@
     {
       "date": "2026-09-15",
       "close": 53596.63
+    },
+    {
+      "date": "2026-09-16",
+      "close": 53801.0
     }
   ],
   "daily_calendar": [
@@ -966,6 +970,12 @@
       "close": 53596.63,
       "daily_pnl": -1000.0,
       "cum_return_pct": 7.19
+    },
+    {
+      "date": "2026-09-16",
+      "close": 53801.0,
+      "daily_pnl": 204.37,
+      "cum_return_pct": 7.6
     }
   ],
   "summary": {
