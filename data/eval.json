@@ -1,10 +1,10 @@
 {
   "_meta": {
     "desc": "交易者全面评测（eval.json）：仅保留“当日复盘”（带 date，进复盘日历）。画像/三率/阶段/总结/雷达由 阶段性评估 根据 ledger.json+forecast.json 实时计算，不在此文件。",
-    "updated_at": "2026-09-15",
-    "data_date": "2026-09-15",
-    "touched_by": "manual（AI批改 50/100，动态短板）",
-    "last_fill": "2026-09-15"
+    "updated_at": "2026-09-16 10:40",
+    "data_date": "2026-09-16",
+    "touched_by": "manual（AI批改 63/100 盘中初评）",
+    "last_fill": "2026-09-16"
   },
   "mentor": {
     "updated_at": "2026-09-14",
@@ -31,6 +31,13 @@
     ]
   },
   "sections": [
+    {
+      "id": "review-0916",
+      "date": "2026-09-16",
+      "title": "当日复盘 · 9/16 盘中",
+      "summary": "「筹码仓红盘跑路、康龙盘中接刀」——把9/15犹豫的铭普止盈今天落地(09:51清仓)、方向判『平/死水』命中；但刚清仓又盘中接康龙、自以为接飞刀（AI 63/100 盘中初评）",
+      "html": "<div class=\"panel-sub\">东财权威盘中(09-56,终版待收盘锁定)：5万口径总资产 <strong class=\"mono\">53,801.00</strong>、当日 <strong class=\"mono\" style=\"color:var(--green)\">+204</strong>(盘中)、收益率 7.60%、仓位 55.79%、现金 23,786。成交胜率升至 <strong class=\"mono\">41.67%</strong>(5胜7负)。<br>操作：09:51 <strong class=\"mono\">清仓铭普</strong> 500股@成本24.122 卖29.63(红盘跑路)；09:52 <strong class=\"mono\">新买康龙</strong> 300股@成本43.544 现43.15(-0.90%，盘中接刀偏急)。持仓：沃尔核材 1000股@17.034现17.07(+0.21%)、康龙 300股、铭普 0。</div><div style=\"display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px\"><div style=\"background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px\"><div style=\"font-size:12px;color:var(--muted);letter-spacing:.05em\">AI综合</div><div class=\"mono\" style=\"font-size:22px;font-weight:700\" style=\"color:var(--orange)\">63/100</div><div style=\"font-size:12px;color:var(--muted);margin-top:4px\">方向22+个股17+预案16+纪律8(盘中)</div></div><div style=\"background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px\"><div style=\"font-size:12px;color:var(--muted);letter-spacing:.05em\">当日动作</div><div style=\"font-size:15px;font-weight:700;margin-top:4px;color:var(--green)\">清仓铭普 + 买康龙</div><div style=\"font-size:12px;color:var(--muted);margin-top:4px\">09:51 铭普@29.63 · 09:52 康龙@43.50</div></div><div style=\"background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:14px\"><div style=\"font-size:12px;color:var(--muted);letter-spacing:.05em\">当日盈亏</div><div class=\"mono\" style=\"font-size:15px;font-weight:700;margin-top:4px;color:var(--green)\">+¥204(盘中)</div><div style=\"font-size:12px;color:var(--muted);margin-top:4px\">仓位55.79% 现金充足</div></div></div><div style=\"margin-top:16px;font-size:13.5px;color:var(--ink);line-height:1.85\"><strong style=\"color:var(--green)\">① 筹码仓红盘跑路=今天最好的一笔 ✅</strong>09:51 把缠在题材上的铭普(蹭CPO、无估值锚)按盘前「红盘就出」清仓@29.63，把9/15犹豫没做的止盈今天落地——『筹码/情绪仓高开跑路』纪律真正兑现，成交胜率升到41.67%。<br><strong style=\"color:var(--green)\">② 方向判「平/死水/轮动」命中 ✅</strong>盘中缩量未大涨、震荡轮动，较9/15判「低开高走」落空明显改善；诚实承认「没预判到自己康龙买点」。<br><strong style=\"color:var(--orange)\">③ 康龙盘中接刀偏急 ⚠️</strong>想用「产业β(景气)+公司α(业绩真)」中线布局没错，但缩量死水盘里43.5盘中直接上、非企稳/右侧买点；用户自认『接飞刀』——类型选对、时点偏急，踩病根H2。对照市值/均线赔率不算高，隐含的还是『先上车再调锚』。<br><strong style=\"color:var(--red)\">④ 反思质量本轮最高 ✅</strong>主动点破『不该盘中加、应尾盘或杀得嗷嗷叫再加』、强调『买票要清楚赚β/α/筹码哪种钱』、『别只看消息热点、要价头+产业思维』、『控制聊天群晒单情绪』——把赚钱类型框架真正内化并自我纠正，是质的进步。</div><div class=\"callout\" style=\"margin-top:14px;border-left:3px solid var(--accent)\"><strong>给明天的自己（现在写，不盘中想）：</strong><br>・康龙化成 300股：把中线仓写死触发价与时点——跌破成本43.54(-3%≈42.2)止损，加仓只等<strong>尾盘企稳或杀得嗷嗷叫</strong>，盘中不追，别让手痒把“好票”买成“贵票”。<br>・沃尔核材 1000股：破17.0(成本区上方3%)且不放量暂持，破16.9果断离场。<br>・总：买点从「觉得公司不错」改成「这个价位+这个时点才买」——给每笔写触发价与时点；铭普清仓后的现金要忍住“立刻换下一只”，空仓等待也是进攻。<br>・赚钱类型：每笔记标签 β/α/筹码——今天铭普=筹码仓(红盘跑路✓)、康龙=产业β+α(时点偏急⚠️)。<br>・宏观：缩量临近假期、死水延续，反弹是减仓机会不是加仓机会，耐心等冰点。</div>"
+    },
     {
       "id": "review-0915",
       "date": "2026-09-15",
