@@ -1,19 +1,19 @@
 {
   "_meta": {
     "desc": "模拟盘完整账本 v2：由东财全量调仓+账户权威数据重建。已了结分票除兖矿/大金为 app 已验证外，其余由调仓记录自动核算；equity_points 为逐日净值序列（锚点+分段校正，末点对齐权威总资产）。",
-    "generated_at": "2026-09-15",
-    "data_date": "2026-09-15",
+    "generated_at": "2026-09-16",
+    "data_date": "2026-09-16",
     "equity_rebuild": "daily-sequence(gen_ledger)"
   },
   "account": {
-    "nominal_assets": 1003596.63,
+    "nominal_assets": 1003801.0,
     "nominal_return_pct": 0.36,
-    "real_assets": 53596.63,
-    "real_return_pct": 7.19,
-    "position_pct": 58.85,
-    "cash": 22056.63,
+    "real_assets": 53801.0,
+    "real_return_pct": 7.6,
+    "position_pct": 55.79,
+    "cash": 23786.0,
     "start_date": "2026年07月14日",
-    "daily_pnl_today": -1000.0,
+    "daily_pnl_today": 204.37,
     "survey": {
       "日收益率": -0.1,
       "5日收益率": 0.32,
@@ -115,6 +115,24 @@
     "note": "已确认轮次(app权威)+自动归因合计 与 账户权威累计已实现 的差额（含分红/费用/股数口径差异）；为空仓期"
   },
   "trades": [
+    {
+      "time": "2026-09-16 09:52",
+      "name": "康龙化成",
+      "dir": "买",
+      "px": 43.5,
+      "pos_bef": "0.00",
+      "pos_aft": "1.30",
+      "code": "300759"
+    },
+    {
+      "time": "2026-09-16 09:51",
+      "name": "铭普光磁",
+      "dir": "卖",
+      "px": 29.63,
+      "pos_bef": "1.48",
+      "pos_aft": "0.00",
+      "code": "002902"
+    },
     {
       "time": "2026-09-14 09:59",
       "name": "沃尔核材",
@@ -485,7 +503,7 @@
       "code": "600188"
     }
   ],
-  "trade_count": 41,
+  "trade_count": 43,
   "equity_points": [
     {
       "date": "2026-07-14",
