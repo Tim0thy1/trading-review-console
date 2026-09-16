@@ -65,8 +65,9 @@ AI 不得改写，也**不得凭空编造缺失的数字**——缺的字段留�
    - `eval.json` sections（全面评测当日复盘）
    - `journal.json` entries 头部插入当日修炼手记（`latest:true`，去掉旧 latest）
    - 复盘里「位置% 高 ≠ 不能买」等判读口径，落进批改注释而非当禁令
-5. **校验+推送**：`python3 setup/ai_pipeline.py --check` 校验 JSON 合法 && 时间戳更新；
-   `git add data/ setup/ tools/ && git commit -m "改作业: <日期>" && git push`，再由 AI 回报小结。
+5. **六处自检 + 推送**：先按下方「每日六处同步自检」逐项打勾（账户总览/调仓流水/复盘日历/收益日历/盘前预测/全景评估）；
+   `python3 setup/ai_pipeline.py --check` 校验 JSON 合法 && 时间戳更新；
+   **六处全部命中当日** 才 `git add data/ setup/ tools/ && git commit -m "改作业: <日期>" && git push`，再由 AI 回报小结。
 
 ### 改作业的边界（不许越）
 - 数字权威字段（total_assets / pnl / win_rate / equity_points…）一律以脚本/东财为准，AI 只读不改。
@@ -101,3 +102,33 @@ AI 不得改写，也**不得凭空编造缺失的数字**——缺的字段留�
 | ledger.json | 净值曲线/收益日历/历史盈亏/胜率 | charts.js + 内联脚本 |
 
 > 修改这些 JSON 后**无需改 HTML**；页面强刷即可看到新值。
+
+## 每日六处同步自检（防漏铁律）
+
+> 历史教训：曾只同步 forecast 却漏同步 `eval.json`（复盘日历缺当日），又漏同步 `ledger.json` 权益点与 `equity_history.json`（收益日历缺当日），用户反复提醒仍未根治。**根因是数据源分散、靠记忆补，必须改成逐项穷举打勾。**
+
+每次「前辈，干活了」收尾、推送前，必须对下面六处**逐项确认当日日期已出现**，缺一即视为未完成、不得推送：
+
+| # | 控制台模块 | 数据文件 → 字段 | 当日必验 |
+|---|---|---|---|
+| 1 | 账户总览 / 顶部汇总卡 | `live-snapshot.json` → `account` | 总资产/收益率/仓位/现金与东财一致 |
+| 2 | 调仓流水 / 当前持仓 | `live-snapshot.json` → `positions` `all_trades` | 当日新增成交逐条齐全（时间/标的/方向/价） |
+| 3 | 复盘日历 / 当日复盘 | `data/eval.json` → `sections[]`（带 `date`） | 日历出现当日、展开可见全文 |
+| 4 | 收益日历 / 权益曲线 | `data/ledger.json` → `equity_points` `daily_calendar` + `data/equity_history.json` | 三处末点=当日（收盘总资产/当日盈亏/累计收益率） |
+| 5 | 盘前预测 / AI判读七维 | `data/forecast.json` | 当日预测 + `review`(actual/judge/overall) |
+| 6 | 历史盈亏 / 胜率 / 全景评估 | `data/ledger.json` → `closed_positions` `summary`（全景另读 forecast） | 当日已了结结算、实时胜率 |
+
+**收尾检验命令**（在 `trading-review-console/` 目录运行）：
+```bash
+python3 - <<'PY'
+import json
+def t(x): return x['date']
+d=json.load(open('data/ledger.json',encoding='utf-8'))
+for k in ('daily_calendar','equity_points'): print(k,'末点',t(d[k][-1]))
+print('equity_history 末点', t(json.load(open('data/equity_history.json',encoding='utf-8'))[-1]))
+print('eval sections 日期', [s['date'] for s in json.load(open('data/eval.json',encoding='utf-8'))['sections']][:3])
+f=json.load(open('data/forecast.json',encoding='utf-8'))
+print('forecast 最新', t(f[-1]), '| 有review' if 'review' in f[-1] else '| 无review!(漏同步)')
+PY
+```
+期望每处「末点/最新」都是**当日**。任何一处落后 → 先定位补齐（脚本产出 or AI 补判断字段）再推送，禁止带着旧日期提交。
