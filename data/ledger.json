@@ -1,19 +1,19 @@
 {
   "_meta": {
     "desc": "模拟盘完整账本 v2：由东财全量调仓+账户权威数据重建。已了结分票除兖矿/大金为 app 已验证外，其余由调仓记录自动核算；equity_points 为逐日净值序列（锚点+分段校正，末点对齐权威总资产）。",
-    "generated_at": "2026-09-16",
-    "data_date": "2026-09-16",
+    "generated_at": "2026-09-17",
+    "data_date": "2026-09-17",
     "equity_rebuild": "daily-sequence(gen_ledger)"
   },
   "account": {
-    "nominal_assets": 1003801.0,
+    "nominal_assets": 1003642.44,
     "nominal_return_pct": 0.36,
-    "real_assets": 53801.0,
-    "real_return_pct": 7.6,
-    "position_pct": 55.79,
-    "cash": 23786.0,
+    "real_assets": 53642.44,
+    "real_return_pct": 7.28,
+    "position_pct": 82.65,
+    "cash": 9307.44,
     "start_date": "2026年07月14日",
-    "daily_pnl_today": 204.37,
+    "daily_pnl_today": -158.56,
     "survey": {
       "日收益率": -0.1,
       "5日收益率": 0.32,
@@ -115,6 +115,15 @@
     "note": "已确认轮次(app权威)+自动归因合计 与 账户权威累计已实现 的差额（含分红/费用/股数口径差异）；为空仓期"
   },
   "trades": [
+    {
+      "time": "2026-09-17 11:06",
+      "name": "彤程新材",
+      "dir": "买",
+      "px": 72.32,
+      "pos_bef": "0.00",
+      "pos_aft": "1.44",
+      "code": "603650"
+    },
     {
       "time": "2026-09-16 09:52",
       "name": "康龙化成",
@@ -503,7 +512,7 @@
       "code": "600188"
     }
   ],
-  "trade_count": 43,
+  "trade_count": 44,
   "equity_points": [
     {
       "date": "2026-07-14",
@@ -692,6 +701,10 @@
     {
       "date": "2026-09-16",
       "close": 53801.0
+    },
+    {
+      "date": "2026-09-17",
+      "close": 53642.44
     }
   ],
   "daily_calendar": [
@@ -976,6 +989,12 @@
       "close": 53801.0,
       "daily_pnl": 204.37,
       "cum_return_pct": 7.6
+    },
+    {
+      "date": "2026-09-17",
+      "close": 53642.44,
+      "daily_pnl": -158.56,
+      "cum_return_pct": 7.28
     }
   ],
   "summary": {
