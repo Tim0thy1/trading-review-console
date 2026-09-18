@@ -106,13 +106,30 @@
         "sell": 19.47
       },
       "note": "自动核算(21.53-22.31)×599股，费买13.43/卖19.47"
+    },
+    "铭普光磁R1": {
+      "shares": 1000,
+      "cost": 24.122,
+      "avg_sell": 30.245,
+      "sell_px": [
+        30.86,
+        29.63
+      ],
+      "pnl": 6123,
+      "status": "closed",
+      "last_sell_date": "2026-09-16",
+      "fees": {
+        "buy": 0.0,
+        "sell": 0.0
+      },
+      "note": "自动核算(30.86-24.122)×500+(29.63-24.122)×500，成本24.122依东财snapshot，费未单列(以app为准)"
     }
   },
-  "realized_pnl_total": 1505.14,
+  "realized_pnl_total": 7628.14,
   "reconcil": {
     "app_authority_pnl": 413.5,
     "gap": -1091.64,
-    "note": "已确认轮次(app权威)+自动归因合计 与 账户权威累计已实现 的差额（含分红/费用/股数口径差异）；为空仓期"
+    "note": "已确认轮次(app权威)+自动归因合计 与 账户权威累计已实现 的差额（含分红/费用/股数口径差异）；铭普R1(东财成本24.122)已补入账修正归因遗漏"
   },
   "trades": [
     {
@@ -999,8 +1016,8 @@
   ],
   "summary": {
     "realized_today": 0,
-    "closed_count": 9,
-    "win_count": 3,
+    "closed_count": 10,
+    "win_count": 4,
     "lose_count": 6
   }
 }
