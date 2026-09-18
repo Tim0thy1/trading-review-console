@@ -238,5 +238,10 @@
     "date": "2026-09-17",
     "close": 54147.44,
     "source": "authority(东财9/17收盘)"
+  },
+  {
+    "date": "2026-09-18",
+    "close": 54147.44,
+    "source": "authority(东财)"
   }
 ]
