@@ -57,9 +57,21 @@ def judge(trade, o, h, l, c):
     return p, verdict, flag
 
 def load_snapshot_trades():
-    with open(SNAP, 'r', encoding='utf-8') as f:
-        snap = json.load(f)
-    return snap.get('all_trades', []) or snap.get('recent_trades', [])
+    try:
+        with open(SNAP, 'r', encoding='utf-8') as f:
+            snap = json.load(f)
+        at = snap.get('all_trades') or snap.get('trade_history')
+        if at: return at
+    except Exception:
+        pass
+    # 回退：快照若无全量流水，读账本已合并的全量调仓（带 code/dir/px/time）
+    p = os.path.join(HERE, '..', 'data', 'ledger.json')
+    try:
+        with open(p, encoding='utf-8') as f:
+            return json.load(f).get('trades', [])
+    except Exception as e:
+        print(f'[MISSING] 无法读取成交记录: {e}')
+        return []
 
 def main():
     since = sys.argv[1] if len(sys.argv) > 1 else None
