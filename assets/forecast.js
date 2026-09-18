@@ -51,17 +51,46 @@
   async function saveForecasts(list){
     var t = getToken();
     if(!t) return false;
+    var msg = 'forecast: 更新盘前预测记录 ('+todayStr()+')';
+    var content = JSON.stringify(list, null, 2);
+    var headers = { 'Authorization':'token '+t, 'Accept':'application/vnd.github+json', 'Content-Type':'application/json' };
+    var base = 'https://api.github.com/repos/' + REPO;
     try{
-      /* 先拿 sha（更新已有文件必须带） */
+      /* 读当前 main 头部提交：若它正好是同一天的上一条预测，就"改写(amend)"而非再堆一条 */
+      var refRes = await fetch(base + '/git/ref/heads/main', { headers: headers, cache:'no-store' });
+      if(!refRes.ok) throw new Error('ref '+refRes.status);
+      var headSha = (await refRes.json()).object.sha;
+      var headCommit = await (await fetch(base + '/git/commits/' + headSha, { headers: headers })).json();
+      var isSameDayTip = (headCommit.message || '').indexOf(msg) === 0;
+
+      if(isSameDayTip){
+        /* 新建 blob + tree（仅替换 forecast.json），构造以旧提交父节点为父的新提交，覆写 ref */
+        var blobRes = await fetch(base + '/git/blobs', { method:'POST', headers: headers, body: JSON.stringify({ content: content, encoding: 'utf-8' }) });
+        var blobSha = (await blobRes.json()).sha;
+        var treeRes = await fetch(base + '/git/trees', { method:'POST', headers: headers, body: JSON.stringify({ base_tree: headCommit.tree.sha, tree: [{ path: FILE, mode: '100644', type: 'blob', sha: blobSha }] }) });
+        var treeSha = (await treeRes.json()).sha;
+        var parentSha = (headCommit.parents && headCommit.parents.length) ? headCommit.parents[0].sha : null;
+        var comRes = await fetch(base + '/git/commits', { method:'POST', headers: headers, body: JSON.stringify({ message: msg, tree: treeSha, parents: parentSha ? [parentSha] : [] }) });
+        var newCommitSha = (await comRes.json()).sha;
+        /* 防竞态：覆写前再确认 ref 未被别处推进；被推进就走普通追加，宁可多一条也不丢别人的 */
+        var curRes = await fetch(base + '/git/ref/heads/main', { headers: headers, cache:'no-store' });
+        var curSha = (await curRes.json()).object.sha;
+        if(curSha === headSha){
+          var upd = await fetch(base + '/git/refs/heads/main', { method:'PATCH', headers: headers, body: JSON.stringify({ sha: newCommitSha, force: true }) });
+          return upd.ok;
+        }
+        /* ref 已前进：落入下方普通追加路径 */
+      }
+
+      /* 普通追加：contents API 更新文件（头部非当天预测提交时走此路径） */
       var sha = null;
-      var r0 = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILE, {
-        headers:{ 'Authorization':'token '+t, 'Accept':'application/vnd.github+json' }});
+      var r0 = await fetch(base + '/contents/' + FILE, { headers: headers });
       if(r0.ok){ sha = (await r0.json()).sha; }
-      var body = { message:'forecast: 更新盘前预测记录 ('+todayStr()+')', content: btoa(unescape(encodeURIComponent(JSON.stringify(list, null, 2)))), branch:'main' };
+      var body = { message: msg, content: btoa(unescape(encodeURIComponent(content))), branch:'main' };
       if(sha) body.sha = sha;
-      var res = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + FILE, {
+      var res = await fetch(base + '/contents/' + FILE, {
         method:'PUT',
-        headers:{ 'Authorization':'token '+t, 'Accept':'application/vnd.github+json', 'Content-Type':'application/json' },
+        headers: headers,
         body: JSON.stringify(body)
       });
       return res.ok;
