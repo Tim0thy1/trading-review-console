@@ -115,11 +115,34 @@
   }
 
   /* ---------- 渲染 ---------- */
+  function renderPanoDiscipline(){
+    /* 全景评估 · 历史预测纪律面板（预测表单已移除，仅保留历史淡入淡出口径） */
+    var pDays = document.getElementById('pano-fc-days');
+    if(!pDays) return;
+    var scored = forecasts.filter(function(f){ return f.review; });
+    var hits = scored.filter(function(f){ return f.review.dir_hit === true || f.review.dir_hit === 'part'; }).length;
+    pDays.textContent = forecasts.length;
+    document.getElementById('pano-fc-avg').textContent = scored.length ? Math.round(scored.reduce(function(s,f){ return s+f.review.score; },0)/scored.length) : '—';
+    document.getElementById('pano-fc-hit').textContent = scored.length ? Math.round(hits/scored.length*100)+'%' : '—';
+    var withDisc = scored.filter(function(f){ return typeof f.review.discipline === 'number'; });
+    document.getElementById('pano-fc-disc').textContent = withDisc.length ? (withDisc.reduce(function(s,f){return s+f.review.discipline;},0)/withDisc.length).toFixed(1) : '—';
+    var v = document.getElementById('pano-fc-verdict');
+    if(!forecasts.length){
+      v.innerHTML = '<span style="color:var(--muted)">暂无历史预测纪律数据。当前以每笔持仓档案为准绳，清仓结算后看止盈止损是否守住开仓约定。</span>';
+    } else {
+      var avg = Math.round(scored.reduce(function(s,f){ return s+f.review.score; },0)/scored.length);
+      var lvl = avg>=75?['中','var(--green)','历史方向判断稳定、预案可执行']:avg>=55?['中','var(--accent2)','方向感尚可，重点改为守住持仓档案的止盈止损']:avg>0?['弱','var(--red)','历史预测偏差大']:['待观察','var(--muted)','已开始记录，收盘对账后生成评估'];
+      v.innerHTML = '历史评估：<b style="color:'+lvl[1]+'">'+lvl[0]+'</b>（均分 '+avg+'/100，样本 '+scored.length+' 天）。'+lvl[2];
+    }
+  }
+
   function renderAll(){
     var today = todayStr();
     var rec = forecasts.find(function(f){ return f.date === today; });
-    var statusBar = document.getElementById('fc-status-bar');
     var formPanel = document.getElementById('fc-form-panel');
+    /* 预测表单模块已被移除（改为每笔持仓档案）。fy: 存在该模块才渲染表单，缺失时仅服务全景评估的历史纪律面板 */
+    if(!formPanel){ renderPanoDiscipline(); return; }
+    var statusBar = document.getElementById('fc-status-bar');
     var lockedPanel = document.getElementById('fc-locked-panel');
     document.getElementById('fc-form-date').textContent = '('+today+' · 现在 '+nowTime()+')';
 
@@ -177,24 +200,7 @@
     }
     document.getElementById('fc-kpi-streak').textContent = streak;
 
-    /* 全景评估 · 盘前预测纪律面板 */
-    var pDays = document.getElementById('pano-fc-days');
-    if(pDays){
-      pDays.textContent = forecasts.length;
-      document.getElementById('pano-fc-avg').textContent = scored.length ? Math.round(scored.reduce(function(s,f){ return s+f.review.score; },0)/scored.length) : '—';
-      document.getElementById('pano-fc-hit').textContent = scored.length ? Math.round(hits/scored.length*100)+'%' : '—';
-      var withDisc = scored.filter(function(f){ return typeof f.review.discipline === 'number'; });
-      document.getElementById('pano-fc-disc').textContent = withDisc.length ? (withDisc.reduce(function(s,f){return s+f.review.discipline;},0)/withDisc.length).toFixed(1) : '—';
-      var v = document.getElementById('pano-fc-verdict');
-      if(!forecasts.length){
-        v.innerHTML = '<span style="color:var(--red)">尚未建立预测记录。</span>盘前预测是全景评估的"事前思考"维度——从下个交易日开始，每天开盘前花3分钟填写预测与预案，收盘自动对账。';
-      } else {
-        var avg = Math.round(scored.reduce(function(s,f){ return s+f.review.score; },0)/scored.length);
-        var lvl = avg>=75?['强','var(--green)','方向判断稳定、预案可执行，守住中线持有逻辑，继续保持']:avg>=55?['中','var(--accent2)','方向感尚可，重点提升方向判定的稳定性和守住持有逻辑']:avg>0?['弱','var(--red)','预测与实际偏差大——先不求准，先把"有预案、守住中线"这件事做到']:['待观察','var(--muted)','已开始记录，收盘对账后生成评估'];
-        v.innerHTML = '当前评估：<b style="color:'+lvl[1]+'">'+lvl[0]+'</b>（均分 '+avg+'/100，样本 '+scored.length+' 天）。'+lvl[2]+
-          (scored.some(function(f){return typeof f.review.discipline==='number'&&f.review.discipline<20;})?'<br><span style="color:var(--red)">⚠️ 存在计划外交易记录——盘中操作脱离了盘前预案，这是当前最大失分点。</span>':'');
-      }
-    }
+    renderPanoDiscipline();
 
     /* 历史表 */
     var tbody = document.getElementById('fc-history-body');
@@ -285,9 +291,11 @@
     return out.join('');
   }
 
-  /* ---------- 提交 ---------- */
+  /* ---------- 提交（预测表单模块已移除；此处仅兼容旧版页保留） ---------- */
+  var sb = document.getElementById('fc-submit');
+  if(sb){
   var submitting = false;
-  document.getElementById('fc-submit').addEventListener('click', async function(){
+  sb.addEventListener('click', async function(){
     if(submitting) return;
     var st = document.getElementById('fc-token-tip');
     var token = getToken();
@@ -327,6 +335,7 @@
       st.className = 'token-status err';
     }
   });
+  }
 
   loadForecasts().then(function(list){ forecasts = list; renderAll(); });
 

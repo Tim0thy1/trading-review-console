@@ -46,9 +46,9 @@
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
         历史盈亏
       </div>
-      <div class="nav-item" data-target="forecast">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v3M5.6 5.6l2.1 2.1M2 12h3M22 12h-3M18.4 5.6l-2.1 2.1"/><circle cx="12" cy="14" r="5"/><path d="M8 21h8"/></svg>
-        盘前预测
+      <div class="nav-item" data-target="holdings">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+        持仓档案
       </div>
       <div class="nav-item" data-target="profile">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>
@@ -175,18 +175,18 @@
       </div>
     </section>
 
-    <!-- ===== MODULE 5: 盘前预测 ===== -->
-    <section class="module" id="module-forecast">
+    <!-- ===== MODULE 5: 持仓档案 ===== -->
+    <section class="module" id="module-holdings">
       <div class="m-head">
-        <div class="m-kicker">Forecast · 盘前预测</div>
-        <div class="m-title">每天开盘前写下预测与预案，收盘后对账打分</div>
-        <div class="m-desc">预测在开盘前提交并锁定（不可改）；收盘拉数据时按实际表现自动评分。预测准确度与预案质量纳入全景评估——用制度消灭"盘中临时起意"。</div>
+        <div class="m-kicker">Position Journal · 每笔持股档案</div>
+        <div class="m-title">一笔持股，一份作战账本</div>
+        <div class="m-desc">以「一笔完整持股」为单位记录，不做每日过度预测：开仓写清赚什么钱 / 理由 / 预计走势 / 到哪止盈止损；持有过程补想法与操作修改的理由；清仓记录止盈止损的理由与是否遵守开仓约定；AI 在结算后为整笔评分。</div>
       </div>
 
-      <!-- 赚钱类型引导：买之前先答你在赚哪种钱 -->
+      <!-- 赚钱类型引导：开仓之前先答你在赚哪种钱 -->
       <div class="panel" style="margin-top:14px;padding:16px">
-        <div style="display:flex;align-items:center;gap:10px;font-weight:800;font-size:14px">🎯 买之前先答：你在赚哪一种钱？</div>
-        <div style="font-size:12.5px;color:var(--muted);margin-top:4px">类型决定持有周期、要不要估值锚、何时走、和主要病根。答不上来 = 在赚"感觉的钱"，进场即设错、扣分。</div>
+        <div style="display:flex;align-items:center;gap:10px;font-weight:800;font-size:14px">🎯 开仓前先答：你在赚哪一种钱？</div>
+        <div style="font-size:12.5px;color:var(--muted);margin-top:4px">类型决定持有周期、要不要估值锚、何时走、和主要病根。答不上来 = 在赚"感觉的钱"，这一笔的开仓档案就没写对。</div>
         <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px">
           <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:12px">
             <div style="font-weight:800;font-size:14px">β · 产业</div>
@@ -199,7 +199,7 @@
             <div style="font-weight:800;font-size:14px">α · 公司</div>
             <div style="font-size:11px;color:var(--muted);margin-top:2px">赚公司自身超预期的钱</div>
             <div style="font-size:12px;margin-top:8px;line-height:1.75">
-              <b>判定：</b>凭啥跑赢同行？<br><b>验证：</b>业绩 / 订单 / 估值锚（≥5家覆盖、离散&lt;30%）<br><b>周期：</b>到逻辑兑现<br><b>估值锚：</b>必须（5家覆盖）<br><b>何时走：</b>逻辑证伪（业绩miss）<br><b style="color:var(--red)">病根：</b>用"长期看好"扛交易仓亏损
+              <b>判定：</b>凭啥跑赢同行？<br><b>验证：</b>业绩 / 订单 / 估值锚<br><b>周期：</b>到逻辑兑现<br><b>估值锚：</b>必须<br><b>何时走：</b>逻辑证伪（业绩miss）<br><b style="color:var(--red)">病根：</b>用"长期看好"扛交易仓亏损
             </div>
           </div>
           <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:12px;padding:12px">
@@ -210,132 +210,21 @@
             </div>
           </div>
         </div>
-        <div style="font-size:12px;color:var(--muted);margin-top:12px;border-top:1px solid var(--rule);padding-top:10px;line-height:1.7">最怕把三种混成一种买法：<b style="color:var(--red)">用α"长期看好"的理由，去做筹码仓</b>——那是"舍不得卖"的根源。每次下单先标：<b>这笔赚的是 β / α / 筹码情绪 里的哪一种？</b></div>
+        <div style="font-size:12px;color:var(--muted);margin-top:12px;border-top:1px solid var(--rule);padding-top:10px;line-height:1.7">最怕把三种混成一种买法：<b style="color:var(--red)">用α"长期看好"的理由，去做筹码仓</b>——那是"舍不得卖"的根源。每次开仓先标：<b>这笔赚的是 β / α / 筹码情绪 里的哪一种？</b>开仓就写进档案，清仓时对照验证。</div>
       </div>
 
-      <!-- 今日状态条 -->
-      <div id="fc-status-bar" class="callout" style="margin-bottom:18px"></div>
-
-      <!-- 预测表单 -->
-      <div class="panel" id="fc-form-panel">
-        <div class="panel-title">📝 提交今日盘前预测 <span id="fc-form-date" style="font-weight:400;color:var(--muted);font-size:13px"></span></div>
-        <div class="panel-sub">9:15 前填写。写完即锁定，收盘后系统自动对账评分。没有预测的交易日按 0 分计入纪律。</div>
-
-        <div class="fc-field">
-          <label>① 大盘预判（上证指数今日方向）<span class="fc-req">*</span></label>
-          <div class="fc-seg" id="fc-mkt-dir">
-            <button type="button" data-v="涨">上涨</button>
-            <button type="button" data-v="平">横盘震荡</button>
-            <button type="button" data-v="跌">下跌</button>
-            <button type="button" data-v="低开高走">低开高走(V型)</button>
-            <button type="button" data-v="高开低走">高开低走(冲高回落)</button>
-          </div>
-        </div>
-
-        <div class="fc-field">
-          <label>② 大盘判断依据 / 幅度预期</label>
-          <textarea id="fc-mkt-reason" rows="2" placeholder="例：昨日缩量止跌+隔夜美股平稳，预计低开后回勾，上证收在3850上方…"></textarea>
-        </div>
-
-        <div class="fc-field">
-          <label>③ 持仓预判（每只一行：代码/名称 + 预判方向 + 关键价位）<span class="fc-req">*</span></label>
-          <textarea id="fc-hold-view" rows="3" placeholder="例：
-亨通光电：回踩57支撑不破则收红，破57减1/3
-申菱环境：反弹到92.5不过就减半
-星源材质：跌破14.20止损离场"></textarea>
-        </div>
-
-        <div class="fc-field">
-          <label>④ 应对预案（触发条件 → 动作，必须可执行）<span class="fc-req">*</span></label>
-          <textarea id="fc-plan" rows="3" placeholder="例：
-若大盘二次探底不破3851且龙头翻红→接回减掉的仓位
-若申菱反抽92.5放量不过→执行减半
-单日最多操作2笔，不做计划外交易"></textarea>
-        </div>
-
-        <div class="fc-field">
-          <label>⑤ 情绪自评（昨晚到现在）</label>
-          <div class="fc-seg" id="fc-mood">
-            <button type="button" data-v="冷静">冷静</button>
-            <button type="button" data-v="正常">正常</button>
-            <button type="button" data-v="焦躁">焦躁/想翻本</button>
-            <button type="button" data-v="亢奋">亢奋/怕踏空</button>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:10px;margin-top:14px">
-          <button id="fc-submit" class="primary" style="flex:1;padding:12px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:700;font-size:14px;cursor:pointer">🔒 锁定并提交预测</button>
-        </div>
-        <div id="fc-token-tip" class="token-status" style="margin-top:8px"></div>
+      <!-- 持仓档案 KPI -->
+      <div class="kpi-grid" style="margin-top:14px">
+        <div class="kpi"><div class="kpi-label">档案笔数</div><div class="kpi-value" id="hk-days">0</div><div class="kpi-sub">当前建档持股</div></div>
+        <div class="kpi"><div class="kpi-label">持有中</div><div class="kpi-value" style="color:var(--accent)" id="hk-open">0</div><div class="kpi-sub">未清仓</div></div>
+        <div class="kpi"><div class="kpi-label">已清仓</div><div class="kpi-value" id="hk-closed">0</div><div class="kpi-sub">待/已结算</div></div>
+        <div class="kpi"><div class="kpi-label">AI结算均分</div><div class="kpi-value" style="color:var(--accent2)" id="hk-avg">—</div><div class="kpi-sub">按笔评分 /100</div></div>
       </div>
 
-      <!-- 已锁定提示 -->
-      <div class="panel" id="fc-locked-panel" style="display:none;border-color:rgba(217,119,6,.45)">
-        <div class="panel-title">🔒 今日预测已锁定</div>
-        <div class="panel-sub">开盘前提交的内容不可修改——这就是"先写后验"的意义。收盘后自动对账。</div>
-        <div id="fc-today-review" style="margin-top:10px"></div>
-      </div>
+      <!-- 每笔持股档案列表 -->
+      <div id="holdings-list" style="margin-top:16px"><!-- 由 data/holdings.json 动态渲染：开仓→持有→清仓→AI评分 --></div>
 
-      <!-- 盘中思路 -->
-      <div class="panel" id="fc-intraday-panel" style="margin-top:20px">
-        <div class="panel-title">🕐 盘中思路 <span id="fc-intraday-date" style="font-weight:400;color:var(--muted);font-size:13px"></span></div>
-        <div class="panel-sub">盘中随手记：看到什么异动、情绪变化、临时操作及其理由。可随时修改保存，收盘后用于和盘前预测对账。</div>
-        <textarea id="fc-intraday" rows="5" style="width:100%;box-sizing:border-box;background:var(--bg3);color:var(--ink);border:1px solid var(--rule);border-radius:10px;padding:12px;font-size:13.5px;line-height:1.7" placeholder="例：金安国纪水下-6%都能拉起来，强势就是不一样；沃尔、铭普就没那么厉害了，特别是铭普拉红都做不到，盘前预测错了…"></textarea>
-        <div style="display:flex;gap:10px;margin-top:10px">
-          <button id="fc-intraday-save" class="primary" style="flex:1;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:700;font-size:14px;cursor:pointer">💾 保存盘中思路</button>
-        </div>
-        <div id="fc-intraday-tip" class="token-status" style="margin-top:8px"></div>
-      </div>
-
-      <!-- 盘后反思 -->
-      <div class="panel" id="fc-reflect-panel" style="margin-top:20px">
-        <div class="panel-title">🌙 盘后反思 <span id="fc-reflect-date" style="font-weight:400;color:var(--muted);font-size:13px"></span></div>
-        <div class="panel-sub">收盘后整理：今天操作对不对、盘前预案有无执行到位、心态有没有动摇。可随时修改保存，是"修炼复盘"的核心输入。</div>
-        <textarea id="fc-reflect" rows="5" style="width:100%;box-sizing:border-box;background:var(--bg3);color:var(--ink);border:1px solid var(--rule);border-radius:10px;padding:12px;font-size:13.5px;line-height:1.7" placeholder="例：太容易被一天涨跌引得心动了，CRO/CXO动了心痒痒。虽然操作没变，但策略在动摇，不知道是好事的动态变化还是坏事的摇摆…"></textarea>
-        <div style="display:flex;gap:10px;margin-top:10px">
-          <button id="fc-reflect-save" class="primary" style="flex:1;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-weight:700;font-size:14px;cursor:pointer">💾 保存盘后反思</button>
-        </div>
-        <div id="fc-reflect-tip" class="token-status" style="margin-top:8px"></div>
-      </div>
-
-      <!-- 评分规则说明 -->
-      <div class="panel" style="margin-top:20px">
-        <div class="panel-title">📊 评分规则（收盘后自动计算）</div>
-        <div class="panel-sub">满分100 = 方向25 + 个股25 + 预案25 + 纪律25。按「上班族 + 开盘半小时盯盘 + 中线持有」的真实能力设计，不逼精确点位。</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:12px;font-size:12.5px;line-height:1.7">
-          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent)">方向 25分</b><br>只判「方向级」，不要求点位：涨/跌/平、或低开高走/高开低走。完全命中25 / 相邻方向10（如判跌实为震荡）/ 反向0。开盘半小时内可判即可</div>
-          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent)">个股 25分（中线口径）</b><br>不追精确点位。看「中线持有逻辑」：是否守住持有逻辑（趋势/主线/基本面未破）= 满分；趋势走坏仍不处理 = 扣分。方向对 15 + 中线持有合理性 10</div>
-          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent)">预案 25分（轻量触发句）</b><br>开盘 30 分钟能执行的一句话即可：有明确触发条件+动作=25；写了但当日没触发=20；模糊无触发=8；没写=0。不要求盯全天</div>
-          <div style="background:var(--bg3);border:1px solid var(--rule);border-radius:10px;padding:12px"><b style="color:var(--accent2)">纪律 25分</b><br>当日实际操作是否都在预案内、是否守住中线不加乱仓：全部在内25；1笔计划外交易扣8；情绪标"焦躁/亢奋"仍交易再扣7</div>
-        </div>
-      </div>
-
-      <!-- 历史记录 -->
-      <div class="panel" style="margin-top:20px">
-        <div class="panel-title">🗂️ 预测 vs 实际 · 历史档案</div>
-        <div class="panel-sub">每条记录：盘前预测（锁定）→ 收盘对账（自动填充）→ 得分。持续积累形成"预测能力曲线"。</div>
-        <div class="kpi-grid" style="margin-top:12px">
-          <div class="kpi"><div class="kpi-label">已记录天数</div><div class="kpi-value" id="fc-kpi-days">0</div><div class="kpi-sub">个交易日</div></div>
-          <div class="kpi"><div class="kpi-label">平均得分</div><div class="kpi-value" id="fc-kpi-avg">—</div><div class="kpi-sub">满分100</div></div>
-          <div class="kpi"><div class="kpi-label">大盘方向命中率</div><div class="kpi-value" id="fc-kpi-hit">—</div><div class="kpi-sub">含相邻方向</div></div>
-          <div class="kpi"><div class="kpi-label">连续打卡</div><div class="kpi-value" id="fc-kpi-streak">0</div><div class="kpi-sub">最近连续记录天</div></div>
-        </div>
-        <div id="fc-history-wrap">
-        <div class="table-wrap" style="max-height:420px;margin-top:12px">
-          <table style="width:100%;font-size:12.5px;border-collapse:collapse" id="fc-history-table">
-            <thead><tr>
-              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule);white-space:nowrap">日期</th>
-              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">盘前预测</th>
-              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">盘中思路</th>
-              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">盘后反思</th>
-              <th style="text-align:center;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">得分</th>
-              <th style="text-align:left;padding:8px;color:var(--muted);border-bottom:1px solid var(--rule)">对账点评</th>
-            </tr></thead>
-            <tbody id="fc-history-body"><tr><td colspan="6" style="padding:20px;text-align:center;color:var(--muted)">暂无记录——明早 9:15 前写下第一条盘前预测吧</td></tr></tbody>
-          </table>
-        </div>
-        </div>
-      </div>
+      <div class="callout" style="margin-top:18px">使用说明：展开任一持股 → 可修改开仓字段（赚钱类型 / 理由 / 预计走势 / 止盈止损点位）、新增持有记录、保存本笔档案（GitHub，同天多次保存自动改写不堆提交）。<b style="color:var(--accent)">清仓不再是"每天想一遍"而是"结算这一笔"：止盈止损的理由是否守住开仓时写下的点位，结算后由 AI 对整笔打分。</b></div>
     </section>
 
     <!-- ===== MODULE 6: 全景评估 ===== -->
@@ -429,6 +318,7 @@
 <script src="assets/trades.js"></script>
 
 <script src="assets/nav.js"></script>
+<script src="assets/holdings.js"></script>
 <script src="assets/forecast.js"></script>
 </body>
 </html>
