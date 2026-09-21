@@ -6,7 +6,7 @@
     "equity_rebuild": "daily-sequence(gen_ledger)"
   },
   "account": {
-    "nominal_assets": 1004147.44,
+    "nominal_assets": 1004424.44,
     "nominal_return_pct": 0.36,
     "real_assets": 54424.44,
     "real_return_pct": 8.85,
