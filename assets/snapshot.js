@@ -1,0 +1,205 @@
+/* assets/snapshot.js — 总览KPI/持仓卡/风险矩阵/全景评估动态渲染
+   数据源：live-snapshot.json（总览）+ data/ledger.json（全景评估） */
+(function(){
+  function fmt(n){ return n==null ? '—' : Number(n).toLocaleString('zh-CN'); }
+  function load(){
+    fetch('live-snapshot.json', {cache:'no-store'})
+      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(d){
+        var a = d.account || {}, fmtp = d.recent_trades || [];
+
+        // ---- 总览 KPI / 页脚统一刷新（跟随快照，不再硬编码）----
+        if(typeof window.__applySnapshot === 'function'){ window.__applySnapshot(d); }
+        var posVal = (d.positions||[]).reduce(function(s,p){ return s + p.price*p.shares; }, 0);
+        var cash = a.total_assets - posVal;
+        var set = function(id, txt){ var el=document.getElementById(id); if(el) el.textContent = txt; };
+        set('k-total', '¥' + fmt(a.total_assets));
+        set('k-return', (a.total_return_pct>0?'+':'') + a.total_return_pct + '%');
+        set('k-pnl', (a.total_assets-50000>0?'+':'') + '¥' + fmt(a.total_assets-50000));
+        set('k-pos', (a.position_pct==null?'—':a.position_pct+'%'));
+        set('k-pos-sub', '持仓市值' + fmt(Math.round(posVal)));
+        var dp = a.daily_pnl;
+        var dEl = document.getElementById('k-daily');
+        if(dEl){
+          if(dp==null){ dEl.textContent='—'; dEl.className='kpi-value'; }
+          else {
+            dEl.textContent = (dp>0?'+':'') + '¥' + fmt(Math.round(dp*100)/100);
+            dEl.className = 'kpi-value ' + (dp>0?'up':(dp<0?'dn':''));
+            dEl.style.color = ''; dEl.style.color = dp>0?'var(--red)':(dp<0?'var(--green)':'');
+            document.getElementById('k-daily-sub').textContent = '相对上次同步(总资产 '+fmt(Math.round((a.prev_total_assets||0)*100)/100)+')';
+          }
+        }
+        set('k-cash', '¥' + fmt(Math.round(cash*100)/100));
+        set('k-cash-sub', fmt(a.total_assets) + ' - ' + fmt(Math.round(posVal)));
+
+        // ---- 持仓明细卡动态渲染 ----
+        var pc = document.getElementById('pos-cards');
+        var holdings = d.positions || [];
+        var active = holdings.filter(function(p){ return (p.shares||0) > 0; });
+        if(pc){
+          if(active.length === 0){
+            // 空仓态：今日全部清仓
+            var sellHtml = '<div class="pos-head"><div><div class="pos-name" style="font-size:15px">当前空仓 · 今日已全部清仓</div><div class="pos-tag" style="margin-top:8px">仓位 0% · 现金 ¥' + fmt(Math.round(a.total_assets)) + '</div></div></div>'
+              + '<div style="margin-top:14px;font-size:13px;color:var(--muted);line-height:1.8">'
+              + '截至 ' + d.synced_at + '，账户当前无持仓。东财记录的最新卖出：</div><div style="margin-top:10px">';
+            (d.recent_trades||[]).forEach(function(t){
+              var isSell = t.mmbz==='卖';
+              if(!isSell) return;
+              sellHtml += '<div style="display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--rule);border-radius:8px;padding:6px 10px;margin:0 8px 8px 0;font-size:12px">'
+                + '<span style="color:var(--red);font-weight:700">'+t.mmbz+'</span><span>'+(t.name||'')+'</span><span class="mono" style="color:var(--muted)">@'+t.price+'</span><span class="mono" style="color:var(--muted)">'+t.time+'</span></div>';
+            });
+            sellHtml += '</div>';
+            pc.innerHTML = '<div class="pos-card">'+sellHtml+'</div>';
+          } else {
+            var posCardHtml = active.map(function(p){
+              var up = p.return_pct>=0;
+              var f = up?'up':'dn';
+              return '<div class="pos-card"><div class="pos-head"><div><div class="pos-name">'+p.name+' <span class="pos-code">'+p.code+'</span></div>'
+                + '<div class="pos-tag" style="margin-top:8px">持仓中 · 持'+p.days+'天</div></div>'
+                + '<div style="text-align:right"><div class="mono '+f+'" style="font-size:20px;font-weight:700">¥'+fmt(Math.round(p.cost*p.shares*(1+p.return_pct/100)))+'</div>'
+                + '<div class="mono '+f+'" style="font-size:13px">'+(p.return_pct>0?'+':'')+p.return_pct+'%</div></div></div>'
+                + '<div class="pos-metrics"><div class="pm"><div class="pm-label">现价</div><div class="pm-value">'+p.price+'</div></div>'
+                + '<div class="pm"><div class="pm-label">持仓 / 成本</div><div class="pm-value">'+p.shares+' <span style="color:var(--muted);font-size:12px">股</span></div><div style="font-size:12px;color:var(--muted)">成本 '+p.cost+'</div></div>'
+                + '<div class="pm"><div class="pm-label">市值</div><div class="pm-value">¥'+fmt(Math.round(p.price*p.shares))+'</div></div>'
+                + '<div class="pm"><div class="pm-label">单票盈亏</div><div class="pm-value" style="color:var(--'+(up?'green':'red')+')">'+(p.return_pct>0?'+':'')+p.return_pct+'%</div></div>'
+                + '</div><div class="panel-sub" style="margin-bottom:6px">'+(up?'✅':'🔴')+' 当前该股'+(up?'浮盈':'浮亏')+'，现价 '+p.price+'，'+(up?'':'注意风险控制。')+'数据来自东财快照（'+d.synced_at+'）。</div></div>';
+            }).join('');
+            pc.innerHTML = posCardHtml;
+          }
+        }
+        var pd = document.getElementById('pos-desc');
+        if(pd) pd.textContent = active.length===0
+          ? '当前空仓。账户仓位 0%，全部为现金。'
+          : '当前持仓 ' + active.length + ' 票：' + active.map(function(p){return p.name;} ).join('、')
+            + '（仓位合计 ' + (a.position_pct||0) + '%）。';
+
+        // ---- 持仓风险矩阵动态渲染 ----
+        var rb = document.getElementById('risk-body');
+        if(rb){
+          if(active.length===0){
+            rb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted)">空仓 · 无单票风险暴露</td></tr>'
+              + '<tr><td>现金</td><td class="mono">100%</td><td class="mono">≥20%</td><td class="up">达标</td><td class="mono">—</td><td class="mono">—</td><td class="mono">—</td><td><span class="pill g">低</span></td></tr>';
+          } else {
+            rb.innerHTML = active.map(function(p){
+              var up = p.return_pct>=0;
+              var w = p.shares*p.price;
+              var pct = posVal>0 ? (w/posVal*100) : 0;
+              return '<tr><td>'+p.name+'</td><td class="mono">'+pct.toFixed(1)+'%</td><td class="mono">动态</td><td class="up">—</td>'
+                + '<td class="'+(up?'up':'dn')+' mono">'+(p.return_pct>0?'+':'')+p.return_pct+'%</td><td class="mono">—</td><td class="mono">—</td>'
+                + '<td><span class="pill '+(up?'g':'a')+'">'+(up?'低':'警示')+'</span></td></tr>';
+            }).join('')
+            + '<tr><td>现金</td><td class="mono">'+((1-(posVal/a.total_assets))*100).toFixed(1)+'%</td><td class="mono">≥20%</td><td class="mono">—</td><td class="mono">—</td><td class="mono">—</td><td class="mono">—</td><td><span class="pill a">跟踪</span></td></tr>';
+          }
+        }
+
+        set('realm-assets', '¥' + fmt(a.total_assets));
+        set('realm-return', (a.total_return_pct>0?'+':'') + a.total_return_pct + '%');
+        set('foot-assets', '¥' + fmt(a.total_assets));
+
+        // ---- 侧栏「更新」日期 + 总览「最新收盘实况」横幅：跟随快照，永不再写死日期 ----
+        var dateStr = (d.synced_at || '').slice(0, 10);
+        var fu = document.getElementById('foot-updated');
+        if (fu) fu.textContent = dateStr || '—';
+        var oc = document.getElementById('overview-callout');
+        if (oc) {
+          var posNames = active.map(function(p) {
+            return p.name + ' ' + p.shares + '股@' + p.cost + '（现 ' + p.price + '，' + (p.return_pct >= 0 ? '+' : '') + p.return_pct + '%）';
+          }).join('、');
+          var dp = a.daily_pnl;
+          var dpStr = (dp == null) ? '—' : ((dp > 0 ? '+' : '') + '¥' + fmt(Math.round(dp * 100) / 100));
+          var dpColor = dp == null ? '' : (dp >= 0 ? 'var(--red)' : 'var(--green)');
+          var recent = (d.recent_trades || []).slice(0, 3).map(function(t) {
+            return (t.time || '').slice(5, 16).replace('-', '/') + ' ' + t.mmbz + ' ' + t.name + '@' + t.price;
+          }).join('；');
+          var dealStr = (a.deal_rate != null) ? ('，成交胜率 ' + a.deal_rate + '%（' + a.deal_win + '胜' + a.deal_fail + '负）') : '';
+          oc.innerHTML = '<strong>' + dateStr + ' 收盘实况（东财权威）：</strong>账户收在 <span class="mono">'
+            + fmt(a.total_assets) + '（收益率 ' + (a.total_return_pct > 0 ? '+' : '') + a.total_return_pct
+            + '%，仓位 ' + a.position_pct + '%）</span>，当日 <span class="mono" style="color:' + dpColor + '">' + dpStr
+            + '</span>' + dealStr + '。'
+            + (posNames ? '持仓：' + posNames + '。' : '当前空仓。')
+            + (recent ? ' 近期操作：' + recent + '。' : '');
+        }
+      })
+      .catch(function(e){
+        if(window.console) console.error('[snapshot] LOAD_ERR:', e && e.message || e, e && e.stack);
+      });
+  }
+
+  // ---- 加载完整账本 ledger.json 并渲染「全景评估」 ----
+  function fmtMoney(n){ var s=(n<0?'-¥':'¥')+Math.abs(n).toLocaleString('zh-CN',{maximumFractionDigits:2}); return s; }
+  function loadLedger(){
+    Promise.all([
+      fetch('data/ledger.json', {cache:'no-store'}).then(function(r){ return r.json(); }),
+      fetch('live-snapshot.json', {cache:'no-store'}).then(function(r){ return r.json(); }).catch(function(){ return null; }),
+      fetch('data/forecast.json', {cache:'no-store'}).then(function(r){ return r.json(); }).catch(function(){ return null; })
+    ]).then(function(arr){
+      var L = arr[0], snap = arr[1], forecasts = arr[2] || [];
+
+      // ---- 核心动态口径：成交胜率（东财权威，最新）、累计收益、已了结口径 ----
+      var a = (snap && snap.account) || {};
+      var dealRate = (a.deal_rate != null) ? a.deal_rate : null;
+      var dealWin = (a.deal_win != null) ? a.deal_win : null;
+      var dealFail = (a.deal_fail != null) ? a.deal_fail : null;
+      var ret = (typeof L.account.real_return_pct === 'number') ? L.account.real_return_pct : null;
+      var closed = L.closed_positions || {};
+      var panopnl = 0; Object.keys(closed).forEach(function(k) { panopnl += (closed[k].pnl || 0); });
+      var dateStr = (snap && snap.synced_at ? String(snap.synced_at).slice(0, 10) : (L._meta && L._meta.data_date) || '');
+
+      // ---- 综合评分（固定口径）----
+      var panoVal = 77;
+      if (dealRate != null) {
+        panoVal = Math.max(30, Math.min(95, 40 + dealRate * 0.7 + (ret != null && ret >= 0 ? 8 : 0) + (panopnl >= 0 ? 3 : -3)));
+      }
+      var ring = document.getElementById('pano-ring');
+      var pscore = document.getElementById('pano-score');
+      if (pscore) pscore.textContent = Math.round(panoVal);
+      var doff = 314 * (1 - panoVal / 100);
+      if (ring) ring.setAttribute('stroke-dashoffset', doff.toFixed(1));
+
+      // ---- 结论与画像（动态生成，不再写死日期/胜率）----
+      var pgrade = document.getElementById('pano-grade');
+      if (pgrade) {
+        if (dealRate != null && ret != null) {
+          if (dealRate >= 50 && ret >= 0) pgrade.textContent = '胜率与收益双在线，纪律待回升';
+          else if (ret >= 0) pgrade.textContent = '收益为正（+' + ret.toFixed(2) + '%），成交胜率 ' + dealRate + '% 待改善';
+          else pgrade.textContent = '长板稳、短板明显';
+        } else {
+          pgrade.textContent = '从 ledger/snapshot 加载';
+        }
+      }
+      var pver = document.getElementById('pano-verdict');
+      if (pver) {
+        var dealTxt = (dealRate != null)
+          ? '「截至 ' + dateStr + '，累计 ' + (dealWin != null ? dealWin + ' 胜 ' + dealFail + ' 负' : '') + '，成交胜率 ' + dealRate + '%」'
+          : '「成交胜率待同步」';
+
+        // ---- 核心短板 / 修炼动作：动态取自最新一天批改(forecast.json)，不再写死 ----
+        var FIELD_LABEL = {emotion:'情绪纪律',plan_exec:'计划执行',chase:'追涨杀跌',position:'仓位管理',analysis:'分析质量',stop:'止损止盈',reflect:'反思质量'};
+        var lr = null, newest = '';
+        (forecasts||[]).forEach(function(fd){
+          if(fd && fd.review && (!newest || fd.date > newest)){ newest = fd.date; lr = fd.review; }
+        });
+        var short = '', action = '';
+        if (lr) {
+          var names = [], j = lr.judge || {};
+          Object.keys(j).forEach(function(k){ if(j[k] && j[k].pass === false && FIELD_LABEL[k]) names.push(FIELD_LABEL[k]); });
+          short = names.length ? names.join('、') : '当日七维判断均达标';
+          var ov = lr.overall || '';
+          ['下一阶段目标','下一课','下一步'].forEach(function(kw){
+            if(!action){ var i = ov.lastIndexOf(kw); if(i >= 0){ action = ov.slice(i + kw.length).replace(/^[：:，,。\s]*(还是|仍然|依然是)?[：:，,。\s]*/,'').split('。')[0].trim(); } }
+          });
+        } else {
+          short = '反弹拿不住+止损点位过晚+缩量死扛';
+        }
+        var tail = '核心短板：<strong style="color:var(--red)">「' + short + '」</strong>。'
+          + (action ? '修炼动作：' + action + '。' : '纪律缺席仍是最关键短板——当前最重要的修炼动作：把下一笔进场的触发价/止损位落实为纸面预案。');
+
+        pver.innerHTML = '整体画像：<strong>' + dealTxt + '</strong>，累计收益 <strong>' + (ret != null ? (ret > 0 ? '+' : '') + ret.toFixed(2) + '%' : '—')
+          + '</strong>、已实现净盈亏 ' + fmtMoney(panopnl)
+          + '（已了结 ' + Object.keys(closed).length + ' 段）。' + tail;
+      }
+    }).catch(function(){});
+  }
+  load();
+  loadLedger();
+})();
