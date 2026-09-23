@@ -1,22 +1,22 @@
 {
-"synced_at": "2026-09-22 16:14",
+  "synced_at": "2026-09-23 12:53:57",
   "combin_id": "261944300000051189",
   "combin_name": "翻81681",
   "manager": "聪明的企业家6",
   "account": {
     "initial_principal": 50000,
     "principal_label": "人为控制实际本金5万",
-    "total_assets": 53287.44,
-    "total_return_pct": 6.57,
-    "position_pct": 82.53,
-    "cash": 9307.44,
-    "pos_value": 43980.0,
+    "total_assets": 53957.69,
+    "total_return_pct": 7.92,
+    "position_pct": 73.49,
+    "cash": 14306.69,
+    "pos_value": 39651.0,
     "start_date": "2026年07月14日",
-    "deal_rate": 38.46,
-    "deal_win": 5,
+    "deal_rate": 42.86,
+    "deal_win": 6,
     "deal_fail": 8,
-    "daily_pnl": -1137.0,
-    "prev_total_assets": 54424.44,
+    "daily_pnl": 670.25,
+    "prev_total_assets": 53287.44,
     "basis": "东财权威收盘(09-22): 总资产53,287.44(+6.57%), 仓位82.53%, 现金9,307.44, 成交胜率38.46%(5胜8负). 持仓: 沃尔核材1000股@17.034现16.84(-1.98%)/康龙化成300股@43.544现44.46(-1.48%)/彤程200股@72.393现69.01(-4.14%). 当日盈亏-1,137.00(=收盘53,287.44-昨收54,424.44), 今日无调仓"
   },
   "prev_snapshot_note": null,
@@ -24,35 +24,69 @@
     {
       "name": "沃尔核材",
       "code": "002130",
-      "shares": 1000,
-      "cost": 17.034,
-      "price": 16.84,
-      "pct": -1.98,
-      "return_pct": -1.14,
-      "days": 16
+      "shares": 0,
+      "cost": 0.0,
+      "price": 16.57,
+      "pct": -0.86,
+      "return_pct": 0.0,
+      "days": 17
+    },
+    {
+      "name": "金安国纪",
+      "code": "002636",
+      "shares": 300,
+      "cost": 84.836,
+      "price": 87.15,
+      "pct": 2.73,
+      "return_pct": 2.73,
+      "days": 1
     },
     {
       "name": "康龙化成",
       "code": "300759",
       "shares": 300,
       "cost": 43.544,
-      "price": 44.46,
-      "pct": -1.48,
-      "return_pct": 2.1,
-      "days": 7
+      "price": 45.02,
+      "pct": 1.26,
+      "return_pct": 3.39,
+      "days": 8
     },
     {
       "name": "彤程新材",
       "code": "603650",
-      "shares": 200,
-      "cost": 72.393,
-      "price": 69.01,
-      "pct": -4.14,
-      "return_pct": -4.67,
-      "days": 6
+      "shares": 0,
+      "cost": 0.0,
+      "price": 69.23,
+      "pct": -0.34,
+      "return_pct": 0.0,
+      "days": 7
     }
   ],
   "recent_trades": [
+    {
+      "time": "2026-09-23 09:51",
+      "name": "彤程新材",
+      "mmbz": "卖",
+      "price": "68.88",
+      "pos_bef": "1.37",
+      "pos_aft": "0.00"
+    },
+    {
+      "time": "2026-09-23 09:50",
+      "name": "金安国纪",
+      "mmbz": "买",
+      "price": "84.75",
+      "pos_bef": "0.00",
+      "pos_aft": "2.53"
+    },
+    {
+      "time": "2026-09-23 09:50",
+      "name": "沃尔核材",
+      "mmbz": "卖",
+      "price": "16.72",
+      "pos_bef": "1.67",
+      "pos_aft": "0.00"
+    },
     {
       "time": "2026-09-17 11:06",
       "name": "彤程新材",
@@ -76,33 +110,36 @@
       "price": "29.63",
       "pos_bef": "1.48",
       "pos_aft": "0.00"
-    },
-    {
-      "time": "2026-09-14 09:59",
-      "name": "沃尔核材",
-      "mmbz": "买",
-      "price": "17.37",
-      "pos_bef": "1.38",
-      "pos_aft": "1.73"
-    },
-    {
-      "time": "2026-09-11 10:10",
-      "name": "沃尔核材",
-      "mmbz": "卖",
-      "price": "17.89",
-      "pos_bef": "2.14",
-      "pos_aft": "1.42"
-    },
-    {
-      "time": "2026-09-11 10:10",
-      "name": "铭普光磁",
-      "mmbz": "卖",
-      "price": "30.86",
-      "pos_bef": "3.07",
-      "pos_aft": "1.53"
     }
   ],
   "all_trades": [
+    {
+      "time": "2026-09-23 09:51",
+      "name": "彤程新材",
+      "dir": "卖",
+      "px": 68.88,
+      "pos_bef": "1.37",
+      "pos_aft": "0.00",
+      "code": "603650"
+    },
+    {
+      "time": "2026-09-23 09:50",
+      "name": "金安国纪",
+      "dir": "买",
+      "px": 84.75,
+      "pos_bef": "0.00",
+      "pos_aft": "2.53",
+      "code": "002636"
+    },
+    {
+      "time": "2026-09-23 09:50",
+      "name": "沃尔核材",
+      "dir": "卖",
+      "px": 16.72,
+      "pos_bef": "1.67",
+      "pos_aft": "0.00",
+      "code": "002130"
+    },
     {
       "time": "2026-09-17 11:06",
       "name": "彤程新材",
@@ -500,5 +537,5 @@
       "code": "600188"
     }
   ],
-  "trade_count": 44
+  "trade_count": 47
 }
