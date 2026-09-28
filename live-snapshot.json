@@ -1,22 +1,22 @@
 {
-  "synced_at": "2026-09-25 12:52:20",
+  "synced_at": "2026-09-28 15:46:09",
   "combin_id": "261944300000051189",
   "combin_name": "翻81681",
   "manager": "聪明的企业家6",
   "account": {
     "initial_principal": 50000,
     "principal_label": "人为控制实际本金5万",
-    "total_assets": 51620.75,
-    "total_return_pct": 3.24,
-    "position_pct": 72.28,
-    "cash": 14306.75,
-    "pos_value": 37314.0,
+    "total_assets": 51035.69,
+    "total_return_pct": 2.07,
+    "position_pct": 71.97,
+    "cash": 14306.69,
+    "pos_value": 36729.0,
     "start_date": "2026年07月14日",
     "deal_rate": 28.57,
     "deal_win": 4,
     "deal_fail": 10,
-    "daily_pnl": -2336.94,
-    "prev_total_assets": 53957.69,
+    "daily_pnl": -585.06,
+    "prev_total_assets": 51620.75,
     "basis": "东财权威收盘(09-22): 总资产53,287.44(+6.57%), 仓位82.53%, 现金9,307.44, 成交胜率38.46%(5胜8负). 持仓: 沃尔核材1000股@17.034现16.84(-1.98%)/康龙化成300股@43.544现44.46(-1.48%)/彤程200股@72.393现69.01(-4.14%). 当日盈亏-1,137.00(=收盘53,287.44-昨收54,424.44), 今日无调仓"
   },
   "prev_snapshot_note": null,
@@ -26,20 +26,20 @@
       "code": "002636",
       "shares": 300,
       "cost": 84.836,
-      "price": 80.88,
-      "pct": -7.19,
-      "return_pct": -4.66,
-      "days": 3
+      "price": 79.3,
+      "pct": -1.95,
+      "return_pct": -6.53,
+      "days": 6
     },
     {
       "name": "康龙化成",
       "code": "300759",
       "shares": 300,
       "cost": 43.544,
-      "price": 43.5,
-      "pct": -3.38,
-      "return_pct": -0.1,
-      "days": 10
+      "price": 43.13,
+      "pct": -0.85,
+      "return_pct": -0.95,
+      "days": 13
     }
   ],
   "recent_trades": [
