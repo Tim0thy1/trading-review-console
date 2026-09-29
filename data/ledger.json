@@ -1,19 +1,19 @@
 {
   "_meta": {
     "desc": "模拟盘完整账本 v2：由东财全量调仓+账户权威数据重建。已了结分票除兖矿/大金为 app 已验证外，其余由调仓记录自动核算；equity_points 为逐日净值序列（锚点+分段校正，末点对齐权威总资产）。",
-    "generated_at": "2026-09-28",
-    "data_date": "2026-09-28",
+    "generated_at": "2026-09-29",
+    "data_date": "2026-09-29",
     "equity_rebuild": "daily-sequence(gen_ledger)"
   },
   "account": {
-    "nominal_assets": 1001035.69,
+    "nominal_assets": 1002109.69,
     "nominal_return_pct": 0.36,
-    "real_assets": 51035.69,
-    "real_return_pct": 2.07,
-    "position_pct": 71.97,
+    "real_assets": 52109.69,
+    "real_return_pct": 4.22,
+    "position_pct": 72.55,
     "cash": 14306.69,
     "start_date": "2026年07月14日",
-    "daily_pnl_today": -585.06,
+    "daily_pnl_today": 1074.0,
     "survey": {
       "日收益率": -0.1,
       "5日收益率": 0.32,
@@ -283,6 +283,15 @@
     },
     {
       "time": "2026-09-04 14:53",
+      "name": "XD兖矿能",
+      "dir": "卖",
+      "px": 21.53,
+      "pos_bef": "1.29",
+      "pos_aft": "0.00",
+      "code": "600188"
+    },
+    {
+      "time": "2026-09-04 14:53",
       "name": "兖矿能源",
       "dir": "卖",
       "px": 21.53,
@@ -319,11 +328,29 @@
     },
     {
       "time": "2026-09-03 10:56",
+      "name": "XD兖矿能",
+      "dir": "买",
+      "px": 22.13,
+      "pos_bef": "0.88",
+      "pos_aft": "1.32",
+      "code": "600188"
+    },
+    {
+      "time": "2026-09-03 10:56",
       "name": "兖矿能源",
       "dir": "买",
       "px": 22.13,
       "pos_bef": "0.88",
       "pos_aft": "1.32",
+      "code": "600188"
+    },
+    {
+      "time": "2026-09-03 10:27",
+      "name": "XD兖矿能",
+      "dir": "买",
+      "px": 22.4,
+      "pos_bef": "0.00",
+      "pos_aft": "0.89",
       "code": "600188"
     },
     {
@@ -544,6 +571,15 @@
     },
     {
       "time": "2026-08-04 10:20",
+      "name": "XD兖矿能",
+      "dir": "卖",
+      "px": 18.67,
+      "pos_bef": "2.05",
+      "pos_aft": "0.00",
+      "code": "600188"
+    },
+    {
+      "time": "2026-08-04 10:20",
       "name": "兖矿能源",
       "dir": "卖",
       "px": 18.67,
@@ -580,6 +616,15 @@
     },
     {
       "time": "2026-07-14 14:14",
+      "name": "XD兖矿能",
+      "dir": "买",
+      "px": 19.32,
+      "pos_bef": "0.00",
+      "pos_aft": "2.13",
+      "code": "600188"
+    },
+    {
+      "time": "2026-07-14 14:14",
       "name": "兖矿能源",
       "dir": "买",
       "px": 19.32,
@@ -588,7 +633,7 @@
       "code": "600188"
     }
   ],
-  "trade_count": 47,
+  "trade_count": 52,
   "equity_points": [
     {
       "date": "2026-07-14",
@@ -809,6 +854,10 @@
     {
       "date": "2026-09-28",
       "close": 51035.69
+    },
+    {
+      "date": "2026-09-29",
+      "close": 52109.69
     }
   ],
   "daily_calendar": [
@@ -1141,6 +1190,12 @@
       "close": 51035.69,
       "daily_pnl": -585.06,
       "cum_return_pct": 2.07
+    },
+    {
+      "date": "2026-09-29",
+      "close": 52109.69,
+      "daily_pnl": 1074.0,
+      "cum_return_pct": 4.22
     }
   ],
   "summary": {
