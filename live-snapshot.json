@@ -1,22 +1,22 @@
 {
-  "synced_at": "2026-09-29 14:14:07",
+  "synced_at": "2026-09-30 14:04:15",
   "combin_id": "261944300000051189",
   "combin_name": "翻81681",
   "manager": "聪明的企业家6",
   "account": {
     "initial_principal": 50000,
     "principal_label": "人为控制实际本金5万",
-    "total_assets": 52109.69,
-    "total_return_pct": 4.22,
-    "position_pct": 72.55,
+    "total_assets": 51632.69,
+    "total_return_pct": 3.27,
+    "position_pct": 72.29,
     "cash": 14306.69,
-    "pos_value": 37803.0,
+    "pos_value": 37326.0,
     "start_date": "2026年07月14日",
-    "deal_rate": 28.57,
-    "deal_win": 4,
-    "deal_fail": 10,
-    "daily_pnl": 1074.0,
-    "prev_total_assets": 51035.69,
+    "deal_rate": 35.71,
+    "deal_win": 5,
+    "deal_fail": 9,
+    "daily_pnl": -477.0,
+    "prev_total_assets": 52109.69,
     "basis": "东财权威收盘(09-22): 总资产53,287.44(+6.57%), 仓位82.53%, 现金9,307.44, 成交胜率38.46%(5胜8负). 持仓: 沃尔核材1000股@17.034现16.84(-1.98%)/康龙化成300股@43.544现44.46(-1.48%)/彤程200股@72.393现69.01(-4.14%). 当日盈亏-1,137.00(=收盘53,287.44-昨收54,424.44), 今日无调仓"
   },
   "prev_snapshot_note": null,
@@ -26,20 +26,20 @@
       "code": "002636",
       "shares": 300,
       "cost": 84.836,
-      "price": 83.03,
-      "pct": 4.7,
-      "return_pct": -2.13,
-      "days": 7
+      "price": 79.45,
+      "pct": -4.31,
+      "return_pct": -6.35,
+      "days": 8
     },
     {
       "name": "康龙化成",
       "code": "300759",
       "shares": 300,
       "cost": 43.544,
-      "price": 42.98,
-      "pct": -0.35,
-      "return_pct": -1.3,
-      "days": 14
+      "price": 44.97,
+      "pct": 4.63,
+      "return_pct": 3.28,
+      "days": 15
     }
   ],
   "recent_trades": [
@@ -212,7 +212,7 @@
     },
     {
       "time": "2026-09-04 14:53",
-      "name": "XD兖矿能",
+      "name": "兖矿能源",
       "dir": "卖",
       "px": 21.53,
       "pos_bef": "1.29",
@@ -248,7 +248,7 @@
     },
     {
       "time": "2026-09-03 10:56",
-      "name": "XD兖矿能",
+      "name": "兖矿能源",
       "dir": "买",
       "px": 22.13,
       "pos_bef": "0.88",
@@ -257,7 +257,7 @@
     },
     {
       "time": "2026-09-03 10:27",
-      "name": "XD兖矿能",
+      "name": "兖矿能源",
       "dir": "买",
       "px": 22.4,
       "pos_bef": "0.00",
@@ -473,7 +473,7 @@
     },
     {
       "time": "2026-08-04 10:20",
-      "name": "XD兖矿能",
+      "name": "兖矿能源",
       "dir": "卖",
       "px": 18.67,
       "pos_bef": "2.05",
@@ -509,7 +509,7 @@
     },
     {
       "time": "2026-07-14 14:14",
-      "name": "XD兖矿能",
+      "name": "兖矿能源",
       "dir": "买",
       "px": 19.32,
       "pos_bef": "0.00",
