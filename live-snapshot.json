@@ -1,5 +1,5 @@
 {
-  "synced_at": "2026-10-02 14:00:16",
+  "synced_at": "2026-10-05 16:17:32",
   "combin_id": "261944300000051189",
   "combin_name": "翻81681",
   "manager": "聪明的企业家6",
@@ -29,7 +29,7 @@
       "price": 79.45,
       "pct": -4.31,
       "return_pct": -6.35,
-      "days": 10
+      "days": 14
     },
     {
       "name": "康龙化成",
@@ -39,7 +39,7 @@
       "price": 44.97,
       "pct": 4.63,
       "return_pct": 3.28,
-      "days": 17
+      "days": 21
     }
   ],
   "recent_trades": [
