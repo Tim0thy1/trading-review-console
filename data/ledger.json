@@ -1,19 +1,19 @@
 {
   "_meta": {
     "desc": "模拟盘完整账本 v2：由东财全量调仓+账户权威数据重建。已了结分票除兖矿/大金为 app 已验证外，其余由调仓记录自动核算；equity_points 为逐日净值序列（锚点+分段校正，末点对齐权威总资产）。",
-    "generated_at": "2026-10-07",
-    "data_date": "2026-10-07",
+    "generated_at": "2026-10-08",
+    "data_date": "2026-10-08",
     "equity_rebuild": "daily-sequence(gen_ledger)"
   },
   "account": {
-    "nominal_assets": 1001632.69,
+    "nominal_assets": 1001320.69,
     "nominal_return_pct": 0.36,
-    "real_assets": 51632.69,
-    "real_return_pct": 3.27,
-    "position_pct": 72.29,
+    "real_assets": 51320.69,
+    "real_return_pct": 2.64,
+    "position_pct": 72.12,
     "cash": 14306.69,
     "start_date": "2026年07月14日",
-    "daily_pnl_today": -477.0,
+    "daily_pnl_today": -312.0,
     "survey": {
       "日收益率": -0.1,
       "5日收益率": 0.32,
@@ -882,6 +882,10 @@
     {
       "date": "2026-10-07",
       "close": 51632.69
+    },
+    {
+      "date": "2026-10-08",
+      "close": 51320.69
     }
   ],
   "daily_calendar": [
@@ -1256,6 +1260,12 @@
       "close": 51632.69,
       "daily_pnl": 0.0,
       "cum_return_pct": 3.27
+    },
+    {
+      "date": "2026-10-08",
+      "close": 51320.69,
+      "daily_pnl": -312.0,
+      "cum_return_pct": 2.64
     }
   ],
   "summary": {
