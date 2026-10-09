@@ -1,48 +1,82 @@
 {
-  "synced_at": "2026-10-08 14:46:42",
+  "synced_at": "2026-10-09 14:29:31",
   "combin_id": "261944300000051189",
   "combin_name": "翻81681",
   "manager": "聪明的企业家6",
   "account": {
     "initial_principal": 50000,
     "principal_label": "人为控制实际本金5万",
-    "total_assets": 51320.69,
-    "total_return_pct": 2.64,
-    "position_pct": 72.12,
-    "cash": 14306.69,
-    "pos_value": 37014.0,
+    "total_assets": 47511.69,
+    "total_return_pct": -4.98,
+    "position_pct": 124.12,
+    "cash": -11461.31,
+    "pos_value": 58973.0,
     "start_date": "2026年07月14日",
-    "deal_rate": 35.71,
+    "deal_rate": 33.33,
     "deal_win": 5,
-    "deal_fail": 9,
-    "daily_pnl": -312.0,
-    "prev_total_assets": 51632.69,
+    "deal_fail": 10,
+    "daily_pnl": -3809.0,
+    "prev_total_assets": 51320.69,
     "basis": "东财权威收盘(09-22): 总资产53,287.44(+6.57%), 仓位82.53%, 现金9,307.44, 成交胜率38.46%(5胜8负). 持仓: 沃尔核材1000股@17.034现16.84(-1.98%)/康龙化成300股@43.544现44.46(-1.48%)/彤程200股@72.393现69.01(-4.14%). 当日盈亏-1,137.00(=收盘53,287.44-昨收54,424.44), 今日无调仓"
   },
   "prev_snapshot_note": null,
   "positions": [
     {
+      "name": "大金重工",
+      "code": "002487",
+      "shares": 200,
+      "cost": 50.681,
+      "price": 43.75,
+      "pct": -13.68,
+      "return_pct": -13.68,
+      "days": 1
+    },
+    {
       "name": "金安国纪",
       "code": "002636",
-      "shares": 300,
-      "cost": 84.836,
-      "price": 79.63,
-      "pct": 0.23,
-      "return_pct": -6.14,
-      "days": 16
+      "shares": 400,
+      "cost": 81.705,
+      "price": 71.67,
+      "pct": -7.88,
+      "return_pct": -12.28,
+      "days": 17
     },
     {
       "name": "康龙化成",
       "code": "300759",
-      "shares": 300,
-      "cost": 43.544,
-      "price": 43.75,
-      "pct": -2.71,
-      "return_pct": 0.47,
-      "days": 23
+      "shares": 500,
+      "cost": 42.927,
+      "price": 43.11,
+      "pct": 0.14,
+      "return_pct": 0.43,
+      "days": 24
     }
   ],
   "recent_trades": [
+    {
+      "time": "2026-10-09 09:49",
+      "name": "大金重工",
+      "mmbz": "买",
+      "price": "50.63",
+      "pos_bef": "0.00",
+      "pos_aft": "1.01"
+    },
+    {
+      "time": "2026-10-09 09:48",
+      "name": "金安国纪",
+      "mmbz": "买",
+      "price": "72.24",
+      "pos_bef": "2.17",
+      "pos_aft": "2.89"
+    },
+    {
+      "time": "2026-10-09 09:48",
+      "name": "康龙化成",
+      "mmbz": "买",
+      "price": "41.96",
+      "pos_bef": "1.26",
+      "pos_aft": "2.10"
+    },
     {
       "time": "2026-09-23 09:51",
       "name": "彤程新材",
@@ -66,33 +100,36 @@
       "price": "16.72",
       "pos_bef": "1.67",
       "pos_aft": "0.00"
-    },
-    {
-      "time": "2026-09-17 11:06",
-      "name": "彤程新材",
-      "mmbz": "买",
-      "price": "72.32",
-      "pos_bef": "0.00",
-      "pos_aft": "1.44"
-    },
-    {
-      "time": "2026-09-16 09:52",
-      "name": "康龙化成",
-      "mmbz": "买",
-      "price": "43.50",
-      "pos_bef": "0.00",
-      "pos_aft": "1.30"
-    },
-    {
-      "time": "2026-09-16 09:51",
-      "name": "铭普光磁",
-      "mmbz": "卖",
-      "price": "29.63",
-      "pos_bef": "1.48",
-      "pos_aft": "0.00"
     }
   ],
   "all_trades": [
+    {
+      "time": "2026-10-09 09:49",
+      "name": "大金重工",
+      "dir": "买",
+      "px": 50.63,
+      "pos_bef": "0.00",
+      "pos_aft": "1.01",
+      "code": "002487"
+    },
+    {
+      "time": "2026-10-09 09:48",
+      "name": "金安国纪",
+      "dir": "买",
+      "px": 72.24,
+      "pos_bef": "2.17",
+      "pos_aft": "2.89",
+      "code": "002636"
+    },
+    {
+      "time": "2026-10-09 09:48",
+      "name": "康龙化成",
+      "dir": "买",
+      "px": 41.96,
+      "pos_bef": "1.26",
+      "pos_aft": "2.10",
+      "code": "300759"
+    },
     {
       "time": "2026-09-23 09:51",
       "name": "彤程新材",
@@ -517,5 +554,5 @@
       "code": "600188"
     }
   ],
-  "trade_count": 47
+  "trade_count": 50
 }
