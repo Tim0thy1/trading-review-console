@@ -473,5 +473,10 @@
     "date": "2026-11-23",
     "close": 35304.69,
     "source": "authority(东财)"
+  },
+  {
+    "date": "2026-11-24",
+    "close": 34583.69,
+    "source": "authority(东财)"
   }
 ]
